@@ -211,7 +211,7 @@ impl Opt {
 
     pub(crate) fn caption(self) -> &'static str {
         match self {
-            Opt::AndroidInputSelection => "Input device",
+            Opt::AndroidInputSelection => "options.inputDevice",
             Opt::TouchMode => "Control scheme",
             Opt::TouchCrosshairGestures => "Touch gestures",
             Opt::TouchControlHub => "Control hub button",
@@ -243,7 +243,7 @@ impl Opt {
             Opt::AndroidGyroscope => "Gyroscope aiming",
             Opt::AndroidGyroSensitivity => "Gyroscope sensitivity",
             Opt::TouchSwapJumpSneak => "Swap jump / sneak",
-            Opt::TouchAutoSprint => "Auto Sprint",
+            Opt::TouchAutoSprint => "options.autoSprint",
 
             Opt::Fov => "options.fov",
             Opt::RenderDistance => "options.renderDistance",
@@ -655,14 +655,30 @@ impl Opt {
             Opt::TouchSwapJumpSneak => {
                 Some(if s.touch.swap_jump_sneak { "ON" } else { "OFF" }.into())
             }
-            Opt::AndroidInputSelection => Some(s.touch.input_selection.label().into()),
-            Opt::TouchAutoSprint => Some(
-                if s.touch.sprint_with_joystick {
-                    "ON"
-                } else {
-                    "OFF"
+            Opt::AndroidInputSelection => Some(
+                match s.touch.input_selection {
+                    crate::android_controls::layout::InputSelection::Auto => {
+                        horizon_client::lang::get("options.inputDevice.auto")
+                    }
+                    crate::android_controls::layout::InputSelection::Touch => {
+                        horizon_client::lang::get("options.inputDevice.touch")
+                    }
+                    crate::android_controls::layout::InputSelection::KeyboardMouse => {
+                        horizon_client::lang::get("options.inputDevice.keyboardMouse")
+                    }
+                    crate::android_controls::layout::InputSelection::Controller => {
+                        horizon_client::lang::get("options.inputDevice.controller")
+                    }
                 }
-                .into(),
+                .to_owned(),
+            ),
+            Opt::TouchAutoSprint => Some(
+                tr(if s.touch.sprint_with_joystick {
+                    "options.on"
+                } else {
+                    "options.off"
+                })
+                .plain(),
             ),
             _ => None,
         };
@@ -3800,7 +3816,7 @@ impl OptionsUi {
                             0.,
                             0.,
                             150.,
-                            Text::literal("Touch Controls..."),
+                            tr("options.touchControls"),
                             Act::Push(Page::Touch),
                         ),
                         Some(button(
@@ -3852,7 +3868,9 @@ impl OptionsUi {
                         0.,
                         0.,
                         150.,
-                        Text::literal("Bedrock Inventory: ").append(on_off(s.bedrock_inventory)),
+                        tr("options.bedrockInventory")
+                            .append(Text::literal(": "))
+                            .append(on_off(s.bedrock_inventory)),
                         Act::BedrockInventory,
                     ),
                     Some(if android {
