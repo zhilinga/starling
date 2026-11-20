@@ -105,7 +105,7 @@ impl Button {
             Button::Jump => "Jump",
             Button::Sneak => "Sneak",
             Button::Inventory => "Bag",
-            Button::Chat => "Chat",
+            Button::Chat => "聊天",
             Button::Pause => "II",
             Button::Attack => "Hit",
             Button::Use => "Use",
@@ -243,7 +243,7 @@ impl SneakMode {
     pub fn label(self) -> &'static str {
         match self {
             SneakMode::Hold => "Hold",
-            SneakMode::Toggle => "Toggle",
+            SneakMode::Toggle => "切换",
         }
     }
     /// The other one: the chip switches between them.

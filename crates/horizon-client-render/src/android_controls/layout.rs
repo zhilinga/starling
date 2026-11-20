@@ -72,20 +72,20 @@ impl Control {
     ];
     pub fn name(self) -> &'static str {
         match self {
-            Self::Move => "Movement",
-            Self::Sprint => "Sprint",
-            Self::Jump => "Jump / fly up",
-            Self::Sneak => "Sneak / fly down",
-            Self::Attack => "Attack / mine",
-            Self::Use => "Use / place",
-            Self::Chat => "Chat",
-            Self::Pause => "Pause",
-            Self::Settings => "Touch settings",
-            Self::Inventory => "Inventory",
-            Self::Debug => "Debug overlay (F3)",
-            Self::Perspective => "Camera perspective (F5)",
-            Self::Offhand => "Swap hands",
-            Self::Shield => "Raise shield",
+            Self::Move => "移动",
+            Self::Sprint => "疾跑",
+            Self::Jump => "跳跃 / 上升",
+            Self::Sneak => "潜行 / 下降",
+            Self::Attack => "攻击 / 挖掘",
+            Self::Use => "使用 / 放置",
+            Self::Chat => "聊天",
+            Self::Pause => "暂停",
+            Self::Settings => "触控设置",
+            Self::Inventory => "物品栏",
+            Self::Debug => "调试信息（F3）",
+            Self::Perspective => "视角切换（F5）",
+            Self::Offhand => "交换双手",
+            Self::Shield => "举起盾牌",
         }
     }
 }
@@ -101,19 +101,19 @@ pub enum ControlStyle {
 impl ControlStyle {
     pub fn label(self) -> &'static str {
         match self {
-            Self::Mcpe => "MCPE (Default)",
+            Self::Mcpe => "MCPE（默认）",
             Self::GoyControl => "GoyControl",
         }
     }
     pub fn subtitle(self) -> &'static str {
         match self {
-            Self::Mcpe => "Vanilla touch controls",
+            Self::Mcpe => "原版触控",
             Self::GoyControl => "Custom layout with more options",
         }
     }
     pub fn section_title(self) -> &'static str {
         match self {
-            Self::Mcpe => "MCPE Controls",
+            Self::Mcpe => "MCPE 控制",
             Self::GoyControl => "GoyControl Controls",
         }
     }
@@ -449,10 +449,10 @@ pub enum InputSelection {
 impl InputSelection {
     pub fn label(self) -> &'static str {
         match self {
-            Self::Auto => "Auto",
+            Self::Auto => "自动",
             Self::Touch => "Touch",
             Self::KeyboardMouse => "Keyboard & Mouse",
-            Self::Controller => "Controller",
+            Self::Controller => "手柄",
         }
     }
     pub fn cycle(&mut self, back: bool) {
@@ -577,10 +577,10 @@ fn default_profile_name() -> String {
     "default".into()
 }
 fn default_preset_display_name() -> String {
-    "Default".into()
+    "默认".into()
 }
 fn default_mcpe_preset_desc() -> String {
-    "Vanilla touch controls".into()
+    "原版触控".into()
 }
 fn default_goy_preset_desc() -> String {
     "Custom layout with more options".into()
@@ -959,7 +959,7 @@ impl Settings {
             self.active_goy_preset = Self::sanitize_profile_name(&self.active_goy_preset);
         }
         if self.preset_id == "default" {
-            self.preset_name = "Default".into();
+            self.preset_name = "默认".into();
             if self.preset_description.trim().is_empty()
                 || (self.control_style == ControlStyle::GoyControl
                     && self.preset_description == default_mcpe_preset_desc())
@@ -972,7 +972,7 @@ impl Settings {
                 };
             }
         } else if self.preset_name.trim().is_empty()
-            || (self.preset_name == "Default" && self.preset_id != "default")
+            || (self.preset_name == "默认" && self.preset_id != "default")
         {
             self.preset_name = self.preset_id.clone();
         }
@@ -1076,7 +1076,7 @@ impl Settings {
                 {
                     parsed.preset_id = clean.clone();
                     parsed.active_profile = clean.clone();
-                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "Default" {
+                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "默认" {
                         parsed.preset_name = stem.to_owned();
                     }
                     if parsed.preset_description.trim().is_empty() {
@@ -1099,7 +1099,7 @@ impl Settings {
         };
         let mut out = vec![PresetMeta {
             id: "default".into(),
-            name: "Default".into(),
+            name: "默认".into(),
             description: default_desc,
             system: style,
             is_default: true,
@@ -1122,7 +1122,7 @@ impl Settings {
                 && let Ok(parsed) = serde_json::from_slice::<Self>(&bytes)
             {
                 let name =
-                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "Default" {
+                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "默认" {
                         clean.clone()
                     } else {
                         parsed.preset_name.trim().to_owned()
@@ -1164,7 +1164,7 @@ impl Settings {
             loaded.control_style = style;
             loaded.preset_id = clean.clone();
             loaded.active_profile = clean;
-            if loaded.preset_name.trim().is_empty() || loaded.preset_name == "Default" {
+            if loaded.preset_name.trim().is_empty() || loaded.preset_name == "默认" {
                 loaded.preset_name = loaded.preset_id.clone();
             }
             loaded.sanitize();
@@ -1539,7 +1539,7 @@ impl Settings {
         let mut copy = self.clone();
         copy.active_profile = clean.clone();
         copy.preset_id = clean.clone();
-        if copy.preset_name.trim().is_empty() || copy.preset_name == "Default" {
+        if copy.preset_name.trim().is_empty() || copy.preset_name == "默认" {
             copy.preset_name = name.trim().to_owned();
         }
         match style {
@@ -1554,7 +1554,7 @@ impl Settings {
     }
     pub const PRESETS: [(&'static str, &'static str, &'static str); 1] = [(
         "default",
-        "Default",
+        "默认",
         "Protected default layout for the active control system",
     )];
 

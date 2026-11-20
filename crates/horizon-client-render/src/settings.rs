@@ -315,7 +315,7 @@ impl Default for Settings {
             toggle_crouch: false,
             toggle_sprint: false,
             auto_jump: false,
-            language: "en_us".into(),
+            language: "zh_cn".into(),
             force_unicode: false,
             japanese_glyphs: false,
             chat_visibility: 0,

@@ -114,7 +114,7 @@ impl MachineEntity {
             Some(Tag::Long(v)) => *v,
             _ => 0,
         };
-        let size = (int(tag, "Size") as usize).max(slots);
+        let size = (int(tag, "大小") as usize).max(slots);
         let mut fluids = vec![None; tanks];
         if let Some(Tag::List(list)) = tag.get("Fluids") {
             for t in list {
@@ -160,7 +160,7 @@ impl MachineEntity {
             ("y", Tag::Int(pos[1])),
             ("z", Tag::Int(pos[2])),
             ("Items", horizon_client::save::encode_items(&self.items)),
-            ("Size", Tag::Int(self.items.len() as i32)),
+            ("大小", Tag::Int(self.items.len() as i32)),
             ("Timer", Tag::Int(self.timer)),
             ("Running", Tag::Int(self.running)),
             ("Since", Tag::Long(self.since)),
@@ -243,7 +243,7 @@ pub(super) fn is_machine_tag(tag: &Tag) -> bool {
 /// What a machine's saved block entity holds, every slot: dropped when its block breaks
 /// (`ItemHelper.dropContents`).
 pub(super) fn held_items(tag: &Tag) -> Vec<Option<ItemStack>> {
-    let size = match tag.get("Size") {
+    let size = match tag.get("大小") {
         Some(Tag::Int(v)) => (*v).max(0) as usize,
         _ => 0,
     };

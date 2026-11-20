@@ -194,8 +194,13 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "assets").mkdir(parents=True)
-    (OUT / "pack.mcmeta").write_text(json.dumps({"pack": {
-        "pack_format": 97, "description": "Starling's low-budget skin"}}, indent=2) + "\n", encoding="utf-8")
+    (OUT / "pack.mcmeta").write_text(json.dumps({
+        "pack": {"pack_format": 97, "description": "Starling's low-budget skin"},
+        "language": {
+            "en_us": {"name": "English", "region": "US", "bidirectional": False},
+            "zh_cn": {"name": "简体中文", "region": "中国", "bidirectional": False},
+        },
+    }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     sprites = "minecraft/textures/gui/sprites/widget/"
     # Buttons: a take of each state per take number; the plain names are take 0.
     for take in range(BUTTON_TAKES):
@@ -235,10 +240,17 @@ def main():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(font, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
             takes.append(f"starling:hand_{take}")
-    default = {"providers": [{"type": "space", "advances": {" ": 4}},
-                             {"type": "bitmap", "file": "minecraft:font/hand_0.png", "height": 10, "ascent": 8,
-                              "chars": letters(0)[1]}],
-               "starling:variants": takes}
+    # The handwritten sheets cover ASCII; the Chinese labels fall through to
+    # this TrueType face, so the menu has no missing-glyph boxes.
+    cjk = Path(__file__).resolve().parents[2] / "crates" / "horizon-theme" / "fonts" / "Geist-Regular.ttf"
+    providers = [{"type": "space", "advances": {" ": 4}},
+                 {"type": "bitmap", "file": "minecraft:font/hand_0.png", "height": 10, "ascent": 8,
+                  "chars": letters(0)[1]}]
+    if cjk.exists():
+        shutil.copy2(cjk, OUT / "assets" / "minecraft" / "font" / "StarlingCJK.ttf")
+        providers.append({"type": "ttf", "file": "minecraft:StarlingCJK.ttf", "size": 10.0,
+                          "oversample": 2.0, "shift": [0, 0], "skip": ""})
+    default = {"providers": providers, "starling:variants": takes}
     path = OUT / "assets" / "minecraft" / "font" / "default.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(default, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -246,6 +258,9 @@ def main():
     path = OUT / "assets" / "minecraft" / "lang" / "en_us.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(strings, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    strings_zh = json.loads((HERE / "strings_zh_cn.json").read_text(encoding="utf-8"))
+    path = OUT / "assets" / "minecraft" / "lang" / "zh_cn.json"
+    path.write_text(json.dumps(strings_zh, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     path = OUT / "assets" / "starling" / "skin.json"
     path.write_text(json.dumps({"button_takes": BUTTON_TAKES, "pressed_label": PRESSED_LABEL}, indent=1) + "\n",
                     encoding="utf-8")

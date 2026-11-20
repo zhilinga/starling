@@ -332,12 +332,12 @@ impl Chooser {
             device: Some(name),
             choices: vec![
                 (
-                    "Remove".into(),
+                    "移除".into(),
                     String::new(),
                     Action::ConfirmDeleteLocal,
                     false,
                 ),
-                ("Cancel".into(), String::new(), Action::Dismiss, true),
+                ("取消".into(), String::new(), Action::Dismiss, true),
             ],
             deletes: Vec::new(),
             scroll: 0.0,
@@ -352,13 +352,13 @@ impl Chooser {
             device: Some(format!("Profile {}", id + 1)),
             choices: vec![
                 (
-                    "Delete".into(),
+                    "删除".into(),
                     format!("Delete Profile {} for good", id + 1),
                     Action::ConfirmDeleteProfile(id),
                     false,
                 ),
                 (
-                    "Cancel".into(),
+                    "取消".into(),
                     "Back to the profiles".into(),
                     Action::Profile,
                     true,
@@ -494,7 +494,7 @@ impl Chooser {
                 let r = [w - 48.0 - 96.0, y + 17.0, 96.0, 40.0];
                 ui.rounded(r[0], r[1], r[2], r[3], 10.0, with_alpha(theme.danger, 0.16));
                 ui.border(r[0], r[1], r[2], r[3], 10.0, theme.danger);
-                ui.centered_fit(Face::Medium, 14.0, r, theme.danger, "Delete");
+                ui.centered_fit(Face::Medium, 14.0, r, theme.danger, "删除");
                 if let Some(c) = ui.clip_rect(r) {
                     targets.push((c, delete));
                 }
@@ -505,7 +505,7 @@ impl Chooser {
             ui,
             targets,
             [32.0, h - 74.0, 160.0, 44.0],
-            "Cancel",
+            "取消",
             Action::Dismiss,
             false,
             10.0,

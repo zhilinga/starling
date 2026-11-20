@@ -374,33 +374,33 @@ fn texts(step: &Step) -> (&'static str, String, Option<String>) {
         }
         #[cfg(target_os = "android")]
         Step::Horizon(false) => (
-            "Coming from Horizon Android?",
+            "从 Horizon Android 过来？",
             "Horizon Android is part of Starling now: bring your worlds and resource packs over. \
              Close Horizon Android first, then, in the folder that opens, tap Use this folder and \
              Allow."
                 .into(),
-            Some("They are copied: Horizon Android keeps its own.".into()),
+            Some("这些文件会被复制：Horizon Android 会保留自己的副本。".into()),
         ),
         #[cfg(target_os = "android")]
         Step::Horizon(true) => (
-            "Coming from Horizon Android?",
+            "从 Horizon Android 过来？",
             "Your worlds and resource packs are on their way: the note at the top says what each \
              one added. Tap Next when they are in."
                 .into(),
             None,
         ),
-        Step::Start => ("Set up Starling", tr("setup.intro"), None),
+        Step::Start => ("设置 Starling", tr("setup.intro"), None),
         Step::Offline => (
-            "Are you sure?",
+            "确定吗？",
             "You will not be able to play on most servers! We highly recommend signing in with \
              Microsoft."
                 .into(),
             None,
         ),
-        Step::Talking(message) => ("Set up Starling", message.clone(), None),
-        Step::AccountForm => ("Set up Starling", String::new(), None),
+        Step::Talking(message) => ("设置 Starling", message.clone(), None),
+        Step::AccountForm => ("设置 Starling", String::new(), None),
         Step::Code { link, .. } => (
-            "Sign in with Microsoft",
+            "使用 Microsoft 登录",
             format!("On {link}, enter this code:"),
             Some(tr("waiting_browser")),
         ),
@@ -410,8 +410,8 @@ fn texts(step: &Step) -> (&'static str, String, Option<String>) {
             None,
         ),
         Step::Download(progress) => (
-            "Downloading the game",
-            "From Mojang's servers, checked file by file.".into(),
+            "正在下载游戏",
+            "来自 Mojang 服务器，逐文件校验。".into(),
             Some(if let Some(started) = progress.transfer_started {
                 let stalled = progress
                     .last_transfer
@@ -451,10 +451,10 @@ fn texts(step: &Step) -> (&'static str, String, Option<String>) {
                 )
             }),
         ),
-        Step::Unpacking => ("Preparing the game", "Unpacking Java.".into(), None),
+        Step::Unpacking => ("正在准备游戏", "正在解压 Java。".into(), None),
         Step::Preparing(line) => (
-            "Preparing the game",
-            "This takes a few minutes. Keep Starling open.".into(),
+            "正在准备游戏",
+            "这需要几分钟，请保持 Starling 打开。".into(),
             Some(line.clone()),
         ),
         #[cfg(target_os = "android")]
@@ -465,11 +465,11 @@ fn texts(step: &Step) -> (&'static str, String, Option<String>) {
             error.clone(),
         ),
         Step::Done => (
-            "Starting Starling",
-            "The game files are ready.".into(),
+            "正在启动 Starling",
+            "游戏文件已就绪。".into(),
             None,
         ),
-        Step::Failed(e) | Step::SignInFailed(e) => ("Something went wrong", e.clone(), None),
+        Step::Failed(e) | Step::SignInFailed(e) => ("出错了", e.clone(), None),
     }
 }
 
@@ -498,13 +498,13 @@ fn buttons(step: &Step) -> Vec<(String, Action)> {
         }
         #[cfg(target_os = "android")]
         Step::Horizon(false) => vec![
-            literal("Bring them over", Action::Horizon),
-            literal("Skip", Action::HorizonDone),
+            literal("带过来", Action::Horizon),
+            literal("跳过", Action::HorizonDone),
         ],
         #[cfg(target_os = "android")]
         Step::Horizon(true) => vec![
-            literal("Next", Action::HorizonDone),
-            literal("Pick the folder again", Action::Horizon),
+            literal("下一步", Action::HorizonDone),
+            literal("重新选择文件夹", Action::Horizon),
         ],
         #[cfg(target_os = "android")]
         Step::StartupScreen { .. } => vec![
@@ -528,17 +528,17 @@ fn buttons(step: &Step) -> Vec<(String, Action)> {
         ],
         Step::Talking(_) => vec![(tr("cancel"), Action::CancelSignIn)],
         Step::Failed(_) => vec![
-            literal("Try again", Action::Retry),
+            literal("重试", Action::Retry),
             (tr("setup.import"), Action::Pick),
         ],
         Step::SignInFailed(_) => vec![
-            literal("Try again", Action::Retry),
+            literal("重试", Action::Retry),
             (tr("back"), Action::AccountBack),
             (tr("setup.offline_title"), Action::Offline),
         ],
         step if waiting(step) => vec![
-            literal("Go fishing", Action::Fish),
-            literal("Settings", Action::Settings),
+            literal("去钓鱼", Action::Fish),
+            literal("设置", Action::Settings),
         ],
         _ => Vec::new(),
     }
@@ -718,7 +718,7 @@ impl Loading {
         } else {
             buttons(&step)
         };
-        // Wider for three buttons, so "Sign in with Microsoft" fits in a third.
+        // Wider for three buttons, so "使用 Microsoft 登录" fits in a third.
         let three = actions.len() >= 3;
         let card_w = (w - 48.0).min(if three { 660.0 } else { 520.0 });
         let pad = 24.0;
@@ -874,7 +874,7 @@ impl Loading {
                 rect[0] + rect[2] / 2.0,
                 rect[1] + 9.0,
                 color::text(),
-                "Back",
+                "返回",
             );
             drawn[0] = Some((rect, Action::Back));
         }

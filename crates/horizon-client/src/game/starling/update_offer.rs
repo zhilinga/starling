@@ -275,19 +275,19 @@ impl Game<'_> {
             Stage::Downloading => (
                 format!("Downloading Starling {version}"),
                 format!("{} of {} MB", mb(done), mb(total)),
-                &["Cancel"],
+                &["取消"],
             ),
             Stage::Installing => (
                 format!("Install Starling {version}"),
                 "Android asks to install the update (the first time, to allow installs from \
                  Starling). Once it is in, open Starling again."
                     .into(),
-                &["Install", "Later"],
+                &["Install", "稍后"],
             ),
             Stage::Failed(e) => (
                 "The update did not download".into(),
                 e.clone(),
-                &["Try again", "Later"],
+                &["重试", "稍后"],
             ),
         };
         let mut ui = Ui::new(&self.gui.atlas, batch, (-1.0, -1.0));

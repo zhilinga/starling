@@ -57,13 +57,13 @@ pub(crate) fn shader_folder_note() -> String {
         .join("shaderpacks");
     if cfg!(target_os = "android") {
         if crate::logging::game_home() == crate::logging::private_home() {
-            return "In the app's own files: Open Pack Folder to reach them".into();
+            return "在应用自己的文件夹中：点“打开资源包文件夹”即可访问".into();
         }
         if let Ok(shared) = dir.strip_prefix("/storage/emulated/0") {
-            return format!("Folder: {}", shared.display());
+            return format!("文件夹：{}", shared.display());
         }
     }
-    clipped(&format!("Folder: {}", dir.display()), 52)
+    clipped(&format!("文件夹：{}", dir.display()), 52)
 }
 
 /// False only in a game built without the `horizon-extras` feature (docs/forking.md), which says
@@ -266,9 +266,9 @@ impl Opt {
             Opt::TouchControlHub => "Control hub button",
             Opt::TouchUiVibration => "UI vibration",
             Opt::TouchGameVibration => "Gameplay vibration",
-            Opt::TouchAttackButtonLook => "Look while interacting",
+            Opt::TouchAttackButtonLook => "交互时转动视角",
             Opt::TouchMouseSensitivity => "Virtual mouse sensitivity",
-            Opt::TouchAnalog => "360-degree movement",
+            Opt::TouchAnalog => "360 度移动",
             Opt::TouchCircleSize => "Touch circle size",
             Opt::TouchAttackSide => "Attack indicator side",
             Opt::TouchHorizontalMargin => "HUD margins: left / right",
@@ -276,8 +276,8 @@ impl Opt {
             Opt::TouchSensitivity => "Touch sensitivity",
             Opt::TouchSensitivityHorizontal => "Horizontal sensitivity",
             Opt::TouchSensitivityVertical => "Vertical sensitivity",
-            Opt::TouchMouseButton => "Virtual Mouse Button",
-            Opt::TouchKeyboardButton => "Keyboard Button",
+            Opt::TouchMouseButton => "虚拟鼠标按钮",
+            Opt::TouchKeyboardButton => "键盘按钮",
             Opt::TouchOffhand => "Swap hands button",
             Opt::TouchShield => "Raise shield with",
             Opt::TouchButtonScale => "Control button size",
@@ -669,14 +669,14 @@ impl Opt {
                 if s.touch.virtual_mouse_enabled {
                     "On"
                 } else {
-                    "Off"
+                    "关"
                 }
                 .into(),
             ),
             Opt::TouchKeyboardButton => {
-                Some(if s.touch.keyboard_button { "On" } else { "Off" }.into())
+                Some(if s.touch.keyboard_button { "On" } else { "关" }.into())
             }
-            Opt::TouchOffhand => Some(if s.touch.offhand_button { "On" } else { "Off" }.into()),
+            Opt::TouchOffhand => Some(if s.touch.offhand_button { "On" } else { "关" }.into()),
             Opt::TouchShield => Some(
                 if s.touch.shield_button {
                     "Button"
@@ -4820,7 +4820,7 @@ impl OptionsUi {
                             0.,
                             0.,
                             150.,
-                            Text::literal("Customize Layout..."),
+                            Text::literal("自定义布局…"),
                             Act::CustomButtons,
                         )
                     }),
@@ -4828,7 +4828,7 @@ impl OptionsUi {
                 self.filter_option_rows(rows)
             }
             Page::Touch => {
-                let mut rows = vec![Row::Header("Movement & Look Sensitivity")];
+                let mut rows = vec![Row::Header("移动与视角灵敏度")];
                 rows.push(Row::Big(Opt::TouchMode));
                 rows.extend(pairs(&[
                     Opt::TouchCrosshairGestures,
@@ -4837,13 +4837,13 @@ impl OptionsUi {
                     Opt::TouchSensitivityHorizontal,
                     Opt::TouchSensitivityVertical,
                 ]));
-                rows.push(Row::Header("Control Hub & Feedback"));
+                rows.push(Row::Header("控制中心与反馈"));
                 rows.extend(pairs(&[
                     Opt::TouchControlHub,
                     Opt::TouchUiVibration,
                     Opt::TouchGameVibration,
                 ]));
-                rows.push(Row::Header("HUD Buttons & Layout"));
+                rows.push(Row::Header("HUD 按钮与布局"));
                 rows.extend(pairs(&[
                     Opt::TouchMouseButton,
                     Opt::TouchKeyboardButton,
@@ -4857,7 +4857,7 @@ impl OptionsUi {
                     Opt::TouchSwapJumpSneak,
                     Opt::TouchAvoidCutout,
                 ]));
-                rows.push(Row::Header("Joystick, Actions & Gyroscope"));
+                rows.push(Row::Header("摇杆、操作与陀螺仪"));
                 rows.extend(pairs(&[
                     Opt::TouchAnalog,
                     Opt::TouchSprintButton,
@@ -4875,7 +4875,7 @@ impl OptionsUi {
                         0.0,
                         0.0,
                         310.0,
-                        Text::literal("Customize Touch & GoyControl Layout..."),
+                        Text::literal("自定义触控与 GoyControl 布局…"),
                         Act::TouchLayout,
                     ),
                     None,
@@ -4938,7 +4938,7 @@ impl OptionsUi {
                             0.0,
                             0.0,
                             150.0,
-                            Text::literal("Delete"),
+                            Text::literal("删除"),
                             Act::CustomDelete(b.id),
                         )),
                     ));
@@ -7898,8 +7898,8 @@ mod tests {
         })
     }
 
-    /// Horizon's own options pages said "Splitscreen...", "Hide block-break particles" and
-    /// "Hotbar: Previous Slot" in every language (#1927).
+    /// Horizon's own options pages said "分屏…", "隐藏方块破坏粒子" and
+    /// "快捷栏：上一个栏位" in every language (#1927).
     #[test]
     fn horizon_option_pages_follow_the_language() {
         let (texts, missed) = page_texts("de_de", &[Page::Horizon, Page::Extras, Page::PadBinds]);
@@ -8407,10 +8407,10 @@ mod tests {
         s.mods.native_game = Some(NativeGame {
             lines: vec![(now.into(), false), (old.into(), true)],
             buttons: vec![
-                ("Compile".into(), NativeGameAct::Compile),
-                ("Use GitHub (slower)".into(), NativeGameAct::CompileOnGithub),
+                ("编译".into(), NativeGameAct::Compile),
+                ("使用 GitHub（较慢）".into(), NativeGameAct::CompileOnGithub),
                 (
-                    "Play without native mods".into(),
+                    "不带原生模组游玩".into(),
                     NativeGameAct::PlayWithout,
                 ),
             ],
@@ -9099,7 +9099,7 @@ mod tests {
             }),
         });
         let labels = lang::scoped(english(), || ui.extras.row_labels(&s)).0;
-        assert!(labels.iter().any(|l| l == "Settings"), "{labels:?}");
+        assert!(labels.iter().any(|l| l == "设置"), "{labels:?}");
         // The mod's switch is beside it, so Extras keeps the Zoom setting it had.
         assert!(labels.iter().any(|l| l.starts_with("Zoom: ")), "{labels:?}");
         let size = (480.0, 480.0);
@@ -10442,7 +10442,7 @@ mod tests {
                     Item::Extra(e) => format!("extra:{e:?}"),
                 };
                 graphics_rows.insert(id.clone());
-                put(id, "Graphics");
+                put(id, "图形");
             }
         }
         // Every page from the Options screen, through its buttons.
@@ -10483,12 +10483,12 @@ mod tests {
         }
         // Vanilla's own: the same option on two of its screens.
         let vanilla_repeats: BTreeMap<&str, &[&str]> = [
-            ("MenuBlur", &["Accessibility", "Graphics"][..]),
-            ("ShowSubtitles", &["Accessibility", "Sound"][..]),
-            ("Narrator", &["Accessibility", "Chat"][..]),
-            ("ChatOpacity", &["Accessibility", "Chat"][..]),
-            ("TextBackgroundOpacity", &["Accessibility", "Chat"][..]),
-            ("ChatLineSpacing", &["Accessibility", "Chat"][..]),
+            ("MenuBlur", &["Accessibility", "图形"][..]),
+            ("ShowSubtitles", &["Accessibility", "声音"][..]),
+            ("Narrator", &["Accessibility", "聊天"][..]),
+            ("ChatOpacity", &["Accessibility", "聊天"][..]),
+            ("TextBackgroundOpacity", &["Accessibility", "聊天"][..]),
+            ("ChatLineSpacing", &["Accessibility", "聊天"][..]),
         ]
         .into();
         for (id, pages) in &places {
@@ -10502,7 +10502,7 @@ mod tests {
         for (page, from) in &ways_in {
             let from: Vec<&str> = from.iter().map(String::as_str).collect();
             match page.as_str() {
-                "Controls" => assert_eq!(from, ["Accessibility", "Main"]),
+                "控制" => assert_eq!(from, ["Accessibility", "Main"]),
                 _ => assert_eq!(from.len(), 1, "{page} opens from {from:?}"),
             }
         }
@@ -10592,7 +10592,7 @@ mod tests {
         )));
         // The AI Agent page: the switch, Copy and the status the game sets.
         ui.push(Page::Agent);
-        ui.agent_status = vec!["Waiting for an agent.".into()];
+        ui.agent_status = vec!["正在等待代理。".into()];
         let (widgets, _, _, _) = ui.layout(&s, 427.0, 240.0);
         let acts: Vec<&Act> = widgets
             .iter()

@@ -158,7 +158,7 @@ pub fn friendly_token_name(token: &str) -> String {
                         "key.sneak" => "Sneak".into(),
                         "key.sprint" => "Sprint".into(),
                         "key.drop" => "Drop Item".into(),
-                        "key.inventory" => "Inventory".into(),
+                        "key.inventory" => "物品栏".into(),
                         "key.chat" => "Open Chat".into(),
                         "key.playerlist" => "Player List".into(),
                         "key.pickItem" => "Pick Block".into(),

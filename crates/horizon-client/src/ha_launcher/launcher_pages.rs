@@ -524,7 +524,7 @@ fn toggle(
         x,
         y + (h - 20.0) * 0.5,
         if on { my3_accent() } else { my3_muted() },
-        if on { "Enabled" } else { "Off" },
+        if on { "Enabled" } else { "关" },
     );
     let track_x = x + w - 52.0;
     let track_y = y + (h - 26.0) * 0.5;
@@ -1496,11 +1496,11 @@ impl Launcher {
                         &mut self.targets,
                         [content_x, btn_y, play_w, 46.0],
                         if self.error.is_some() {
-                            "Try again"
+                            "重试"
                         } else if installed {
                             "Play Minecraft 26.3"
                         } else {
-                            "Set up Starling"
+                            "设置 Starling"
                         },
                         Action::Play,
                         true,
@@ -1537,9 +1537,9 @@ impl Launcher {
                 header_y,
                 my3_text(),
                 if page == Page::Mods {
-                    "Mods"
+                    "模组"
                 } else if page == Page::Shaders {
-                    "Shader Packs"
+                    "光影包"
                 } else {
                     "Resource Packs"
                 },
@@ -1923,7 +1923,7 @@ impl Launcher {
                 &mut ui,
                 &mut self.targets,
                 [content_x, pager_y, 102.0, 32.0],
-                "Previous",
+                "上一个",
                 Action::Previous,
                 false,
             );
@@ -1931,7 +1931,7 @@ impl Launcher {
                 &mut ui,
                 &mut self.targets,
                 [content_x + 110.0, pager_y, 102.0, 32.0],
-                "Next",
+                "下一步",
                 Action::Next,
                 false,
             );
@@ -2039,7 +2039,7 @@ impl Launcher {
                 x + 22.0,
                 y + 21.0,
                 my3_text(),
-                "Set up Starling",
+                "设置 Starling",
             );
             ui.text(
                 Face::Regular,
@@ -2059,7 +2059,7 @@ impl Launcher {
             );
             let bw = (width - 64.0) / 3.0;
             for (index, (label, action, primary)) in [
-                ("Cancel", Action::Dismiss, false),
+                ("取消", Action::Dismiss, false),
                 (
                     "Launcher",
                     Action::ChooseSetupDestination(false),
@@ -2116,7 +2116,7 @@ impl Launcher {
                 &mut ui,
                 &mut self.targets,
                 [x + 20.0, y + 94.0, bw, 42.0],
-                "Cancel",
+                "取消",
                 Action::Dismiss,
                 false,
             );
@@ -2566,7 +2566,7 @@ impl Launcher {
                     ui,
                     &mut self.targets,
                     delete_r,
-                    "Delete",
+                    "删除",
                     Action::DeleteLocal(orig_idx),
                     false,
                 );
@@ -2740,12 +2740,12 @@ impl Launcher {
         let del_label = if sel_count > 0 {
             format!("Delete ({sel_count})")
         } else {
-            "Delete".into()
+            "删除".into()
         };
         let tools: [(&str, Action, bool); 8] = [
             ("All", Action::FmSelectAll, false),
             ("Clear", Action::FmClearSelection, false),
-            ("Copy", Action::FmCopy, sel_count > 0),
+            ("复制", Action::FmCopy, sel_count > 0),
             ("Cut", Action::FmCut, sel_count > 0),
             (&paste_label, Action::FmPaste, clip_count > 0),
             ("Rename", Action::FmOpenRenameSelected, sel_count == 1),
@@ -2952,7 +2952,7 @@ impl Launcher {
                 ui,
                 &mut self.targets,
                 del_r,
-                "Delete",
+                "删除",
                 Action::FmRequestDeleteSingle(idx),
                 false,
             );
@@ -3027,7 +3027,7 @@ impl Launcher {
                     ui,
                     &mut self.targets,
                     [mx + 20.0, my + mh - 54.0, bw, 38.0],
-                    "Cancel",
+                    "取消",
                     Action::FmCloseModal,
                     false,
                 );
@@ -3081,7 +3081,7 @@ impl Launcher {
                     ui,
                     &mut self.targets,
                     [mx + 20.0, my + mh - 52.0, bw, 38.0],
-                    "Cancel",
+                    "取消",
                     Action::FmCloseModal,
                     false,
                 );
@@ -3140,7 +3140,7 @@ impl Launcher {
                     ui,
                     &mut self.targets,
                     [mx + 20.0, my + mh - 52.0, bw, 38.0],
-                    "Cancel",
+                    "取消",
                     Action::FmCloseModal,
                     false,
                 );
@@ -3232,7 +3232,7 @@ impl Launcher {
                         ui,
                         &mut self.targets,
                         [mx + 30.0 + bw * 2.0, btn_y, bw, 34.0],
-                        "Delete",
+                        "删除",
                         Action::FmRequestDeleteSingle(entry_idx),
                         false,
                     );
@@ -3240,7 +3240,7 @@ impl Launcher {
                         ui,
                         &mut self.targets,
                         [mx + 36.0 + bw * 3.0, btn_y, bw, 34.0],
-                        "Done",
+                        "完成",
                         Action::FmCloseModal,
                         true,
                     );
@@ -3249,7 +3249,7 @@ impl Launcher {
                         ui,
                         &mut self.targets,
                         [mx + mw - 128.0, btn_y, 110.0, 34.0],
-                        "Close",
+                        "关闭",
                         Action::FmCloseModal,
                         true,
                     );
@@ -3553,7 +3553,7 @@ impl Launcher {
             ui,
             &mut self.targets,
             [mx + 18.0, my + mh - 48.0, 108.0, 38.0],
-            "Close",
+            "关闭",
             Action::CloseProjectModal,
             false,
         );
@@ -3758,7 +3758,7 @@ impl Launcher {
             ui,
             &mut self.targets,
             [gx, btn_y, bw3, 36.0],
-            "Close",
+            "关闭",
             Action::CloseDiagnosticsSummary,
             false,
         );
@@ -3801,7 +3801,7 @@ impl Launcher {
                 content_x,
                 62.0 + slide_y,
                 my3_text(),
-                "Settings",
+                "设置",
             );
 
             let cards: [(Icon, &str, &str, Action); 6] = [
@@ -3819,7 +3819,7 @@ impl Launcher {
                 ),
                 (
                     Icon::Gamepad,
-                    "Controls",
+                    "控制",
                     "HUD touch layout, buttons, sensitivity and profiles",
                     Action::SettingsCat(SettingsCategory::Controls),
                 ),
@@ -3831,7 +3831,7 @@ impl Launcher {
                 ),
                 (
                     Icon::Terminal,
-                    "Diagnostics",
+                    "诊断",
                     "Logs, device info and troubleshooting",
                     Action::SettingsCat(SettingsCategory::Diagnostics),
                 ),
@@ -4895,7 +4895,7 @@ impl Launcher {
                         &editor_title,
                         editor_sub,
                         SettingControl::Button(
-                            "Customize Controls",
+                            "自定义控制",
                             Action::OpenControlEditor,
                             true,
                         ),
@@ -4910,7 +4910,7 @@ impl Launcher {
                         "Duplicate selected layout into a new independent preset with custom name & description",
                         if self.catalog.editing == Some("profile_name") {
                             SettingControl::TextField {
-                                label: "PRESET NAME",
+                                label: "预设名称",
                                 value: &self.catalog.config.custom_profile_name,
                                 hint: "Enter preset name",
                                 active: true,
@@ -4925,7 +4925,7 @@ impl Launcher {
                         edit_meta_sub,
                         if self.catalog.editing == Some("profile_desc") {
                             SettingControl::TextField {
-                                label: "DESCRIPTION",
+                                label: "说明",
                                 value: &self.catalog.config.custom_profile_desc,
                                 hint: "Enter preset description",
                                 active: true,
@@ -4970,12 +4970,12 @@ impl Launcher {
                         },
                     ),
                     (
-                        "Invert Y-Axis",
+                        "反转 Y 轴",
                         "Inverts vertical camera look direction for touch and mouse",
                         SettingControl::Toggle(invert_y_active, Action::ToggleInvertY),
                     ),
                     (
-                        "Split Touch (Aim & Look)",
+                        "分离触控（瞄准与视角）",
                         "Separates aiming and camera look with center crosshair",
                         SettingControl::Toggle(touch_cfg.crosshair(), Action::ToggleSplitControls),
                     ),
@@ -5015,7 +5015,7 @@ impl Launcher {
                         SettingControl::Toggle(sprint_latch_active, Action::ToggleSprintLatch),
                     ),
                     (
-                        "Inventory Walk Controls",
+                        "物品栏内移动控制",
                         "Keep movement controls active while inventory or chest screens are open",
                         SettingControl::Toggle(
                             touch_cfg.inventory_controls,
@@ -5023,7 +5023,7 @@ impl Launcher {
                         ),
                     ),
                     (
-                        "Auto-Jump",
+                        "自动跳跃",
                         "Automatically jump when walking up 1-block terrain steps",
                         SettingControl::Toggle(opts.auto_jump, Action::ToggleAutoJump),
                     ),
@@ -5069,12 +5069,12 @@ impl Launcher {
                         },
                     ),
                     (
-                        "Gyroscope Aiming",
+                        "陀螺仪瞄准",
                         "Tilt your phone for fine bow and crosshair aiming adjustments",
                         SettingControl::Toggle(touch_cfg.gyroscope, Action::ToggleGyro),
                     ),
                     (
-                        "Gyroscope Sensitivity",
+                        "陀螺仪灵敏度",
                         "Fine-tune motion tilt speed when Gyroscope Aiming is enabled",
                         SettingControl::Slider {
                             value_label: &gyro_sens,
@@ -5098,7 +5098,7 @@ impl Launcher {
                     let half_w = (content_w - 10.0) * 0.5;
                     for (i, (title, sub, badge, selected, action)) in [
                         (
-                            "MCPE (Default)",
+                            "MCPE（默认）",
                             "Vanilla touch sprites, D-Pad & thumbstick",
                             "CLASSIC HUD",
                             is_mcpe,

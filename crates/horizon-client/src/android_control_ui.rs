@@ -387,7 +387,7 @@ const KEYS: [(&str, KeyCode); 28] = [
     ("Swap", KeyCode::KeyF),
     ("Drop", KeyCode::KeyQ),
     ("Adv", KeyCode::KeyL),
-    ("Chat", KeyCode::KeyT),
+    ("聊天", KeyCode::KeyT),
     ("/", KeyCode::Slash),
     ("Enter", KeyCode::Enter),
     ("Esc", KeyCode::Escape),
@@ -964,7 +964,7 @@ impl TouchUi {
                 } else {
                     56.
                 };
-            button(b, a, "Keys", right - 56., 3., 56.);
+            button(b, a, "按键", right - 56., 3., 56.);
         }
         if menu && !self.goy_mode && self.virtual_mouse_available {
             button(
@@ -981,7 +981,7 @@ impl TouchUi {
             );
         }
         if menu && !self.goy_mode && crate::android_controls::current_hud_opacity_scale() > 0.01 {
-            button(b, a, "Back", b.width - 53.0, 3.0, 50.0);
+            button(b, a, "返回", b.width - 53.0, 3.0, 50.0);
             if self.virtual_mouse {
                 let [lmb, rmb] = mouse_button_rects(b.width, b.height);
                 button(b, a, "LMB", lmb.0[0], lmb.0[1], lmb.0[2]);
@@ -1005,8 +1005,8 @@ impl TouchUi {
             ("...", 39.0, 33.0),
             ("F3", 75.0, 33.0),
             ("F5", 111.0, 33.0),
-            ("Chat", 147.0, 33.0),
-            ("Keys", 183.0, 39.0),
+            ("聊天", 147.0, 33.0),
+            ("按键", 183.0, 39.0),
         ] {
             button(
                 b,
@@ -1326,14 +1326,14 @@ fn draw_input_picker_modal(
             let title_str = if for_custom_send {
                 "Send Custom Input — Choose Input Type".to_owned()
             } else if mcpe_exclusive {
-                "MCPE Custom Button — Choose Exclusive Binding".to_owned()
+                "MCPE 自定义按钮 —— 选择独占绑定".to_owned()
             } else {
                 format!("Assign Event Slot #{} — Choose Input Type", event_slot + 1)
             };
             let sub_str = if for_custom_send {
                 "Tap any physical key, use System Keyboard, or pick from the PC layout below."
             } else if mcpe_exclusive {
-                "Exclusive binding: Keyboard OR Mouse (selecting one clears the other)."
+                "独占绑定：键盘或鼠标（选一个会清除另一个）。"
             } else {
                 "Each GoyControl button can trigger up to 3 Keyboard or Mouse events simultaneously."
             };
@@ -1352,18 +1352,18 @@ fn draw_input_picker_modal(
             for (r, title, sub) in [
                 (
                     r_kb,
-                    "Keyboard Key",
+                    "键盘按键",
                     if mcpe_exclusive {
-                        "Bind 1 key (clears mouse binding)"
+                        "绑定 1 个按键（会清除鼠标绑定）"
                     } else {
                         "Full 104-Key horizontal PC keyboard"
                     },
                 ),
                 (
                     r_ms,
-                    "Mouse & Actions",
+                    "鼠标与动作",
                     if mcpe_exclusive {
-                        "Bind 1 mouse/action (clears key)"
+                        "绑定 1 个鼠标/动作（会清除按键绑定）"
                     } else {
                         "LMB, RMB, MMB, Scroll, Look & Actions"
                     },
@@ -1400,7 +1400,7 @@ fn draw_input_picker_modal(
                 let r_can = [dx + 16.0, dy + 180.0, dw - 32.0, 36.0];
                 ui.rounded(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, bg_hi);
                 ui.border(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, border_c);
-                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "Cancel");
+                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "取消");
             } else {
                 let r_clr = [dx + 16.0, dy + 180.0, cw, 36.0];
                 let r_can = [dx + 24.0 + cw, dy + 180.0, cw, 36.0];
@@ -1411,11 +1411,11 @@ fn draw_input_picker_modal(
                     11.0,
                     r_clr,
                     danger_c,
-                    "Clear / Unassign Slot",
+                    "清除／取消分配槽位",
                 );
                 ui.rounded(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, bg_hi);
                 ui.border(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, border_c);
-                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "Cancel");
+                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "取消");
             }
         }
         PickerStep::Keyboard { event_slot } => {
@@ -1453,7 +1453,7 @@ fn draw_input_picker_modal(
                 (b_ime, "⌨ Sys Key"),
                 (b_left, "◀ Left"),
                 (b_right, "Right ▶"),
-                (b_back, "Back"),
+                (b_back, "返回"),
             ] {
                 ui.rounded(r[0], r[1], r[2], r[3], 8.0, bg_hi);
                 ui.border(r[0], r[1], r[2], r[3], 8.0, border_c);
@@ -1523,7 +1523,7 @@ fn draw_input_picker_modal(
             let b_back = [dx + dw - 72.0, dy + 8.0, 58.0, 26.0];
             ui.rounded(b_back[0], b_back[1], b_back[2], b_back[3], 8.0, bg_hi);
             ui.border(b_back[0], b_back[1], b_back[2], b_back[3], 8.0, border_c);
-            ui.centered_fit(Face::SemiBold, 10.0, b_back, text_c, "Back");
+            ui.centered_fit(Face::SemiBold, 10.0, b_back, text_c, "返回");
 
             let cols = 3usize;
             let rows = MOUSE_AND_ACTION_ITEMS.len().div_ceil(cols).max(1);
@@ -2923,13 +2923,13 @@ impl TouchUi {
                 dx + 52.0,
                 dy + 25.0,
                 muted_c,
-                "Configure touch controls, virtual mouse & feedback",
+                "配置触控、虚拟鼠标与反馈",
             );
         }
 
         // Active Control System Pill Badge in Header
         let mode_badge_txt = if settings.control_style == ControlStyle::Mcpe {
-            "MCPE Controls"
+            "MCPE 控制"
         } else {
             "GoyControl HUD"
         };
@@ -2951,19 +2951,19 @@ impl TouchUi {
             ui.centered_fit(Face::SemiBold, 11.0, r, text_c, "Launcher");
         }
 
-        // "Done" Button in top-right
+        // "完成" Button in top-right
         let done_r = [dx + dw - 76.0, dy + 10.0, 62.0, 28.0];
         ui.rounded(done_r[0], done_r[1], done_r[2], done_r[3], 9.0, card_bg);
         ui.border(done_r[0], done_r[1], done_r[2], done_r[3], 9.0, border_c);
-        ui.centered_fit(Face::SemiBold, 11.0, done_r, text_c, "Done");
+        ui.centered_fit(Face::SemiBold, 11.0, done_r, text_c, "完成");
 
         // Left Sidebar Navigation Tabs (Recommended, Controls, Aiming, Buttons, Advanced)
         let tabs: [(Icon, &str); 5] = [
-            (Icon::HorizonLogo, "Recommended"),
-            (Icon::Gamepad, "Controls"),
-            (Icon::Crosshair, "Aiming"),
-            (Icon::MicrosoftGrid, "Buttons"),
-            (Icon::Flask, "Advanced"),
+            (Icon::HorizonLogo, "推荐"),
+            (Icon::Gamepad, "控制"),
+            (Icon::Crosshair, "瞄准"),
+            (Icon::MicrosoftGrid, "按钮"),
+            (Icon::Flask, "高级"),
         ];
         let tab_start_y = dy + 54.0;
         for (ti, (ic, lbl)) in tabs.into_iter().enumerate() {
@@ -3043,7 +3043,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "REAL-TIME 3D RESOLUTION & PERFORMANCE",
+                    "实时 3D 分辨率与性能",
                 );
                 let res_y = body_y + 18.0;
                 ui.rounded(cx, res_y, cw, 78.0, 11.0, card_bg);
@@ -3054,7 +3054,7 @@ impl TouchUi {
                     cx + 14.0,
                     res_y + 6.0,
                     text_c,
-                    "Real-Time 3D Resolution Scale (Zero-Lag)",
+                    "实时 3D 分辨率缩放（零延迟）",
                 );
                 let res_pct = settings.resolution_scale_percent.clamp(25, 100);
                 let res_txt = format!("{res_pct}%");
@@ -3124,7 +3124,7 @@ impl TouchUi {
                     cx,
                     body_y + 102.0,
                     muted_c,
-                    "FAST AIM, VIRTUAL MOUSE & CONTROLS",
+                    "快速瞄准、虚拟鼠标与控制",
                 );
                 let sens_y = body_y + 118.0;
                 ui.rounded(cx, sens_y, cw, 50.0, 11.0, card_bg);
@@ -3135,7 +3135,7 @@ impl TouchUi {
                     cx + 14.0,
                     sens_y + 6.0,
                     text_c,
-                    "Touch Look Sensitivity",
+                    "触屏视角灵敏度",
                 );
                 let pct_txt = format!("{:.0}%", settings.sensitivity * 100.0);
                 let pill_w = 48.0;
@@ -3175,8 +3175,8 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 176.0,
-                    "Virtual Mouse Button",
-                    "Off by default; enable for desktop pointer in menus & inventory",
+                    "虚拟鼠标按钮",
+                    "默认关闭；开启后可在菜单与物品栏中使用桌面指针",
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
@@ -3184,8 +3184,8 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 230.,
-                    "Keyboard Button",
-                    "Show Keys beside Back; fields still open the keyboard automatically",
+                    "键盘按钮",
+                    "在「返回」旁显示「按键」；输入框仍会自动打开键盘",
                     Some(settings.keyboard_button),
                     None,
                 );
@@ -3198,7 +3198,7 @@ impl TouchUi {
                     cx + 14.0,
                     spd_y + 6.0,
                     text_c,
-                    "Virtual Mouse Speed",
+                    "虚拟鼠标速度",
                 );
                 let spd_pct = format!("{:.0}%", settings.virtual_mouse_sensitivity * 100.0);
                 ui.rounded(
@@ -3243,11 +3243,11 @@ impl TouchUi {
                 let half_w = (cw - 10.0) * 0.5;
                 let sys_sub = format!("Active: {}", settings.control_style.label());
                 for (i, (ic, title, sub)) in [
-                    (Icon::Gamepad, "Switch Control System", sys_sub.as_str()),
+                    (Icon::Gamepad, "切换控制系统", sys_sub.as_str()),
                     (
                         Icon::MicrosoftGrid,
-                        "Customize Controls",
-                        "Open layout & property studio",
+                        "自定义控制",
+                        "打开布局与属性工作室",
                     ),
                 ]
                 .into_iter()
@@ -3265,8 +3265,8 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 394.0,
-                    "In-Game Animations",
-                    "Animated block textures, view bobbing, FOV transitions & menu motion",
+                    "游戏内动画",
+                    "动态方块贴图、视角晃动、视野过渡与菜单动效",
                     Some(!settings.disable_game_animations),
                     None,
                 );
@@ -3281,13 +3281,13 @@ impl TouchUi {
             }
             1 => {
                 // 1. Control Mode Section
-                ui.text(Face::SemiBold, 10.2, cx, body_y, muted_c, "CONTROL MODE");
+                ui.text(Face::SemiBold, 10.2, cx, body_y, muted_c, "控制模式");
                 let mode_y = body_y + 18.0;
                 let half_w = (cw - 10.0) * 0.5;
                 let is_mcpe = settings.control_style == ControlStyle::Mcpe;
                 for (i, (title, sub, sel)) in [
-                    ("MCPE (Default)", "Vanilla touch controls", is_mcpe),
-                    ("GoyControl", "Custom layout & keybinds", !is_mcpe),
+                    ("MCPE（默认）", "原版触控", is_mcpe),
+                    ("GoyControl", "自定义布局与按键", !is_mcpe),
                 ]
                 .into_iter()
                 .enumerate()
@@ -3342,12 +3342,12 @@ impl TouchUi {
                 for (i, (ic, title, sub)) in [
                     (
                         Icon::MicrosoftGrid,
-                        "Customize Controls",
-                        "Open layout editor",
+                        "自定义控制",
+                        "打开布局编辑器",
                     ),
                     (
                         Icon::Settings,
-                        "Control Presets",
+                        "控制预设",
                         active_preset_lbl.as_str(),
                     ),
                 ]
@@ -3378,7 +3378,7 @@ impl TouchUi {
                     cx,
                     body_y + 132.0,
                     muted_c,
-                    "POINTER, CAMERA & AIM",
+                    "指针、镜头与瞄准",
                 );
                 let sens_y = body_y + 148.0;
                 ui.rounded(cx, sens_y, cw, 50.0, 11.0, card_bg);
@@ -3389,7 +3389,7 @@ impl TouchUi {
                     cx + 14.0,
                     sens_y + 6.0,
                     text_c,
-                    "Touch Look Sensitivity",
+                    "触屏视角灵敏度",
                 );
                 let pct_txt = format!("{:.0}%", settings.sensitivity * 100.0);
                 let pill_w = 48.0;
@@ -3430,24 +3430,24 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 206.0,
-                    "Virtual Mouse Button",
-                    "Windows 11 pointer; auto-shows when MCPE controls are hidden",
+                    "虚拟鼠标按钮",
+                    "Windows 11 指针；MCPE 控制隐藏时自动显示",
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 260.0,
-                    "Invert Y-Axis",
-                    "Reverse vertical camera look direction",
+                    "反转 Y 轴",
+                    "反转镜头垂直视角方向",
                     Some(settings.invert_y),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 314.0,
-                    "Split Touch (Aim & Look)",
-                    "Use center crosshair instead of tap-anywhere interaction",
+                    "分离触控（瞄准与视角）",
+                    "使用中心准星，而非点按任意位置交互",
                     Some(settings.crosshair()),
                     None,
                 );
@@ -3476,7 +3476,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "AIMING, VIRTUAL MOUSE & GYROSCOPE",
+                    "瞄准、虚拟鼠标与陀螺仪",
                 );
                 let move_lbl = match settings.mode {
                     crate::android_controls::Mode::Dpad => "D-Pad + Crosshair/Touch",
@@ -3492,7 +3492,7 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0,
-                    "Movement & Aim Mode",
+                    "移动与瞄准模式",
                     move_lbl,
                     None,
                     None,
@@ -3500,7 +3500,7 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Joystick Active Zone",
+                    "摇杆活动区域",
                     area_lbl,
                     None,
                     None,
@@ -3508,8 +3508,8 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Virtual Mouse Button",
-                    "Authoritative toggle for MCPE and GoyControl menus",
+                    "虚拟鼠标按钮",
+                    "MCPE 与 GoyControl 菜单的统一开关",
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
@@ -3524,7 +3524,7 @@ impl TouchUi {
                     cx + 14.0,
                     spd_y + 6.0,
                     text_c,
-                    "Virtual Mouse Speed",
+                    "虚拟鼠标速度",
                 );
                 let spd_pct = format!("{:.0}%", settings.virtual_mouse_sensitivity * 100.0);
                 let spd_pill_w = 48.0;
@@ -3585,7 +3585,7 @@ impl TouchUi {
                     cx + 14.0,
                     size_y + 6.0,
                     text_c,
-                    "Pointer Size",
+                    "指针大小",
                 );
                 let size_pct = format!("{:.0}%", settings.virtual_mouse_pointer_scale * 100.0);
                 let size_pill_w = 48.0;
@@ -3645,8 +3645,8 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 296.0,
-                    "Gyroscope Aiming",
-                    "Tilt device for fine camera and bow aiming",
+                    "陀螺仪瞄准",
+                    "倾斜设备以精调镜头与弓箭瞄准",
                     Some(settings.gyroscope),
                     None,
                 );
@@ -3660,7 +3660,7 @@ impl TouchUi {
                     cx + 14.0,
                     gyro_y + 6.0,
                     text_c,
-                    "Gyroscope Sensitivity",
+                    "陀螺仪灵敏度",
                 );
                 let gyro_pct = format!("{:.0}%", settings.gyro_sensitivity * 100.0);
                 let gyro_pill_w = 48.0;
@@ -3720,16 +3720,16 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 234.,
-                    "Offhand Button",
-                    "Show the swap-hands button",
+                    "副手按钮",
+                    "显示交换双手按钮",
                     Some(settings.offhand_button),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 288.,
-                    "Separate Shield Button",
-                    "Off uses crouching to raise the shield",
+                    "单独盾牌按钮",
+                    "关闭时用潜行举盾",
                     Some(settings.shield_button),
                     None,
                 );
@@ -3740,7 +3740,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "BUTTON SIZING, HANDEDNESS & BEHAVIOR",
+                    "按钮尺寸、惯用手与行为",
                 );
                 let step = 54.0;
                 let scale_y = body_y + 18.0;
@@ -3752,7 +3752,7 @@ impl TouchUi {
                     cx + 14.0,
                     scale_y + 6.0,
                     text_c,
-                    "Global Button Scale",
+                    "全局按钮大小",
                 );
                 let sc_pct = format!("{:.0}%", settings.button_scale * 100.0);
                 let sc_pill_w = 48.0;
@@ -3798,24 +3798,24 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Left-Handed Layout",
-                    "Mirror movement and action buttons horizontally",
+                    "左手布局",
+                    "水平镜像移动与动作按钮",
                     Some(settings.left_handed),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Toggle Sprint",
-                    "Latch sprint on tap instead of holding",
+                    "切换疾跑",
+                    "点按锁定疾跑，而无需长按",
                     Some(settings.sprint_toggle || settings.toggle_sprint),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 3.0,
-                    "Inventory Walk Controls",
-                    "Keep movement controls active while inventory is open",
+                    "物品栏内移动控制",
+                    "打开物品栏时保持移动控制可用",
                     Some(settings.inventory_controls),
                     None,
                 );
@@ -3828,7 +3828,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "FEEDBACK, GAMEPLAY & SHORTCUTS",
+                    "反馈、玩法与快捷方式",
                 );
                 let step = 54.0;
                 let feedback_width = (cw - 8.0) * 0.5;
@@ -3847,9 +3847,9 @@ impl TouchUi {
                     [cx, body_y + 18.0, feedback_width, 46.0],
                     text_c,
                     if settings.ui_vibrate {
-                        "UI vibration: ON"
+                        "界面振动：开"
                     } else {
-                        "UI vibration: OFF"
+                        "界面振动：关"
                     },
                 );
                 ui.centered_fit(
@@ -3863,24 +3863,24 @@ impl TouchUi {
                     ],
                     text_c,
                     if settings.vibrate {
-                        "Gameplay vibration: ON"
+                        "游戏振动：开"
                     } else {
-                        "Gameplay vibration: OFF"
+                        "游戏振动：关"
                     },
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Auto-Jump",
-                    "Automatically jump when walking into 1-block ledges",
+                    "自动跳跃",
+                    "走向 1 格高台阶时自动跳跃",
                     Some(settings.auto_jump),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Apply Standard Menu Visibility",
-                    "Reset in-game vs in-menu visibility flags for active system",
+                    "应用标准菜单可见性",
+                    "为当前系统重置游戏内与菜单内的可见性标记",
                     None,
                     None,
                 );
@@ -3890,11 +3890,11 @@ impl TouchUi {
                     cx,
                     body_y + 182.0,
                     muted_c,
-                    "QUICK DESKTOP KEYS & CUSTOM INPUT",
+                    "快捷桌面按键与自定义输入",
                 );
                 let ky = body_y + 198.0;
                 let kw = (cw - 25.0) / 6.0;
-                for (i, lbl) in ["F1", "F3", "F5", "Inv", "Chat", "Keys"]
+                for (i, lbl) in ["F1", "F3", "F5", "Inv", "聊天", "按键"]
                     .into_iter()
                     .enumerate()
                 {
@@ -3919,7 +3919,7 @@ impl TouchUi {
                     cx + 38.0,
                     send_y + 5.0,
                     text_c,
-                    "Send Custom Input (Keyboard / Mouse / Action)",
+                    "发送自定义输入（键盘／鼠标／动作）",
                 );
                 ui.text(
                     Face::Regular,
@@ -3927,7 +3927,7 @@ impl TouchUi {
                     cx + 38.0,
                     send_y + 21.0,
                     muted_c,
-                    "Open 104-key PC keyboard, mouse buttons, scroll wheel & actions",
+                    "打开 104 键 PC 键盘、鼠标按键、滚轮与动作",
                 );
                 ui.text(
                     Face::SemiBold,
@@ -3954,7 +3954,7 @@ impl TouchUi {
                     10.8,
                     [cx, sys_y, half, 38.0],
                     danger_c,
-                    "Force Kill",
+                    "强制结束",
                 );
                 ui.rounded(cx + half + 10.0, sys_y, half, 38.0, 10.0, card_bg);
                 ui.border(cx + half + 10.0, sys_y, half, 38.0, 10.0, border_c);
@@ -3963,7 +3963,7 @@ impl TouchUi {
                     10.8,
                     [cx + half + 10.0, sys_y, half, 38.0],
                     text_c,
-                    "Open Logs",
+                    "打开日志",
                 );
             }
         }
@@ -4012,7 +4012,7 @@ impl TouchUi {
             let back_r = [mdx + mdw - 78.0, mdy + 10.0, 64.0, 28.0];
             ui.rounded(back_r[0], back_r[1], back_r[2], back_r[3], 9.0, card_bg);
             ui.border(back_r[0], back_r[1], back_r[2], back_r[3], 9.0, border_c);
-            ui.centered_fit(Face::SemiBold, 10.5, back_r, text_c, "Back");
+            ui.centered_fit(Face::SemiBold, 10.5, back_r, text_c, "返回");
 
             let list_y = mdy + 48.0;
             let row_h = 46.0;
@@ -4142,7 +4142,7 @@ impl TouchUi {
                     copy_r[0] + 24.0,
                     copy_r[1] + 7.0,
                     text_c,
-                    "Copy",
+                    "复制",
                 );
             }
         }
@@ -4185,7 +4185,7 @@ impl TouchUi {
                 8.0,
                 border_c,
             );
-            ui.centered_fit(Face::SemiBold, 10.0, cancel_r, text_c, "Cancel");
+            ui.centered_fit(Face::SemiBold, 10.0, cancel_r, text_c, "取消");
 
             let name_r = [mdx + 14.0, mdy + 42.0, (mdw - 36.0) * 0.45, 48.0];
             let desc_r = [
@@ -4199,9 +4199,9 @@ impl TouchUi {
                 name_r[1],
                 name_r[2],
                 name_r[3],
-                "PRESET NAME",
+                "预设名称",
                 dlg.name_input.as_str(),
-                "Tap to type",
+                "点按输入",
                 !dlg.editing_desc,
             );
             ui.text_field(
@@ -4209,9 +4209,9 @@ impl TouchUi {
                 desc_r[1],
                 desc_r[2],
                 desc_r[3],
-                "DESCRIPTION",
+                "说明",
                 dlg.desc_input.as_str(),
-                "Tap to type",
+                "点按输入",
                 dlg.editing_desc,
             );
 
@@ -4233,7 +4233,7 @@ impl TouchUi {
                 if dlg.is_copy {
                     "Create Independent Preset Copy"
                 } else {
-                    "Save Preset Details"
+                    "保存预设信息"
                 },
             );
         }
@@ -4282,12 +4282,12 @@ fn clamp_editor_custom_selection(
 
 fn shape_name(shape: u8) -> &'static str {
     match shape {
-        1 => "Square",
-        2 => "Circle/Pill",
-        3 => "Cut Octagon",
-        4 => "Diamond",
-        5 => "Hexagon",
-        _ => "Rounded",
+        1 => "方形",
+        2 => "圆形／胶囊",
+        3 => "切角八边形",
+        4 => "菱形",
+        5 => "六边形",
+        _ => "圆角",
     }
 }
 
@@ -4296,24 +4296,24 @@ pub fn control_icon_from_id(
 ) -> Option<(crate::android_control_theme::Icon, &'static str)> {
     use crate::android_control_theme::Icon;
     match icon_id {
-        1 => Some((Icon::Crosshair, "Crosshair")),
-        2 => Some((Icon::Gamepad, "Gamepad")),
-        3 => Some((Icon::Play, "Attack")),
-        4 => Some((Icon::Pause, "Pause")),
-        5 => Some((Icon::Settings, "Settings")),
-        6 => Some((Icon::Search, "Zoom")),
-        7 => Some((Icon::Check, "Confirm")),
-        8 => Some((Icon::Monitor, "Camera")),
-        9 => Some((Icon::Flask, "Use/Potion")),
-        10 => Some((Icon::Terminal, "Debug/Cmd")),
-        11 => Some((Icon::MicrosoftGrid, "Inventory")),
-        12 => Some((Icon::Share, "Swap/Drop")),
+        1 => Some((Icon::Crosshair, "准星")),
+        2 => Some((Icon::Gamepad, "手柄")),
+        3 => Some((Icon::Play, "攻击")),
+        4 => Some((Icon::Pause, "暂停")),
+        5 => Some((Icon::Settings, "设置")),
+        6 => Some((Icon::Search, "缩放")),
+        7 => Some((Icon::Check, "确认")),
+        8 => Some((Icon::Monitor, "相机")),
+        9 => Some((Icon::Flask, "使用／药水")),
+        10 => Some((Icon::Terminal, "调试／命令")),
+        11 => Some((Icon::MicrosoftGrid, "物品栏")),
+        12 => Some((Icon::Share, "交换／丢弃")),
         _ => None,
     }
 }
 
 pub fn control_icon_label(icon_id: u8) -> &'static str {
-    control_icon_from_id(icon_id).map_or("Text Only", |(_, name)| name)
+    control_icon_from_id(icon_id).map_or("仅文字", |(_, name)| name)
 }
 
 fn draw_button_icon_and_label(
@@ -4759,7 +4759,7 @@ pub fn draw_hud_editor(
                 8.0,
                 [rx, ry + rh - 11.0, rw, 10.0],
                 color::hex(0xFBBF24, 220),
-                "HIDDEN",
+                "隐藏",
             );
         }
         if is_sel {
@@ -4897,14 +4897,14 @@ pub fn draw_hud_editor(
         let items: [(Option<Icon>, &str, f32, bool, bool); 5] = [
             (Some(Icon::Undo), "", 42.0, !ed.undo_stack.is_empty(), false),
             (Some(Icon::Redo), "", 42.0, !ed.redo_stack.is_empty(), false),
-            (Some(Icon::Gear), "Props", 72.0, true, ed.props_open),
-            (Some(Icon::Plus), "Add", 64.0, true, false),
-            (Some(Icon::Check), "Save", 68.0, true, true),
+            (Some(Icon::Gear), "属性", 72.0, true, ed.props_open),
+            (Some(Icon::Plus), "添加", 64.0, true, false),
+            (Some(Icon::Check), "保存", 68.0, true, true),
         ];
         let mut ix = pod_x + 50.0;
         for (ic, lbl, iw, enabled, hi) in items {
             let r = [ix, pod_y + 5.0, iw, 38.0];
-            let bg = if lbl == "Save" {
+            let bg = if lbl == "保存" {
                 accent
             } else if hi {
                 accent_soft
@@ -4918,13 +4918,13 @@ pub fn draw_hud_editor(
                 r[2],
                 r[3],
                 19.0,
-                if hi || lbl == "Save" {
+                if hi || lbl == "保存" {
                     accent
                 } else {
                     border_c
                 },
             );
-            let fg = if lbl == "Save" {
+            let fg = if lbl == "保存" {
                 accent_fg
             } else if !enabled {
                 color::hex(0x5E5875, 200)
@@ -4980,7 +4980,7 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 16.0,
             text_c,
-            "Unsaved Layout Changes",
+            "未保存的布局更改",
         );
         ui.text(
             Face::Regular,
@@ -4988,7 +4988,7 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 42.0,
             muted_c,
-            "You have modified your control layout in this session.",
+            "你在本次会话中修改了控制布局。",
         );
         ui.text(
             Face::Regular,
@@ -4996,17 +4996,17 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 60.0,
             muted_c,
-            "Save your changes before leaving, or go back without saving?",
+            "离开前保存更改，还是不保存直接返回？",
         );
         let bw = (dw - 44.0) * 0.5;
         let by = dy + dh - 50.0;
         let save_r = [dx + 18.0, by, bw, 36.0];
         let back_r = [dx + 26.0 + bw, by, bw, 36.0];
         ui.rounded(save_r[0], save_r[1], save_r[2], save_r[3], 10.0, accent);
-        ui.centered_fit(Face::SemiBold, 11.5, save_r, accent_fg, "Save");
+        ui.centered_fit(Face::SemiBold, 11.5, save_r, accent_fg, "保存");
         ui.rounded(back_r[0], back_r[1], back_r[2], back_r[3], 10.0, bg_hi);
         ui.border(back_r[0], back_r[1], back_r[2], back_r[3], 10.0, danger_c);
-        ui.centered_fit(Face::SemiBold, 11.5, back_r, danger_c, "Back");
+        ui.centered_fit(Face::SemiBold, 11.5, back_r, danger_c, "返回");
         ui.finish();
         return;
     }
@@ -5053,8 +5053,8 @@ pub fn draw_hud_editor(
         let is_mcpe_mode = tc.settings.control_style == ControlStyle::Mcpe;
         let (header_txt, sub_txt) = if is_joystick {
             (
-                "Joystick & Analog Base Inspector".to_owned(),
-                "Customize stick knob, analog base ring, active zone & visibility",
+                "摇杆与模拟底盘检查器".to_owned(),
+                "自定义摇杆头、模拟底盘环、活动区域与可见性",
             )
         } else if let Some(idx) = ed.selected_custom {
             let lbl = tc
@@ -5071,7 +5071,7 @@ pub fn draw_hud_editor(
             } else {
                 (
                     format!("GoyControl Button — {lbl}"),
-                    "Customize visual style, icon badge, geometry, stroke & events",
+                    "自定义视觉样式、图标徽标、几何、描边与事件",
                 )
             }
         } else if let Some(c) = ed.selected {
@@ -5175,7 +5175,7 @@ pub fn draw_hud_editor(
         ui.rounded(
             close_r[0], close_r[1], close_r[2], close_r[3], 13.0, st_cyan,
         );
-        ui.centered_fit(Face::SemiBold, 10.2, close_r, st_cyan_fg, "✓ Done");
+        ui.centered_fit(Face::SemiBold, 10.2, close_r, st_cyan_fg, "✓ 完成");
 
         // Full-Width M3 Workspace Area (single clean top segmented tab bar, no duplicate left rail)
         let wx = dx + 14.0;
@@ -5187,7 +5187,7 @@ pub fn draw_hud_editor(
         ui.rounded(wx, tab_y - 2.0, ww, 28.0, 14.0, st_inner);
         ui.border(wx, tab_y - 2.0, ww, 28.0, 14.0, st_border);
         let tab_labels = if is_joystick {
-            ["1. Stick & Style", "2. Analog Base", "3. Zone & Visibility"]
+            ["1. 摇杆与样式", "2. 模拟底盘", "3. 区域与可见性"]
         } else {
             [
                 "1. Style & Colors",
@@ -5233,7 +5233,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "STICK KNOB DIMENSIONS & STROKE",
+                        "摇杆头尺寸与描边",
                     );
                     let st_pill_w = 216.0f32.min(ww * 0.46);
                     let st_pill_r = [wx + ww - st_pill_w - 12.0, body_y - 2.0, st_pill_w, 24.0];
@@ -5258,7 +5258,7 @@ pub fn draw_hud_editor(
                     {
                         "● Style: Custom GoyControl Stick ⌄"
                     } else {
-                        "● Style: Default MCPE Stick ⌄"
+                        "● 样式：默认 MCPE 摇杆 ⌄"
                     };
                     ui.centered_fit(Face::SemiBold, 8.8, st_pill_r, st_cyan, st_lbl);
 
@@ -5336,7 +5336,7 @@ pub fn draw_hud_editor(
                         js.stick_stroke_color,
                     );
 
-                    // Bottom Swatch Card ("STICK COLOR" + Circular Swatches + Right Cycle Stroke Button)
+                    // Bottom Swatch Card ("摇杆颜色" + Circular Swatches + Right Cycle Stroke Button)
                     let sw_y = cards_y + card_h + 8.0;
                     let sw_card_h = (box_y + box_h - sw_y - 10.0).clamp(48.0, 62.0);
                     ui.rounded(wx + 12.0, sw_y, ww - 24.0, sw_card_h, 12.0, st_card);
@@ -5347,7 +5347,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "STICK COLOR",
+                        "摇杆颜色",
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5387,7 +5387,7 @@ pub fn draw_hud_editor(
                         8.8,
                         act_r,
                         st_text,
-                        "● Cycle Stick Stroke Col",
+                        "● 循环切换摇杆描边颜色",
                     );
                 }
                 1 => {
@@ -5398,7 +5398,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "ANALOG BASE RING GEOMETRY & INPUT MODE",
+                        "模拟底盘环几何与输入模式",
                     );
                     let mode_pill_w = 186.0f32.min(ww * 0.42);
                     let mode_pill_r = [
@@ -5499,7 +5499,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "BASE COLOR",
+                        "底盘颜色",
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5539,7 +5539,7 @@ pub fn draw_hud_editor(
                         8.8,
                         act_r,
                         st_text,
-                        "● Cycle Base Stroke Col",
+                        "● 循环切换底盘描边颜色",
                     );
                 }
                 _ => {
@@ -5550,7 +5550,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "ACTIVE TOUCH ZONE & VISIBILITY RULES",
+                        "活动触控区域与可见性规则",
                     );
                     let area_y = body_y + 26.0;
                     let hw = (ww - 24.0 - 8.0) * 0.5;
@@ -5609,7 +5609,7 @@ pub fn draw_hud_editor(
                         y6 + 8.0,
                         18.0,
                         p_move.visible_in_game,
-                        "Visible in Game",
+                        "游戏内可见",
                     );
 
                     let vm_x = wx + 12.0 + third + 4.0;
@@ -5642,7 +5642,7 @@ pub fn draw_hud_editor(
                         y6 + 8.0,
                         18.0,
                         p_move.visible_in_menu,
-                        "Visible in Menu",
+                        "菜单内可见",
                     );
 
                     let pv_x = wx + 12.0 + (third + 4.0) * 2.0;
@@ -5653,7 +5653,7 @@ pub fn draw_hud_editor(
                         9.5,
                         [pv_x + 4.0, y6, third - 8.0, 34.0],
                         st_cyan,
-                        "Preset Vis for All",
+                        "应用预设可见性到全部",
                     );
                 }
             }
@@ -5689,7 +5689,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "BUTTON STYLE, ICON BADGE & OPACITY",
+                        "按钮样式、图标徽标与不透明度",
                     );
                     let is_goy =
                         tc.settings.control_style == ControlStyle::GoyControl || p.use_goy_style;
@@ -5712,9 +5712,9 @@ pub fn draw_hud_editor(
                         st_cyan,
                     );
                     let st_lbl = if is_goy {
-                        "● Style: Static (GoyControl) ⌄"
+                        "● 样式：静态（GoyControl）⌄"
                     } else {
-                        "● Style: Default (MCPE) ⌄"
+                        "● 样式：默认（MCPE）⌄"
                     };
                     ui.centered_fit(Face::SemiBold, 8.8, st_pill_r, st_cyan, st_lbl);
 
@@ -5735,7 +5735,7 @@ pub fn draw_hud_editor(
                     draw_m3_selector_cell(
                         &mut ui,
                         [wx + 12.0 + (cw3 + 8.0), cards_y, cw3, card_h],
-                        "Icon Badge",
+                        "图标徽标",
                         icon_lbl,
                         st_cyan,
                         st_cyan_soft,
@@ -5746,7 +5746,7 @@ pub fn draw_hud_editor(
                     draw_m3_selector_cell(
                         &mut ui,
                         [wx + 12.0 + (cw3 + 8.0) * 2.0, cards_y, cw3, card_h],
-                        "Hint Label",
+                        "提示标签",
                         &cur_hint,
                         st_cyan,
                         st_cyan_soft,
@@ -5794,7 +5794,7 @@ pub fn draw_hud_editor(
                         st_text,
                     );
 
-                    // Bottom Swatch Card ("BUTTON COLOR" + Circular Swatches + onClick/onToggle Cycle Pills)
+                    // Bottom Swatch Card ("按钮颜色" + Circular Swatches + onClick/onToggle Cycle Pills)
                     let sw_y = cards_y + card_h + 8.0;
                     let sw_card_h = (box_y + box_h - sw_y - 10.0).clamp(48.0, 62.0);
                     ui.rounded(wx + 12.0, sw_y, ww - 24.0, sw_card_h, 12.0, st_card);
@@ -5805,7 +5805,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "BUTTON COLOR",
+                        "按钮颜色",
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5845,7 +5845,7 @@ pub fn draw_hud_editor(
                         1.3,
                         p.on_click_stroke_color,
                     );
-                    ui.centered_fit(Face::SemiBold, 8.2, clk_r, st_text, "onClick Col (Cycle)");
+                    ui.centered_fit(Face::SemiBold, 8.2, clk_r, st_text, "点击颜色（循环）");
                     ui.rounded(
                         tog_r[0],
                         tog_r[1],
@@ -5863,7 +5863,7 @@ pub fn draw_hud_editor(
                         1.3,
                         p.on_toggle_stroke_color,
                     );
-                    ui.centered_fit(Face::SemiBold, 8.2, tog_r, st_text, "onToggle Col (Cycle)");
+                    ui.centered_fit(Face::SemiBold, 8.2, tog_r, st_text, "切换颜色（循环）");
                 }
                 1 => {
                     // Button Tab 1: Shape, Stroke, Roundness & Aspect Ratios + Live Preview + Stroke Color Swatches
@@ -5873,7 +5873,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "SHAPE GEOMETRY, STROKE & ASPECT RATIO",
+                        "形状几何、描边与宽高比",
                     );
                     let sh_pill_w = 192.0f32.min(ww * 0.44);
                     let sh_pill_r = [wx + ww - sh_pill_w - 12.0, body_y - 2.0, sh_pill_w, 24.0];
@@ -6012,7 +6012,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "STROKE COLOR",
+                        "描边颜色",
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -6039,7 +6039,7 @@ pub fn draw_hud_editor(
                     ];
                     ui.rounded(act_r[0], act_r[1], act_r[2], act_r[3], 10.0, st_inner);
                     ui.stroke_rounded(act_r[0], act_r[1], act_r[2], act_r[3], 10.0, 1.5, st_cyan);
-                    ui.centered_fit(Face::SemiBold, 8.8, act_r, st_text, "Reset Shape & Scale");
+                    ui.centered_fit(Face::SemiBold, 8.8, act_r, st_text, "重置形状与缩放");
                 }
                 _ => {
                     // Button Tab 2: Events, Behavior Toggles & Visibility Checkboxes
@@ -6069,8 +6069,8 @@ pub fn draw_hud_editor(
                         };
                         let half_w = (ww - 24.0 - 8.0) * 0.5;
                         for (ci, (title, status, active)) in [
-                            ("KEYBOARD BINDING (EXCLUSIVE)", kb_lbl.as_str(), is_kb),
-                            ("MOUSE / ACTION BINDING (EXCLUSIVE)", ms_lbl.as_str(), is_ms),
+                            ("键盘绑定（独占）", kb_lbl.as_str(), is_kb),
+                            ("鼠标/动作绑定（独占）", ms_lbl.as_str(), is_ms),
                         ]
                         .into_iter()
                         .enumerate()
@@ -6125,7 +6125,7 @@ pub fn draw_hud_editor(
                                 if slot == 0 {
                                     c.name().to_owned()
                                 } else {
-                                    "Built-in".to_owned()
+                                    "内置".to_owned()
                                 }
                             } else {
                                 "Unassigned".into()
@@ -6174,38 +6174,38 @@ pub fn draw_hud_editor(
                     for (i, (lbl, on, danger)) in [
                         (
                             if p.passthrough {
-                                "Pass-Thru: ON"
+                                "穿透：开"
                             } else {
-                                "Pass-Thru: OFF"
+                                "穿透：关"
                             },
                             p.passthrough,
                             false,
                         ),
                         (
                             if p.toggleable {
-                                "Mode: Toggle"
+                                "模式：切换"
                             } else {
-                                "Mode: Hold"
+                                "模式：按住"
                             },
                             p.toggleable,
                             false,
                         ),
                         (
                             if p.swipeable {
-                                "Swipe: ON"
+                                "滑动：开"
                             } else {
-                                "Swipe: OFF"
+                                "滑动：关"
                             },
                             p.swipeable,
                             false,
                         ),
                         (
                             if ed.selected_custom.is_some() {
-                                "Delete Button"
+                                "删除按钮"
                             } else if is_vis {
-                                "Visible: YES"
+                                "可见：是"
                             } else {
-                                "Visible: NO"
+                                "可见：否"
                             },
                             is_vis,
                             ed.selected_custom.is_some(),
@@ -6289,7 +6289,7 @@ pub fn draw_hud_editor(
                         vy + 5.0,
                         18.0,
                         p.visible_in_game,
-                        "Visible in Game",
+                        "游戏内可见",
                     );
 
                     let vm_x = wx + 12.0 + third + 4.0;
@@ -6322,7 +6322,7 @@ pub fn draw_hud_editor(
                         vy + 5.0,
                         18.0,
                         p.visible_in_menu,
-                        "Visible in Menu",
+                        "菜单内可见",
                     );
 
                     let pv_x = wx + 12.0 + (third + 4.0) * 2.0;
@@ -6333,7 +6333,7 @@ pub fn draw_hud_editor(
                         9.2,
                         [pv_x + 4.0, vy, third - 8.0, 28.0],
                         st_cyan,
-                        "Preset Vis for All",
+                        "应用预设可见性到全部",
                     );
                 }
             }
@@ -6382,7 +6382,7 @@ pub fn draw_hud_editor(
             7.0,
             danger_c,
         );
-        ui.centered_fit(Face::SemiBold, 9.5, discard_r, danger_c, "Discard & Exit");
+        ui.centered_fit(Face::SemiBold, 9.5, discard_r, danger_c, "放弃并退出");
 
         let cancel_r = [dx + dw - 76.0, dy + 8.0, 62.0, 24.0];
         ui.rounded(
@@ -6401,7 +6401,7 @@ pub fn draw_hud_editor(
             7.0,
             border_c,
         );
-        ui.centered_fit(Face::SemiBold, 9.5, cancel_r, text_c, "Cancel");
+        ui.centered_fit(Face::SemiBold, 9.5, cancel_r, text_c, "取消");
 
         // Option A: Replace existing preset (disabled/protected when Default is active)
         let is_def = tc.settings.is_default_preset();
@@ -6433,9 +6433,9 @@ pub fn draw_hud_editor(
             opt_a_r[1] + 6.0,
             if is_def { muted_c } else { text_c },
             if is_def {
-                "Option A: Replace existing preset (Protected)"
+                "选项 A：替换现有预设（受保护）"
             } else {
-                "Option A: Replace existing preset"
+                "选项 A：替换现有预设"
             },
         );
         let opt_a_sub = if is_def {
@@ -6472,7 +6472,7 @@ pub fn draw_hud_editor(
             if is_def {
                 "Protected"
             } else {
-                "Replace & Save"
+                "替换并保存"
             },
         );
 
@@ -6483,7 +6483,7 @@ pub fn draw_hud_editor(
             dx + 14.0,
             dy + 86.0,
             accent,
-            "OPTION B: CREATE A NEW PRESET AS...",
+            "选项 B：创建新预设，名为……",
         );
         let iy = dy + 100.0;
         let nw = (dw - 28.0 - 8.0) * 0.44;
@@ -6496,9 +6496,9 @@ pub fn draw_hud_editor(
             name_box[1],
             name_box[2],
             name_box[3],
-            "NEW PRESET NAME",
+            "新预设名称",
             ed.save_name_input.as_str(),
-            "Tap to type",
+            "点按输入",
             name_focus,
         );
         ui.text_field(
@@ -6506,16 +6506,16 @@ pub fn draw_hud_editor(
             desc_box[1],
             desc_box[2],
             desc_box[3],
-            "DESCRIPTION",
+            "说明",
             ed.save_desc_input.as_str(),
-            "Tap to type",
+            "点按输入",
             !name_focus,
         );
         ui.hint_line(
             dx + 14.0,
             iy + 56.0,
             dw - 28.0,
-            "Tap Name or Desc to type; press Enter, then tap Create New Preset.",
+            "点名称或说明输入；按回车，然后点“创建新预设”。",
             muted_c,
         );
 
@@ -6533,7 +6533,7 @@ pub fn draw_hud_editor(
             10.5,
             create_btn_r,
             accent_fg,
-            "Create New Preset & Save",
+            "创建新预设并保存",
         );
 
         ui.finish();
@@ -6591,7 +6591,7 @@ pub fn draw_hud_editor(
             8.0,
             border_c,
         );
-        ui.centered_fit(Face::SemiBold, 10.5, resume_r, accent, "Resume");
+        ui.centered_fit(Face::SemiBold, 10.5, resume_r, accent, "继续");
 
         // Row 1: Save Workflow & Reset to Default for Active System
         ui.text(
@@ -6609,8 +6609,8 @@ pub fn draw_hud_editor(
         let ey = dy + 56.0;
         let ew = (dw - 28.0 - 8.0) * 0.5;
         for (i, (title, primary)) in [
-            ("Save Preset (Replace / Save As...)", true),
-            ("Reset Canvas to Default Layout", false),
+            ("保存预设（替换 / 另存为…）", true),
+            ("重置画布为默认布局", false),
         ]
         .into_iter()
         .enumerate()
@@ -6688,37 +6688,37 @@ pub fn draw_hud_editor(
             dx + 14.0,
             py + 36.0,
             accent,
-            "3. MOVEMENT, JOYSTICK AREA & GRID SNAP",
+            "3. 移动、摇杆区域与网格吸附",
         );
         let gy = py + 50.0;
         let gw = (dw - 28.0 - 12.0) / 4.0;
         let move_lbl = match tc.settings.mode {
-            crate::android_controls::Mode::Dpad => "Move: D-Pad",
-            crate::android_controls::Mode::Crosshair => "Move: Joystick",
-            crate::android_controls::Mode::Tap => "Move: Tap Stick",
+            crate::android_controls::Mode::Dpad => "移动：方向键",
+            crate::android_controls::Mode::Crosshair => "移动：摇杆",
+            crate::android_controls::Mode::Tap => "移动：点按摇杆",
         };
         let area_lbl = match tc.settings.joystick_style.move_area {
-            JoystickMoveArea::MidBottomLeft => "Area: Mid-Left",
-            JoystickMoveArea::RightSideAnywhere => "Area: Right Side",
-            JoystickMoveArea::AbsoluteFixed => "Area: Fixed",
-            JoystickMoveArea::FollowFinger => "Area: Follow",
+            JoystickMoveArea::MidBottomLeft => "区域：左中",
+            JoystickMoveArea::RightSideAnywhere => "区域：右侧",
+            JoystickMoveArea::AbsoluteFixed => "区域：固定",
+            JoystickMoveArea::FollowFinger => "区域：跟随",
         };
         for (i, (lbl, on)) in [
             (move_lbl, true),
             (area_lbl, true),
             (
                 if tc.settings.snap_to_grid {
-                    "Grid Snap: ON"
+                    "网格吸附：开"
                 } else {
-                    "Grid Snap: OFF"
+                    "网格吸附：关"
                 },
                 tc.settings.snap_to_grid,
             ),
             (
                 if ed.show_hidden {
-                    "Hidden: SHOWN"
+                    "隐藏项：显示"
                 } else {
-                    "Hidden: HIDE"
+                    "隐藏项：隐藏"
                 },
                 ed.show_hidden,
             ),

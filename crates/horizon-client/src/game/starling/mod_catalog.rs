@@ -22,7 +22,7 @@ use std::time::{Duration, Instant};
 use winit::event::{Touch, TouchPhase};
 
 const SHELVES: [(Shelf, &str); 3] = [
-    (Shelf::Mods, "Mods"),
+    (Shelf::Mods, "模组"),
     (Shelf::ResourcePacks, "Resource packs"),
     (Shelf::ShaderPacks, "Shader packs"),
 ];
@@ -295,9 +295,9 @@ fn draw_confirm(ui: &mut Ui<'_>, title: &str, drawn: &mut Vec<([f32; 4], Act)>) 
         10.0,
         color::DANGER,
     );
-    label(ui, remove, color::text(), "Remove");
+    label(ui, remove, color::text(), "移除");
     drawn.push((remove, Act::ConfirmRemove));
-    plate(ui, cancel, "Cancel", false);
+    plate(ui, cancel, "取消", false);
     drawn.push((cancel, Act::CancelRemove));
 }
 
@@ -383,7 +383,7 @@ fn draw_list(
                 10.0,
                 color::hover(),
             );
-            label(ui, remove, color::text(), "Remove");
+            label(ui, remove, color::text(), "移除");
             if let Some(part) = list::shown_part(remove, top, bottom) {
                 drawn.push((part, Act::Remove(i)));
             }
@@ -419,7 +419,7 @@ fn draw_list(
             ROW_BUTTON_W,
             ROW_BUTTON_H,
         ];
-        plate(ui, rect, "Try again", false);
+        plate(ui, rect, "重试", false);
         if let Some(part) = list::shown_part(rect, top, bottom) {
             drawn.push((part, Act::Retry));
         }
@@ -440,7 +440,7 @@ fn draw_head(ui: &mut Ui<'_>, card: &Catalog, edge: f32, drawn: &mut Vec<([f32; 
     button(
         ui,
         [edge - 130.0, 8.0, 130.0, 62.0],
-        "Close",
+        "关闭",
         false,
         Act::Close,
         drawn,

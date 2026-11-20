@@ -41,7 +41,7 @@ const PUBLISHED_SERVER: &str = "published-build-server";
 /// In the folder of a build from the player's own server: which one.
 const CAME_FROM: &str = "server";
 /// The button that compiles on GitHub's machines (`Act::CompileOnGithub`).
-const USE_GITHUB: &str = "Use GitHub (slower)";
+const USE_GITHUB: &str = "使用 GitHub（较慢）";
 /// What the service takes in one request (`MAX_BODY`).
 const LARGEST_REQUEST: usize = 32 << 20;
 /// A build's folder here starts with this, and a new one takes the place of the last.
@@ -1829,9 +1829,9 @@ impl Game<'_> {
                     acts.push((text, Act::Use(b.clone())));
                 }
                 if current.is_some() {
-                    acts.push(("Play without native mods".into(), Act::StopUsing));
+                    acts.push(("不带原生模组游玩".into(), Act::StopUsing));
                 }
-                acts.push(("Build server...".into(), Act::Server));
+                acts.push(("构建服务器…".into(), Act::Server));
                 danger = custom_host.map(|host| {
                     format!(
                         "Compiling uses another build server: {host}. We take no responsibility \
@@ -1864,7 +1864,7 @@ impl Game<'_> {
                 ),
             ),
             Stage::Chosen(name) => {
-                acts.push(("Restart now".into(), Act::Restart));
+                acts.push(("立即重启".into(), Act::Restart));
                 danger = came_from(name).map(|host| {
                     format!("This build came from {host}, not from Starling's server.")
                 });
@@ -1880,7 +1880,7 @@ impl Game<'_> {
                 )
             }
             Stage::Failed(e) => {
-                acts.push(("Try again".into(), Act::Retry));
+                acts.push(("重试".into(), Act::Retry));
                 if self.native_builds.compile_failed && custom_host.is_none() {
                     acts.push((USE_GITHUB.into(), Act::CompileOnGithub));
                 }
@@ -1890,7 +1890,7 @@ impl Game<'_> {
                 let github = custom_host
                     .is_none()
                     .then(|| (USE_GITHUB.to_owned(), Act::CompileOnGithub));
-                let compile = ("Compile".to_owned(), Act::Compile);
+                let compile = ("编译".to_owned(), Act::Compile);
                 // Use GitHub pressed on the Mods page: it comes first.
                 match github {
                     Some(github) if self.native_builds.on_github => {
@@ -1902,7 +1902,7 @@ impl Game<'_> {
                         acts.extend(github);
                     }
                 }
-                acts.push(("Build server...".into(), Act::Server));
+                acts.push(("构建服务器…".into(), Act::Server));
                 danger = custom_host.map(|host| {
                     format!(
                         "{host} is not Starling's server. The game it sends back runs with full \
@@ -1946,7 +1946,7 @@ impl Game<'_> {
             }
             Stage::Compiling => unreachable!("drawn by draw_compiling"),
         };
-        acts.push(("Close".into(), Act::Close));
+        acts.push(("关闭".into(), Act::Close));
         let mut ui = Ui::new(&self.gui.atlas, batch, (-1.0, -1.0));
         let (w, h) = (ui.w, ui.h);
         ui.fill(0.0, 0.0, w, h, color::with_alpha(color::bg(), 0.72));

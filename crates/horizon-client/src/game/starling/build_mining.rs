@@ -34,7 +34,7 @@ const ORES: [(&str, u32, u32); 5] = [
     ("Iron", 45, color::hex(0xd8af93, 255)),
     ("Gold", 20, color::hex(0xfcee4b, 255)),
     ("Redstone", 30, color::hex(0xe02020, 255)),
-    ("Diamond", 8, color::hex(0x5decf5, 255)),
+    ("菱形", 8, color::hex(0x5decf5, 255)),
 ];
 
 struct Cell {

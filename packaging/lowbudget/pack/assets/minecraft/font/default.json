@@ -19,6 +19,17 @@
     "`abcdefghijklmno",
     "pqrstuvwxyz{|}~\u0000"
    ]
+  },
+  {
+   "type": "ttf",
+   "file": "minecraft:StarlingCJK.ttf",
+   "size": 10.0,
+   "oversample": 2.0,
+   "shift": [
+    0,
+    0
+   ],
+   "skip": ""
   }
  ],
  "starling:variants": [
