@@ -4223,15 +4223,31 @@ fn clamp_editor_custom_selection(
     }
 }
 
-fn shape_name(shape: u8) -> &'static str {
-    match shape {
+fn shape_name(shape: u8) -> String {
+    let name = match shape {
         1 => "Square",
         2 => "Circle/Pill",
         3 => "Cut Octagon",
         4 => "Diamond",
         5 => "Hexagon",
         _ => "Rounded",
-    }
+    };
+    crate::lang::get(&format!("starling.controls_ui.shape.{}", key_part(name)))
+}
+
+/// `"Circle/Pill"` -> `"circle_pill"`：界面名到键名的一部分。
+fn key_part(name: &str) -> String {
+    name.chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() {
+                c.to_ascii_lowercase()
+            } else {
+                '_'
+            }
+        })
+        .collect::<String>()
+        .trim_matches('_')
+        .to_owned()
 }
 
 pub fn control_icon_from_id(
@@ -4255,8 +4271,9 @@ pub fn control_icon_from_id(
     }
 }
 
-pub fn control_icon_label(icon_id: u8) -> &'static str {
-    control_icon_from_id(icon_id).map_or("Text Only", |(_, name)| name)
+pub fn control_icon_label(icon_id: u8) -> String {
+    let name = control_icon_from_id(icon_id).map_or("Text Only", |(_, name)| name);
+    crate::lang::get(&format!("starling.controls_ui.icon.{}", key_part(name)))
 }
 
 fn draw_button_icon_and_label(
@@ -5728,6 +5745,7 @@ pub fn draw_hud_editor(
                     let cards_y = body_y + 28.0;
                     let card_h = 74.0;
                     let icon_lbl = control_icon_label(p.icon_id);
+                    let icon_lbl = icon_lbl.as_str();
                     draw_m3_stepper_cell(
                         &mut ui,
                         [wx + 12.0, cards_y, cw3, card_h],
