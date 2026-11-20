@@ -908,7 +908,14 @@ impl TouchUi {
                 } else {
                     56.
                 };
-            button(b, a, "Keys", right - 56., 3., 56.);
+            button(
+                b,
+                a,
+                &crate::lang::get("starling.controls_ui.keys"),
+                right - 56.,
+                3.,
+                56.,
+            );
         }
         if menu && !self.goy_mode && self.virtual_mouse_available {
             button(
@@ -925,7 +932,14 @@ impl TouchUi {
             );
         }
         if menu && !self.goy_mode && crate::android_controls::current_hud_opacity_scale() > 0.01 {
-            button(b, a, "Back", b.width - 53.0, 3.0, 50.0);
+            button(
+                b,
+                a,
+                &crate::lang::get("starling.controls_ui.back"),
+                b.width - 53.0,
+                3.0,
+                50.0,
+            );
             if self.virtual_mouse {
                 let [lmb, rmb] = mouse_button_rects(b.width, b.height);
                 button(b, a, "LMB", lmb.0[0], lmb.0[1], lmb.0[2]);
@@ -1304,13 +1318,19 @@ fn draw_input_picker_modal(
                 10.8,
                 r_sys,
                 accent,
-                "⌨ Type / Capture Key (System / Physical Keyboard)",
+                &crate::lang::get("starling.controls_ui.type_capture_key_system_physical_keyboard"),
             );
             if for_custom_send {
                 let r_can = [dx + 16.0, dy + 180.0, dw - 32.0, 36.0];
                 ui.rounded(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, bg_hi);
                 ui.border(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, border_c);
-                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "Cancel");
+                ui.centered_fit(
+                    Face::Medium,
+                    11.0,
+                    r_can,
+                    text_c,
+                    &crate::lang::get("starling.controls_ui.cancel"),
+                );
             } else {
                 let r_clr = [dx + 16.0, dy + 180.0, cw, 36.0];
                 let r_can = [dx + 24.0 + cw, dy + 180.0, cw, 36.0];
@@ -1321,11 +1341,17 @@ fn draw_input_picker_modal(
                     11.0,
                     r_clr,
                     danger_c,
-                    "Clear / Unassign Slot",
+                    &crate::lang::get("starling.controls_ui.clear_unassign_slot"),
                 );
                 ui.rounded(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, bg_hi);
                 ui.border(r_can[0], r_can[1], r_can[2], r_can[3], 10.0, border_c);
-                ui.centered_fit(Face::Medium, 11.0, r_can, text_c, "Cancel");
+                ui.centered_fit(
+                    Face::Medium,
+                    11.0,
+                    r_can,
+                    text_c,
+                    &crate::lang::get("starling.controls_ui.cancel"),
+                );
             }
         }
         PickerStep::Keyboard { event_slot } => {
@@ -1433,7 +1459,13 @@ fn draw_input_picker_modal(
             let b_back = [dx + dw - 72.0, dy + 8.0, 58.0, 26.0];
             ui.rounded(b_back[0], b_back[1], b_back[2], b_back[3], 8.0, bg_hi);
             ui.border(b_back[0], b_back[1], b_back[2], b_back[3], 8.0, border_c);
-            ui.centered_fit(Face::SemiBold, 10.0, b_back, text_c, "Back");
+            ui.centered_fit(
+                Face::SemiBold,
+                10.0,
+                b_back,
+                text_c,
+                &crate::lang::get("starling.controls_ui.back"),
+            );
 
             let cols = 3usize;
             let rows = MOUSE_AND_ACTION_ITEMS.len().div_ceil(cols).max(1);
@@ -2790,7 +2822,7 @@ impl TouchUi {
             dx + 52.0,
             dy + 8.0,
             text_c,
-            "Horizon Control Hub",
+            &crate::lang::get("starling.controls_ui.horizon_control_hub"),
         );
         ui.text(
             Face::Regular,
@@ -2798,7 +2830,9 @@ impl TouchUi {
             dx + 52.0,
             dy + 25.0,
             muted_c,
-            "Configure touch controls, virtual mouse & feedback",
+            &crate::lang::get(
+                "starling.controls_ui.configure_touch_controls_virtual_mouse_feedback",
+            ),
         );
 
         // Active Control System Pill Badge in Header
@@ -2821,7 +2855,13 @@ impl TouchUi {
         let done_r = [dx + dw - 76.0, dy + 10.0, 62.0, 28.0];
         ui.rounded(done_r[0], done_r[1], done_r[2], done_r[3], 9.0, card_bg);
         ui.border(done_r[0], done_r[1], done_r[2], done_r[3], 9.0, border_c);
-        ui.centered_fit(Face::SemiBold, 11.0, done_r, text_c, "Done");
+        ui.centered_fit(
+            Face::SemiBold,
+            11.0,
+            done_r,
+            text_c,
+            &crate::lang::get("starling.controls_ui.done"),
+        );
 
         // Left Sidebar Navigation Tabs (Recommended, Controls, Aiming, Buttons, Advanced)
         let tabs: [(Icon, &str); 5] = [
@@ -2909,7 +2949,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "REAL-TIME 3D RESOLUTION & PERFORMANCE",
+                    &crate::lang::get("starling.controls_ui.real_time_3d_resolution_performance"),
                 );
                 let res_y = body_y + 18.0;
                 ui.rounded(cx, res_y, cw, 78.0, 11.0, card_bg);
@@ -2920,7 +2960,9 @@ impl TouchUi {
                     cx + 14.0,
                     res_y + 6.0,
                     text_c,
-                    "Real-Time 3D Resolution Scale (Zero-Lag)",
+                    &crate::lang::get(
+                        "starling.controls_ui.real_time_3d_resolution_scale_zero_lag",
+                    ),
                 );
                 let res_pct = settings.resolution_scale_percent.clamp(25, 100);
                 let res_txt = format!("{res_pct}%");
@@ -2990,7 +3032,7 @@ impl TouchUi {
                     cx,
                     body_y + 102.0,
                     muted_c,
-                    "FAST AIM, VIRTUAL MOUSE & CONTROLS",
+                    &crate::lang::get("starling.controls_ui.fast_aim_virtual_mouse_controls"),
                 );
                 let sens_y = body_y + 118.0;
                 ui.rounded(cx, sens_y, cw, 50.0, 11.0, card_bg);
@@ -3001,7 +3043,7 @@ impl TouchUi {
                     cx + 14.0,
                     sens_y + 6.0,
                     text_c,
-                    "Touch Look Sensitivity",
+                    &crate::lang::get("starling.controls_ui.touch_look_sensitivity"),
                 );
                 let pct_txt = format!("{:.0}%", settings.sensitivity * 100.0);
                 let pill_w = 48.0;
@@ -3041,8 +3083,10 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 176.0,
-                    "Virtual Mouse Button",
-                    "Off by default; enable for desktop pointer in menus & inventory",
+                    &crate::lang::get("starling.controls_ui.virtual_mouse_button"),
+                    &crate::lang::get(
+                        "starling.controls_ui.off_by_default_enable_for_desktop_pointer_in_menus_inventory",
+                    ),
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
@@ -3050,8 +3094,10 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 230.,
-                    "Keyboard Button",
-                    "Show Keys beside Back; fields still open the keyboard automatically",
+                    &crate::lang::get("starling.controls_ui.keyboard_button"),
+                    &crate::lang::get(
+                        "starling.controls_ui.show_keys_beside_back_fields_still_open_the_keyboard_automatically",
+                    ),
                     Some(settings.keyboard_button),
                     None,
                 );
@@ -3064,7 +3110,7 @@ impl TouchUi {
                     cx + 14.0,
                     spd_y + 6.0,
                     text_c,
-                    "Virtual Mouse Speed",
+                    &crate::lang::get("starling.controls_ui.virtual_mouse_speed"),
                 );
                 let spd_pct = format!("{:.0}%", settings.virtual_mouse_sensitivity * 100.0);
                 ui.rounded(
@@ -3131,15 +3177,24 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 394.0,
-                    "In-Game Animations",
-                    "Animated block textures, view bobbing, FOV transitions & menu motion",
+                    &crate::lang::get("starling.controls_ui.in_game_animations"),
+                    &crate::lang::get(
+                        "starling.controls_ui.animated_block_textures_view_bobbing_fov_transitions_menu_motion",
+                    ),
                     Some(!settings.disable_game_animations),
                     None,
                 );
             }
             1 => {
                 // 1. Control Mode Section
-                ui.text(Face::SemiBold, 10.2, cx, body_y, muted_c, "CONTROL MODE");
+                ui.text(
+                    Face::SemiBold,
+                    10.2,
+                    cx,
+                    body_y,
+                    muted_c,
+                    &crate::lang::get("starling.controls_ui.control_mode"),
+                );
                 let mode_y = body_y + 18.0;
                 let half_w = (cw - 10.0) * 0.5;
                 let is_mcpe = settings.control_style == ControlStyle::Mcpe;
@@ -3236,7 +3291,7 @@ impl TouchUi {
                     cx,
                     body_y + 132.0,
                     muted_c,
-                    "POINTER, CAMERA & AIM",
+                    &crate::lang::get("starling.controls_ui.pointer_camera_aim"),
                 );
                 let sens_y = body_y + 148.0;
                 ui.rounded(cx, sens_y, cw, 50.0, 11.0, card_bg);
@@ -3247,7 +3302,7 @@ impl TouchUi {
                     cx + 14.0,
                     sens_y + 6.0,
                     text_c,
-                    "Touch Look Sensitivity",
+                    &crate::lang::get("starling.controls_ui.touch_look_sensitivity"),
                 );
                 let pct_txt = format!("{:.0}%", settings.sensitivity * 100.0);
                 let pill_w = 48.0;
@@ -3288,24 +3343,30 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 206.0,
-                    "Virtual Mouse Button",
-                    "Windows 11 pointer; auto-shows when MCPE controls are hidden",
+                    &crate::lang::get("starling.controls_ui.virtual_mouse_button"),
+                    &crate::lang::get(
+                        "starling.controls_ui.windows_11_pointer_auto_shows_when_mcpe_controls_are_hidden",
+                    ),
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 260.0,
-                    "Invert Y-Axis",
-                    "Reverse vertical camera look direction",
+                    &crate::lang::get("starling.controls_ui.invert_y_axis"),
+                    &crate::lang::get(
+                        "starling.controls_ui.reverse_vertical_camera_look_direction",
+                    ),
                     Some(settings.invert_y),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 314.0,
-                    "Split Touch (Aim & Look)",
-                    "Use center crosshair instead of tap-anywhere interaction",
+                    &crate::lang::get("starling.controls_ui.split_touch_aim_look"),
+                    &crate::lang::get(
+                        "starling.controls_ui.use_center_crosshair_instead_of_tap_anywhere_interaction",
+                    ),
                     Some(settings.crosshair()),
                     None,
                 );
@@ -3334,7 +3395,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "AIMING, VIRTUAL MOUSE & GYROSCOPE",
+                    &crate::lang::get("starling.controls_ui.aiming_virtual_mouse_gyroscope"),
                 );
                 let move_lbl = match settings.mode {
                     crate::android_controls::Mode::Dpad => "D-Pad + Crosshair/Touch",
@@ -3350,7 +3411,7 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0,
-                    "Movement & Aim Mode",
+                    &crate::lang::get("starling.controls_ui.movement_aim_mode"),
                     move_lbl,
                     None,
                     None,
@@ -3358,7 +3419,7 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Joystick Active Zone",
+                    &crate::lang::get("starling.controls_ui.joystick_active_zone"),
                     area_lbl,
                     None,
                     None,
@@ -3366,8 +3427,10 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Virtual Mouse Button",
-                    "Authoritative toggle for MCPE and GoyControl menus",
+                    &crate::lang::get("starling.controls_ui.virtual_mouse_button"),
+                    &crate::lang::get(
+                        "starling.controls_ui.authoritative_toggle_for_mcpe_and_goycontrol_menus",
+                    ),
                     Some(settings.virtual_mouse_enabled),
                     None,
                 );
@@ -3382,7 +3445,7 @@ impl TouchUi {
                     cx + 14.0,
                     spd_y + 6.0,
                     text_c,
-                    "Virtual Mouse Speed",
+                    &crate::lang::get("starling.controls_ui.virtual_mouse_speed"),
                 );
                 let spd_pct = format!("{:.0}%", settings.virtual_mouse_sensitivity * 100.0);
                 let spd_pill_w = 48.0;
@@ -3443,7 +3506,7 @@ impl TouchUi {
                     cx + 14.0,
                     size_y + 6.0,
                     text_c,
-                    "Pointer Size",
+                    &crate::lang::get("starling.controls_ui.pointer_size"),
                 );
                 let size_pct = format!("{:.0}%", settings.virtual_mouse_pointer_scale * 100.0);
                 let size_pill_w = 48.0;
@@ -3503,8 +3566,10 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 296.0,
-                    "Gyroscope Aiming",
-                    "Tilt device for fine camera and bow aiming",
+                    &crate::lang::get("starling.controls_ui.gyroscope_aiming"),
+                    &crate::lang::get(
+                        "starling.controls_ui.tilt_device_for_fine_camera_and_bow_aiming",
+                    ),
                     Some(settings.gyroscope),
                     None,
                 );
@@ -3518,7 +3583,7 @@ impl TouchUi {
                     cx + 14.0,
                     gyro_y + 6.0,
                     text_c,
-                    "Gyroscope Sensitivity",
+                    &crate::lang::get("starling.controls_ui.gyroscope_sensitivity"),
                 );
                 let gyro_pct = format!("{:.0}%", settings.gyro_sensitivity * 100.0);
                 let gyro_pill_w = 48.0;
@@ -3578,16 +3643,18 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 234.,
-                    "Offhand Button",
-                    "Show the swap-hands button",
+                    &crate::lang::get("starling.controls_ui.offhand_button"),
+                    &crate::lang::get("starling.controls_ui.show_the_swap_hands_button"),
                     Some(settings.offhand_button),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 288.,
-                    "Separate Shield Button",
-                    "Off uses crouching to raise the shield",
+                    &crate::lang::get("starling.controls_ui.separate_shield_button"),
+                    &crate::lang::get(
+                        "starling.controls_ui.off_uses_crouching_to_raise_the_shield",
+                    ),
                     Some(settings.shield_button),
                     None,
                 );
@@ -3598,7 +3665,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "BUTTON SIZING, HANDEDNESS & BEHAVIOR",
+                    &crate::lang::get("starling.controls_ui.button_sizing_handedness_behavior"),
                 );
                 let step = 54.0;
                 let scale_y = body_y + 18.0;
@@ -3610,7 +3677,7 @@ impl TouchUi {
                     cx + 14.0,
                     scale_y + 6.0,
                     text_c,
-                    "Global Button Scale",
+                    &crate::lang::get("starling.controls_ui.global_button_scale"),
                 );
                 let sc_pct = format!("{:.0}%", settings.button_scale * 100.0);
                 let sc_pill_w = 48.0;
@@ -3656,24 +3723,30 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Left-Handed Layout",
-                    "Mirror movement and action buttons horizontally",
+                    &crate::lang::get("starling.controls_ui.left_handed_layout"),
+                    &crate::lang::get(
+                        "starling.controls_ui.mirror_movement_and_action_buttons_horizontally",
+                    ),
                     Some(settings.left_handed),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Toggle Sprint",
-                    "Latch sprint on tap instead of holding",
+                    &crate::lang::get("starling.controls_ui.toggle_sprint"),
+                    &crate::lang::get(
+                        "starling.controls_ui.latch_sprint_on_tap_instead_of_holding",
+                    ),
                     Some(settings.sprint_toggle || settings.toggle_sprint),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 3.0,
-                    "Inventory Walk Controls",
-                    "Keep movement controls active while inventory is open",
+                    &crate::lang::get("starling.controls_ui.inventory_walk_controls"),
+                    &crate::lang::get(
+                        "starling.controls_ui.keep_movement_controls_active_while_inventory_is_open",
+                    ),
                     Some(settings.inventory_controls),
                     None,
                 );
@@ -3686,7 +3759,7 @@ impl TouchUi {
                     cx,
                     body_y,
                     muted_c,
-                    "FEEDBACK, GAMEPLAY & SHORTCUTS",
+                    &crate::lang::get("starling.controls_ui.feedback_gameplay_shortcuts"),
                 );
                 let step = 54.0;
                 let feedback_width = (cw - 8.0) * 0.5;
@@ -3729,16 +3802,20 @@ impl TouchUi {
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step,
-                    "Auto-Jump",
-                    "Automatically jump when walking into 1-block ledges",
+                    &crate::lang::get("starling.controls_ui.auto_jump"),
+                    &crate::lang::get(
+                        "starling.controls_ui.automatically_jump_when_walking_into_1_block_ledges",
+                    ),
                     Some(settings.auto_jump),
                     None,
                 );
                 draw_toggle_row(
                     &mut ui,
                     body_y + 18.0 + step * 2.0,
-                    "Apply Standard Menu Visibility",
-                    "Reset in-game vs in-menu visibility flags for active system",
+                    &crate::lang::get("starling.controls_ui.apply_standard_menu_visibility"),
+                    &crate::lang::get(
+                        "starling.controls_ui.reset_in_game_vs_in_menu_visibility_flags_for_active_system",
+                    ),
                     None,
                     None,
                 );
@@ -3748,7 +3825,7 @@ impl TouchUi {
                     cx,
                     body_y + 182.0,
                     muted_c,
-                    "QUICK DESKTOP KEYS & CUSTOM INPUT",
+                    &crate::lang::get("starling.controls_ui.quick_desktop_keys_custom_input"),
                 );
                 let ky = body_y + 198.0;
                 let kw = (cw - 25.0) / 6.0;
@@ -3777,7 +3854,9 @@ impl TouchUi {
                     cx + 38.0,
                     send_y + 5.0,
                     text_c,
-                    "Send Custom Input (Keyboard / Mouse / Action)",
+                    &crate::lang::get(
+                        "starling.controls_ui.send_custom_input_keyboard_mouse_action",
+                    ),
                 );
                 ui.text(
                     Face::Regular,
@@ -3785,7 +3864,7 @@ impl TouchUi {
                     cx + 38.0,
                     send_y + 21.0,
                     muted_c,
-                    "Open 104-key PC keyboard, mouse buttons, scroll wheel & actions",
+                    &crate::lang::get("starling.controls_ui.open_104_key_pc_keyboard_mouse_buttons_scroll_wheel_actions"),
                 );
                 ui.text(
                     Face::SemiBold,
@@ -3812,7 +3891,7 @@ impl TouchUi {
                     10.8,
                     [cx, sys_y, half, 38.0],
                     danger_c,
-                    "Force Kill",
+                    &crate::lang::get("starling.controls_ui.force_kill"),
                 );
                 ui.rounded(cx + half + 10.0, sys_y, half, 38.0, 10.0, card_bg);
                 ui.border(cx + half + 10.0, sys_y, half, 38.0, 10.0, border_c);
@@ -3821,7 +3900,7 @@ impl TouchUi {
                     10.8,
                     [cx + half + 10.0, sys_y, half, 38.0],
                     text_c,
-                    "Open Logs",
+                    &crate::lang::get("starling.controls_ui.open_logs"),
                 );
             }
         }
@@ -3870,7 +3949,13 @@ impl TouchUi {
             let back_r = [mdx + mdw - 78.0, mdy + 10.0, 64.0, 28.0];
             ui.rounded(back_r[0], back_r[1], back_r[2], back_r[3], 9.0, card_bg);
             ui.border(back_r[0], back_r[1], back_r[2], back_r[3], 9.0, border_c);
-            ui.centered_fit(Face::SemiBold, 10.5, back_r, text_c, "Back");
+            ui.centered_fit(
+                Face::SemiBold,
+                10.5,
+                back_r,
+                text_c,
+                &crate::lang::get("starling.controls_ui.back"),
+            );
 
             let list_y = mdy + 48.0;
             let row_h = 46.0;
@@ -3973,7 +4058,7 @@ impl TouchUi {
                     copy_r[0] + 24.0,
                     copy_r[1] + 7.0,
                     text_c,
-                    "Copy",
+                    &crate::lang::get("starling.controls_ui.copy"),
                 );
             }
         }
@@ -4016,7 +4101,13 @@ impl TouchUi {
                 8.0,
                 border_c,
             );
-            ui.centered_fit(Face::SemiBold, 10.0, cancel_r, text_c, "Cancel");
+            ui.centered_fit(
+                Face::SemiBold,
+                10.0,
+                cancel_r,
+                text_c,
+                &crate::lang::get("starling.controls_ui.cancel"),
+            );
 
             let name_r = [mdx + 14.0, mdy + 42.0, (mdw - 36.0) * 0.45, 48.0];
             let desc_r = [
@@ -4030,9 +4121,9 @@ impl TouchUi {
                 name_r[1],
                 name_r[2],
                 name_r[3],
-                "PRESET NAME",
+                &crate::lang::get("starling.controls_ui.preset_name"),
                 dlg.name_input.as_str(),
-                "Tap to type",
+                &crate::lang::get("starling.controls_ui.tap_to_type"),
                 !dlg.editing_desc,
             );
             ui.text_field(
@@ -4040,9 +4131,9 @@ impl TouchUi {
                 desc_r[1],
                 desc_r[2],
                 desc_r[3],
-                "DESCRIPTION",
+                &crate::lang::get("starling.controls_ui.description"),
                 dlg.desc_input.as_str(),
-                "Tap to type",
+                &crate::lang::get("starling.controls_ui.tap_to_type"),
                 dlg.editing_desc,
             );
 
@@ -4811,7 +4902,7 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 16.0,
             text_c,
-            "Unsaved Layout Changes",
+            &crate::lang::get("starling.controls_ui.unsaved_layout_changes"),
         );
         ui.text(
             Face::Regular,
@@ -4819,7 +4910,9 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 42.0,
             muted_c,
-            "You have modified your control layout in this session.",
+            &crate::lang::get(
+                "starling.controls_ui.you_have_modified_your_control_layout_in_this_session",
+            ),
         );
         ui.text(
             Face::Regular,
@@ -4827,17 +4920,31 @@ pub fn draw_hud_editor(
             dx + 18.0,
             dy + 60.0,
             muted_c,
-            "Save your changes before leaving, or go back without saving?",
+            &crate::lang::get(
+                "starling.controls_ui.save_your_changes_before_leaving_or_go_back_without_saving",
+            ),
         );
         let bw = (dw - 44.0) * 0.5;
         let by = dy + dh - 50.0;
         let save_r = [dx + 18.0, by, bw, 36.0];
         let back_r = [dx + 26.0 + bw, by, bw, 36.0];
         ui.rounded(save_r[0], save_r[1], save_r[2], save_r[3], 10.0, accent);
-        ui.centered_fit(Face::SemiBold, 11.5, save_r, accent_fg, "Save");
+        ui.centered_fit(
+            Face::SemiBold,
+            11.5,
+            save_r,
+            accent_fg,
+            &crate::lang::get("starling.controls_ui.save"),
+        );
         ui.rounded(back_r[0], back_r[1], back_r[2], back_r[3], 10.0, bg_hi);
         ui.border(back_r[0], back_r[1], back_r[2], back_r[3], 10.0, danger_c);
-        ui.centered_fit(Face::SemiBold, 11.5, back_r, danger_c, "Back");
+        ui.centered_fit(
+            Face::SemiBold,
+            11.5,
+            back_r,
+            danger_c,
+            &crate::lang::get("starling.controls_ui.back"),
+        );
         ui.finish();
         return;
     }
@@ -5006,7 +5113,13 @@ pub fn draw_hud_editor(
         ui.rounded(
             close_r[0], close_r[1], close_r[2], close_r[3], 13.0, st_cyan,
         );
-        ui.centered_fit(Face::SemiBold, 10.2, close_r, st_cyan_fg, "✓ Done");
+        ui.centered_fit(
+            Face::SemiBold,
+            10.2,
+            close_r,
+            st_cyan_fg,
+            &crate::lang::get("starling.controls_ui.done_2"),
+        );
 
         // Full-Width M3 Workspace Area (single clean top segmented tab bar, no duplicate left rail)
         let wx = dx + 14.0;
@@ -5064,7 +5177,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "STICK KNOB DIMENSIONS & STROKE",
+                        &crate::lang::get("starling.controls_ui.stick_knob_dimensions_stroke"),
                     );
                     let st_pill_w = 216.0f32.min(ww * 0.46);
                     let st_pill_r = [wx + ww - st_pill_w - 12.0, body_y - 2.0, st_pill_w, 24.0];
@@ -5178,7 +5291,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "STICK COLOR",
+                        &crate::lang::get("starling.controls_ui.stick_color"),
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5218,7 +5331,7 @@ pub fn draw_hud_editor(
                         8.8,
                         act_r,
                         st_text,
-                        "● Cycle Stick Stroke Col",
+                        &crate::lang::get("starling.controls_ui.cycle_stick_stroke_col"),
                     );
                 }
                 1 => {
@@ -5229,7 +5342,9 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "ANALOG BASE RING GEOMETRY & INPUT MODE",
+                        &crate::lang::get(
+                            "starling.controls_ui.analog_base_ring_geometry_input_mode",
+                        ),
                     );
                     let mode_pill_w = 186.0f32.min(ww * 0.42);
                     let mode_pill_r = [
@@ -5330,7 +5445,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "BASE COLOR",
+                        &crate::lang::get("starling.controls_ui.base_color"),
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5370,7 +5485,7 @@ pub fn draw_hud_editor(
                         8.8,
                         act_r,
                         st_text,
-                        "● Cycle Base Stroke Col",
+                        &crate::lang::get("starling.controls_ui.cycle_base_stroke_col"),
                     );
                 }
                 _ => {
@@ -5381,7 +5496,9 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "ACTIVE TOUCH ZONE & VISIBILITY RULES",
+                        &crate::lang::get(
+                            "starling.controls_ui.active_touch_zone_visibility_rules",
+                        ),
                     );
                     let area_y = body_y + 26.0;
                     let hw = (ww - 24.0 - 8.0) * 0.5;
@@ -5484,7 +5601,7 @@ pub fn draw_hud_editor(
                         9.5,
                         [pv_x + 4.0, y6, third - 8.0, 34.0],
                         st_cyan,
-                        "Preset Vis for All",
+                        &crate::lang::get("starling.controls_ui.preset_vis_for_all"),
                     );
                 }
             }
@@ -5520,7 +5637,7 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "BUTTON STYLE, ICON BADGE & OPACITY",
+                        &crate::lang::get("starling.controls_ui.button_style_icon_badge_opacity"),
                     );
                     let is_goy =
                         tc.settings.control_style == ControlStyle::GoyControl || p.use_goy_style;
@@ -5636,7 +5753,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "BUTTON COLOR",
+                        &crate::lang::get("starling.controls_ui.button_color"),
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5676,7 +5793,13 @@ pub fn draw_hud_editor(
                         1.3,
                         p.on_click_stroke_color,
                     );
-                    ui.centered_fit(Face::SemiBold, 8.2, clk_r, st_text, "onClick Col (Cycle)");
+                    ui.centered_fit(
+                        Face::SemiBold,
+                        8.2,
+                        clk_r,
+                        st_text,
+                        &crate::lang::get("starling.controls_ui.onclick_col_cycle"),
+                    );
                     ui.rounded(
                         tog_r[0],
                         tog_r[1],
@@ -5694,7 +5817,13 @@ pub fn draw_hud_editor(
                         1.3,
                         p.on_toggle_stroke_color,
                     );
-                    ui.centered_fit(Face::SemiBold, 8.2, tog_r, st_text, "onToggle Col (Cycle)");
+                    ui.centered_fit(
+                        Face::SemiBold,
+                        8.2,
+                        tog_r,
+                        st_text,
+                        &crate::lang::get("starling.controls_ui.ontoggle_col_cycle"),
+                    );
                 }
                 1 => {
                     // Button Tab 1: Shape, Stroke, Roundness & Aspect Ratios + Live Preview + Stroke Color Swatches
@@ -5704,7 +5833,9 @@ pub fn draw_hud_editor(
                         wx + 12.0,
                         body_y + 3.0,
                         st_text,
-                        "SHAPE GEOMETRY, STROKE & ASPECT RATIO",
+                        &crate::lang::get(
+                            "starling.controls_ui.shape_geometry_stroke_aspect_ratio",
+                        ),
                     );
                     let sh_pill_w = 192.0f32.min(ww * 0.44);
                     let sh_pill_r = [wx + ww - sh_pill_w - 12.0, body_y - 2.0, sh_pill_w, 24.0];
@@ -5843,7 +5974,7 @@ pub fn draw_hud_editor(
                         wx + 22.0,
                         sw_y + 6.0,
                         st_muted,
-                        "STROKE COLOR",
+                        &crate::lang::get("starling.controls_ui.stroke_color"),
                     );
                     let sw_d = 20.0;
                     let sw_row_y = sw_y + sw_card_h - sw_d - 7.0;
@@ -5870,7 +6001,13 @@ pub fn draw_hud_editor(
                     ];
                     ui.rounded(act_r[0], act_r[1], act_r[2], act_r[3], 10.0, st_inner);
                     ui.stroke_rounded(act_r[0], act_r[1], act_r[2], act_r[3], 10.0, 1.5, st_cyan);
-                    ui.centered_fit(Face::SemiBold, 8.8, act_r, st_text, "Reset Shape & Scale");
+                    ui.centered_fit(
+                        Face::SemiBold,
+                        8.8,
+                        act_r,
+                        st_text,
+                        &crate::lang::get("starling.controls_ui.reset_shape_scale"),
+                    );
                 }
                 _ => {
                     // Button Tab 2: Events, Behavior Toggles & Visibility Checkboxes
@@ -6164,7 +6301,7 @@ pub fn draw_hud_editor(
                         9.2,
                         [pv_x + 4.0, vy, third - 8.0, 28.0],
                         st_cyan,
-                        "Preset Vis for All",
+                        &crate::lang::get("starling.controls_ui.preset_vis_for_all"),
                     );
                 }
             }
@@ -6213,7 +6350,13 @@ pub fn draw_hud_editor(
             7.0,
             danger_c,
         );
-        ui.centered_fit(Face::SemiBold, 9.5, discard_r, danger_c, "Discard & Exit");
+        ui.centered_fit(
+            Face::SemiBold,
+            9.5,
+            discard_r,
+            danger_c,
+            &crate::lang::get("starling.controls_ui.discard_exit"),
+        );
 
         let cancel_r = [dx + dw - 76.0, dy + 8.0, 62.0, 24.0];
         ui.rounded(
@@ -6232,7 +6375,13 @@ pub fn draw_hud_editor(
             7.0,
             border_c,
         );
-        ui.centered_fit(Face::SemiBold, 9.5, cancel_r, text_c, "Cancel");
+        ui.centered_fit(
+            Face::SemiBold,
+            9.5,
+            cancel_r,
+            text_c,
+            &crate::lang::get("starling.controls_ui.cancel"),
+        );
 
         // Option A: Replace existing preset (disabled/protected when Default is active)
         let is_def = tc.settings.is_default_preset();
@@ -6314,7 +6463,7 @@ pub fn draw_hud_editor(
             dx + 14.0,
             dy + 86.0,
             accent,
-            "OPTION B: CREATE A NEW PRESET AS...",
+            &crate::lang::get("starling.controls_ui.option_b_create_a_new_preset_as"),
         );
         let iy = dy + 100.0;
         let nw = (dw - 28.0 - 8.0) * 0.44;
@@ -6327,9 +6476,9 @@ pub fn draw_hud_editor(
             name_box[1],
             name_box[2],
             name_box[3],
-            "NEW PRESET NAME",
+            &crate::lang::get("starling.controls_ui.new_preset_name"),
             ed.save_name_input.as_str(),
-            "Tap to type",
+            &crate::lang::get("starling.controls_ui.tap_to_type"),
             name_focus,
         );
         ui.text_field(
@@ -6337,9 +6486,9 @@ pub fn draw_hud_editor(
             desc_box[1],
             desc_box[2],
             desc_box[3],
-            "DESCRIPTION",
+            &crate::lang::get("starling.controls_ui.description"),
             ed.save_desc_input.as_str(),
-            "Tap to type",
+            &crate::lang::get("starling.controls_ui.tap_to_type"),
             !name_focus,
         );
         ui.hint_line(
@@ -6364,7 +6513,7 @@ pub fn draw_hud_editor(
             10.5,
             create_btn_r,
             accent_fg,
-            "Create New Preset & Save",
+            &crate::lang::get("starling.controls_ui.create_new_preset_save"),
         );
 
         ui.finish();
@@ -6519,7 +6668,7 @@ pub fn draw_hud_editor(
             dx + 14.0,
             py + 36.0,
             accent,
-            "3. MOVEMENT, JOYSTICK AREA & GRID SNAP",
+            &crate::lang::get("starling.controls_ui.3_movement_joystick_area_grid_snap"),
         );
         let gy = py + 50.0;
         let gw = (dw - 28.0 - 12.0) / 4.0;
