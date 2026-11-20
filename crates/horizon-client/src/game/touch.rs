@@ -369,14 +369,14 @@ pub(super) fn draw_editor(
             Chip::Smaller => "-",
             Chip::Bigger => "+",
             Chip::Visibility => match shown {
-                Some(Show::Ghost) => "Ghost",
-                Some(Show::Off) => "Off",
-                _ => "On",
+                Some(Show::Ghost) => "幽灵",
+                Some(Show::Off) => "关",
+                _ => "开",
             },
             Chip::Sneak => config.sneak.label(),
-            Chip::Anchor if config.fixed_stick => "Fixed",
-            Chip::Anchor => "Float",
-            Chip::Delete => "Del",
+            Chip::Anchor if config.fixed_stick => "固定",
+            Chip::Anchor => "跟随",
+            Chip::Delete => "删除",
         };
         label(ui, c, r, text, ink(1.0));
     }
@@ -413,7 +413,7 @@ pub(super) fn draw_editor(
         (x0 + x1) / 2.0 / d,
         (y - 0.75 * u) / d,
         ink(1.0),
-        &format!("Opacity ({whose}): {:.0}%", value * 100.0),
+        &format!("不透明度（{whose}）：{:.0}%", value * 100.0),
     );
     for (action, c, r) in LayoutEditor::bar(w, h) {
         let fill = match action {
@@ -428,24 +428,24 @@ pub(super) fn draw_editor(
         };
         circle(ui, c, r, fill);
         let text = match action {
-            EditorAction::Done => "Done",
-            EditorAction::Reset => "Reset",
-            EditorAction::Add => "Add",
+            EditorAction::Done => "完成",
+            EditorAction::Reset => "重置",
+            EditorAction::Add => "添加",
             // The movement control picked (a press switches it): auto is the D-pad where the
             // stick moves as the keys.
             EditorAction::Movement => match config.dpad {
-                Some(true) => "D-pad",
-                Some(false) => "Stick",
-                None => "Auto",
+                Some(true) => "方向键",
+                Some(false) => "摇杆",
+                None => "自动",
             },
             // What a tap and a press act on: what is touched, or the crosshair's.
             EditorAction::Interact => config.interact.label(),
-            EditorAction::Vibrate if config.vibrate => "Vib on",
-            EditorAction::Vibrate => "Vib off",
-            EditorAction::Gyro if config.gyro => "Gyro on",
-            EditorAction::Gyro => "Gyro off",
-            EditorAction::ThreeFingers if config.three_fingers => "3-tap on",
-            EditorAction::ThreeFingers => "3-tap off",
+            EditorAction::Vibrate if config.vibrate => "振动开",
+            EditorAction::Vibrate => "振动关",
+            EditorAction::Gyro if config.gyro => "陀螺仪开",
+            EditorAction::Gyro => "陀螺仪关",
+            EditorAction::ThreeFingers if config.three_fingers => "三指点按开",
+            EditorAction::ThreeFingers => "三指点按关",
         };
         label(ui, c, r, text, ink(1.0));
     }

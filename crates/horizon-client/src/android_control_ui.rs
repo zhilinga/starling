@@ -5075,12 +5075,12 @@ pub fn draw_hud_editor(
                         "starling.controls_ui.fmt_mcpe_custom_button_hole",
                         &[&(lbl)],
                     ),
-                    "Exclusive Binding (Keyboard OR Mouse) • Icon, style & geometry",
+                    "独占绑定（键盘或鼠标）• 图标、样式与几何",
                 )
             } else {
                 (
                     crate::lang::tr("starling.controls_ui.fmt_goycontrol_button_hole", &[&(lbl)]),
-                    "Customize visual style, icon badge, geometry, stroke & events",
+                    "自定义视觉样式、图标徽标、几何、描边与事件",
                 )
             }
         } else if let Some(c) = ed.selected {
@@ -5089,13 +5089,10 @@ pub fn draw_hud_editor(
                     "starling.controls_ui.fmt_mcpe_component_hole",
                     &[&(c.name())],
                 ),
-                "Customize style, icon, opacity, shape, stroke & visibility",
+                "自定义样式、图标、不透明度、形状、描边与可见性",
             )
         } else {
-            (
-                "Component Properties".to_owned(),
-                "Configure control appearance & behavior",
-            )
+            ("组件属性".to_owned(), "配置控件外观与行为")
         };
         let cur_pl = if let Some(idx) = ed.selected_custom {
             tc.custom_placement(idx)
@@ -5207,13 +5204,9 @@ pub fn draw_hud_editor(
         ui.rounded(wx, tab_y - 2.0, ww, 28.0, 14.0, st_inner);
         ui.border(wx, tab_y - 2.0, ww, 28.0, 14.0, st_border);
         let tab_labels = if is_joystick {
-            ["1. Stick & Style", "2. Analog Base", "3. Zone & Visibility"]
+            ["1. 摇杆与样式", "2. 模拟底盘", "3. 区域与可见性"]
         } else {
-            [
-                "1. Style & Colors",
-                "2. Shape & Stroke",
-                "3. Events & Behavior",
-            ]
+            ["1. 样式与颜色", "2. 形状与描边", "3. 事件与行为"]
         };
         for (ti, t_lbl) in tab_labels.into_iter().enumerate() {
             let tx = wx + 2.0 + ti as f32 * (tab_w + 2.0);
@@ -5278,7 +5271,7 @@ pub fn draw_hud_editor(
                     {
                         "● Style: Custom GoyControl Stick ⌄"
                     } else {
-                        "● Style: Default MCPE Stick ⌄"
+                        "● 样式：默认 MCPE 摇杆 ⌄"
                     };
                     ui.centered_fit(Face::SemiBold, 8.8, st_pill_r, st_cyan, st_lbl);
 
@@ -5657,7 +5650,7 @@ pub fn draw_hud_editor(
                         y6 + 8.0,
                         18.0,
                         p_move.visible_in_game,
-                        "Visible in Game",
+                        "游戏内可见",
                     );
 
                     let vm_x = wx + 12.0 + third + 4.0;
@@ -5690,7 +5683,7 @@ pub fn draw_hud_editor(
                         y6 + 8.0,
                         18.0,
                         p_move.visible_in_menu,
-                        "Visible in Menu",
+                        "菜单内可见",
                     );
 
                     let pv_x = wx + 12.0 + (third + 4.0) * 2.0;
@@ -5760,9 +5753,9 @@ pub fn draw_hud_editor(
                         st_cyan,
                     );
                     let st_lbl = if is_goy {
-                        "● Style: Static (GoyControl) ⌄"
+                        "● 样式：静态（GoyControl）⌄"
                     } else {
-                        "● Style: Default (MCPE) ⌄"
+                        "● 样式：默认（MCPE）⌄"
                     };
                     ui.centered_fit(Face::SemiBold, 8.8, st_pill_r, st_cyan, st_lbl);
 
@@ -5787,7 +5780,7 @@ pub fn draw_hud_editor(
                     draw_m3_selector_cell(
                         &mut ui,
                         [wx + 12.0 + (cw3 + 8.0), cards_y, cw3, card_h],
-                        "Icon Badge",
+                        "图标徽标",
                         icon_lbl,
                         st_cyan,
                         st_cyan_soft,
@@ -5798,7 +5791,7 @@ pub fn draw_hud_editor(
                     draw_m3_selector_cell(
                         &mut ui,
                         [wx + 12.0 + (cw3 + 8.0) * 2.0, cards_y, cw3, card_h],
-                        "Hint Label",
+                        "提示标签",
                         &cur_hint,
                         st_cyan,
                         st_cyan_soft,
@@ -6156,7 +6149,7 @@ pub fn draw_hud_editor(
                                     ))],
                                 )
                             } else {
-                                "Inactive (Cleared)".to_owned()
+                                "未绑定（已清除）".to_owned()
                             };
                         let ms_lbl =
                             if is_ms {
@@ -6171,8 +6164,8 @@ pub fn draw_hud_editor(
                             };
                         let half_w = (ww - 24.0 - 8.0) * 0.5;
                         for (ci, (title, status, active)) in [
-                            ("KEYBOARD BINDING (EXCLUSIVE)", kb_lbl.as_str(), is_kb),
-                            ("MOUSE / ACTION BINDING (EXCLUSIVE)", ms_lbl.as_str(), is_ms),
+                            ("键盘绑定（独占）", kb_lbl.as_str(), is_kb),
+                            ("鼠标/动作绑定（独占）", ms_lbl.as_str(), is_ms),
                         ]
                         .into_iter()
                         .enumerate()
@@ -6279,34 +6272,34 @@ pub fn draw_hud_editor(
                     for (i, (lbl, on, danger)) in [
                         (
                             if p.passthrough {
-                                "Pass-Thru: ON"
+                                "穿透：开"
                             } else {
-                                "Pass-Thru: OFF"
+                                "穿透：关"
                             },
                             p.passthrough,
                             false,
                         ),
                         (
                             if p.toggleable {
-                                "Mode: Toggle"
+                                "模式：切换"
                             } else {
-                                "Mode: Hold"
+                                "模式：按住"
                             },
                             p.toggleable,
                             false,
                         ),
                         (
                             if p.swipeable {
-                                "Swipe: ON"
+                                "滑动：开"
                             } else {
-                                "Swipe: OFF"
+                                "滑动：关"
                             },
                             p.swipeable,
                             false,
                         ),
                         (
                             if ed.selected_custom.is_some() {
-                                "Delete Button"
+                                "删除按钮"
                             } else if is_vis {
                                 "Visible: YES"
                             } else {
@@ -6552,9 +6545,9 @@ pub fn draw_hud_editor(
             opt_a_r[1] + 6.0,
             if is_def { muted_c } else { text_c },
             if is_def {
-                "Option A: Replace existing preset (Protected)"
+                "选项 A：替换现有预设（受保护）"
             } else {
-                "Option A: Replace existing preset"
+                "选项 A：替换现有预设"
             },
         );
         let opt_a_sub = if is_def {
@@ -6593,7 +6586,7 @@ pub fn draw_hud_editor(
             if is_def {
                 "Protected"
             } else {
-                "Replace & Save"
+                "替换并保存"
             },
         );
 
@@ -6636,7 +6629,7 @@ pub fn draw_hud_editor(
             dx + 14.0,
             iy + 56.0,
             dw - 28.0,
-            "Tap Name or Desc to type; press Enter, then tap Create New Preset.",
+            "点名称或说明输入；按回车，然后点“创建新预设”。",
             muted_c,
         );
 
