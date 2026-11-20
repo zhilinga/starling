@@ -658,16 +658,16 @@ impl Opt {
             Opt::AndroidInputSelection => Some(
                 match s.touch.input_selection {
                     crate::android_controls::layout::InputSelection::Auto => {
-                        horizon_client::lang::get("options.inputDevice.auto")
+                        lang::get("options.inputDevice.auto")
                     }
                     crate::android_controls::layout::InputSelection::Touch => {
-                        horizon_client::lang::get("options.inputDevice.touch")
+                        lang::get("options.inputDevice.touch")
                     }
                     crate::android_controls::layout::InputSelection::KeyboardMouse => {
-                        horizon_client::lang::get("options.inputDevice.keyboardMouse")
+                        lang::get("options.inputDevice.keyboardMouse")
                     }
                     crate::android_controls::layout::InputSelection::Controller => {
-                        horizon_client::lang::get("options.inputDevice.controller")
+                        lang::get("options.inputDevice.controller")
                     }
                 }
                 .to_owned(),
