@@ -148,7 +148,7 @@ public class StarlingActivity extends NativeActivity {
                         == PackageManager.PERMISSION_GRANTED;
         String id = context.getPackageName();
         String name = id.endsWith(".dev") ? "StarlingDev"
-                : id.endsWith(".preview") ? "StarlingPreview" : "Starling";
+                : id.contains(".preview") ? "StarlingPreview" : "Starling";
         return allowed
                 ? new File(Environment.getExternalStorageDirectory(), name).getPath()
                 : null;
