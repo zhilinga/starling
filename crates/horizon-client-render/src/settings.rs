@@ -401,7 +401,8 @@ impl Settings {
             .map(|dir| crate::mod_list::ModList::load(&crate::logging::shared_dir(dir)))
             .unwrap_or_default();
         let keypad = crate::keypad::Settings::load(&path.with_file_name("horizon-keypad.json"));
-        let settings = match fs::read(path) {
+        #[allow(unused_mut)]
+        let mut settings = match fs::read(path) {
             Ok(bytes) => Self {
                 horizon,
                 controller,
@@ -419,6 +420,19 @@ impl Settings {
                 ..Self::default()
             },
         };
+        // Android: a copy installed over an earlier build inherits an options.txt
+        // written with the old English default. Treat that as unset once, so the
+        // app opens in Chinese without wiping the player's settings or files.
+        #[cfg(target_os = "android")]
+        {
+            let marker = path.with_file_name(".starling-language-initialized");
+            if !marker.exists() {
+                if settings.language == "en_us" {
+                    settings.language = "zh_cn".to_owned();
+                }
+                let _ = fs::write(&marker, b"1");
+            }
+        }
         settings.describe_for_crashes();
         // Options.load: the backend asked for at startup, what a restart is measured from.
         Self {
