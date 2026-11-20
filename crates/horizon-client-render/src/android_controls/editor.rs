@@ -387,31 +387,27 @@ impl TouchControls {
     }
     pub(super) fn draw_editor_toolbar(&self, b: &mut HudBatch, a: &HudAtlas) {
         for (rect, label, on) in [
-            ([0.02, 0.04, 0.105, 0.075], "Done".to_owned(), false),
-            ([0.135, 0.04, 0.105, 0.075], "Cancel".to_owned(), false),
-            ([0.25, 0.04, 0.105, 0.075], "Reset".to_owned(), false),
+            ([0.02, 0.04, 0.105, 0.075], "完成".to_owned(), false),
+            ([0.135, 0.04, 0.105, 0.075], "取消".to_owned(), false),
+            ([0.25, 0.04, 0.105, 0.075], "重置".to_owned(), false),
             (
                 [0.365, 0.04, 0.14, 0.075],
                 format!(
-                    "Grid: {}",
+                    "网格：{}",
                     if self.settings.snap_to_grid {
-                        "On"
+                        "开"
                     } else {
-                        "Off"
+                        "关"
                     }
                 ),
                 self.settings.snap_to_grid,
             ),
             (
                 [0.515, 0.04, 0.22, 0.075],
-                format!("Profile: {}", self.settings.active_profile),
+                format!("配置：{}", self.settings.active_profile),
                 false,
             ),
-            (
-                [0.02, 0.13, 0.335, 0.075],
-                "Add buttons...".to_owned(),
-                false,
-            ),
+            ([0.02, 0.13, 0.335, 0.075], "添加按钮…".to_owned(), false),
         ] {
             plate(b, a, rect, &label, on);
         }
@@ -422,19 +418,19 @@ impl TouchControls {
         let (w, h) = (b.width, b.height);
         let text = rgba(245, 245, 245, 255);
         if let Some(selected) = e.selected {
-            plate(b, a, [0.32, 0.88, 0.36, 0.07], "Remove button", false);
+            plate(b, a, [0.32, 0.88, 0.36, 0.07], "删除按钮", false);
             let p = self.placement(selected);
-            plate(b, a, [0.32, 0.46, 0.115, 0.06], "PassThru", p.passthrough);
-            plate(b, a, [0.442, 0.46, 0.115, 0.06], "Toggle", p.toggleable);
-            plate(b, a, [0.565, 0.46, 0.115, 0.06], "Swipe", p.swipeable);
+            plate(b, a, [0.32, 0.46, 0.115, 0.06], "穿透", p.passthrough);
+            plate(b, a, [0.442, 0.46, 0.115, 0.06], "切换", p.toggleable);
+            plate(b, a, [0.565, 0.46, 0.115, 0.06], "滑动", p.swipeable);
             plate(
                 b,
                 a,
                 [0.32, 0.79, 0.17, 0.07],
-                "Opacity",
+                "不透明度",
                 e.option == Some(1),
             );
-            plate(b, a, [0.51, 0.79, 0.17, 0.07], "Size", e.option == Some(0));
+            plate(b, a, [0.51, 0.79, 0.17, 0.07], "大小", e.option == Some(0));
             if let Some(option) = e.option {
                 b.fill(
                     a,
@@ -449,9 +445,9 @@ impl TouchControls {
                     a,
                     [0.32, 0.61, 0.36, 0.06],
                     if e.apply_all {
-                        "Apply to all: On"
+                        "应用到全部：开"
                     } else {
-                        "Apply to all: Off"
+                        "应用到全部：关"
                     },
                     e.apply_all,
                 );
@@ -515,7 +511,7 @@ impl TouchControls {
         if e.error.is_some() {
             b.text(
                 a,
-                "Save failed. Retry Done.",
+                "保存失败，请重试完成。",
                 w * 0.33,
                 h * 0.88,
                 rgba(255, 120, 120, 255),
@@ -865,7 +861,7 @@ impl TouchControls {
     fn draw_custom_editor(&self, b: &mut HudBatch, a: &HudAtlas, e: &Editor) {
         let (w, h) = (b.width, b.height);
         if e.palette {
-            plate(b, a, [0.22, 0.84, 0.56, 0.07], "Create button...", false);
+            plate(b, a, [0.22, 0.84, 0.56, 0.07], "创建按钮…", false);
         }
         if let Some(i) = e.selected_custom
             && let Some(btn) = self.settings.custom_buttons.get(i)
@@ -880,7 +876,7 @@ impl TouchControls {
                 b,
                 a,
                 [0.32, 0.54, 0.36, 0.07],
-                &format!("Action: {}", btn.label()),
+                &format!("动作：{}", btn.label()),
                 false,
             );
             plate(

@@ -42,8 +42,8 @@ LABEL = "Starling"
 # CI builds, signed with that repository's test key: the release key stays out of it.
 DEV_SUFFIX = ".dev"
 VARIANTS = {"dev": (DEV_SUFFIX, " Dev"), "preview": (".preview.Test", " Preview Test")}
-VERSION_NAME = "0.8.0"
-VERSION_CODE = 13
+VERSION_NAME = "0.8.1"
+VERSION_CODE = 14
 MIN_SDK = 26  # AAudio (cpal)
 TARGET_SDK = 35
 PLATFORM = 36

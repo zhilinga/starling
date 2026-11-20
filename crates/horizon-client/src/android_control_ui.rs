@@ -4743,7 +4743,7 @@ pub fn draw_hud_editor(
                 8.0,
                 [rx, ry + rh - 11.0, rw, 10.0],
                 color::hex(0xFBBF24, 220),
-                "HIDDEN",
+                "隐藏",
             );
         }
         if is_sel {
@@ -5059,8 +5059,8 @@ pub fn draw_hud_editor(
         let is_mcpe_mode = tc.settings.control_style == ControlStyle::Mcpe;
         let (header_txt, sub_txt) = if is_joystick {
             (
-                "Joystick & Analog Base Inspector".to_owned(),
-                "Customize stick knob, analog base ring, active zone & visibility",
+                "摇杆与模拟底盘检查器".to_owned(),
+                "自定义摇杆头、模拟底盘环、活动区域与可见性",
             )
         } else if let Some(idx) = ed.selected_custom {
             let lbl = tc
