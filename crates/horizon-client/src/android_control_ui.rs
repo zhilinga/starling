@@ -3309,8 +3309,8 @@ impl TouchUi {
                     ui.border(rx, act_y, half_w, 44.0, 11.0, border_c);
                     ui.rounded(rx + 10.0, act_y + 9.0, 26.0, 26.0, 8.0, card_sel);
                     ui.icon(ic, rx + 15.0, act_y + 14.0, 16.0, accent_hi);
-                    ui.text(Face::SemiBold, 10.6, rx + 42.0, act_y + 6.0, text_c, title);
-                    ui.text(Face::Regular, 8.8, rx + 42.0, act_y + 23.0, muted_c, sub);
+                    ui.text(Face::SemiBold, 10.6, rx + 42.0, act_y + 6.0, text_c, &title);
+                    ui.text(Face::Regular, 8.8, rx + 42.0, act_y + 23.0, muted_c, &sub);
                     ui.text(
                         Face::SemiBold,
                         13.0,
