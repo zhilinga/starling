@@ -37,13 +37,13 @@ fn shader_folder_note() -> String {
         .join("shaderpacks");
     if cfg!(target_os = "android") {
         if crate::logging::game_home() == crate::logging::private_home() {
-            return "In the app's own files: Open Pack Folder to reach them".into();
+            return "在应用自己的文件夹中：点“打开资源包文件夹”即可访问".into();
         }
         if let Ok(shared) = dir.strip_prefix("/storage/emulated/0") {
-            return format!("Folder: {}", shared.display());
+            return format!("文件夹：{}", shared.display());
         }
     }
-    clipped(&format!("Folder: {}", dir.display()), 52)
+    clipped(&format!("文件夹：{}", dir.display()), 52)
 }
 fn generic(caption: &str, value: Text) -> Text {
     Text::translate("options.generic_value", &[tr(caption), value])
@@ -4094,15 +4094,15 @@ impl OptionsUi {
                         && !crate::graphics::light_shader_pack(pack)
                         && scale > limit;
                     let resolution = if limited {
-                        format!("Resolution: {limit}% (Auto)")
+                        format!("分辨率：{limit}%（自动）")
                     } else {
-                        format!("Resolution: {scale}%")
+                        format!("分辨率：{scale}%")
                     };
                     let fps = match s.max_fps {
-                        fps if fps >= 260 => "Off".to_owned(),
+                        fps if fps >= 260 => "关闭".to_owned(),
                         fps => fps.to_string(),
                     };
-                    rows.push(Row::Note("Settings of the pack on".into()));
+                    rows.push(Row::Note("当前光影包设置".into()));
                     rows.push(Row::Buttons(
                         button(
                             0.0,
@@ -4115,7 +4115,7 @@ impl OptionsUi {
                             0.0,
                             0.0,
                             150.0,
-                            Text::literal(format!("FPS Limit: {fps}")),
+                            Text::literal(format!("帧率上限：{fps}")),
                             Act::ShaderFpsLimit,
                         )),
                     ));
@@ -4131,8 +4131,8 @@ impl OptionsUi {
                     }
                     if horizon.is_none() {
                         let shown = match profile.as_str() {
-                            "" => "Pack Default",
-                            crate::graphics::AUTO_PROFILE => "Auto",
+                            "" => "光影包默认",
+                            crate::graphics::AUTO_PROFILE => "自动",
                             profile => profile,
                         };
                         rows.push(Row::Buttons(
@@ -4140,7 +4140,7 @@ impl OptionsUi {
                                 0.0,
                                 0.0,
                                 150.0,
-                                Text::literal(format!("Profile: {shown}")),
+                                Text::literal(format!("配置：{shown}")),
                                 Act::PackProfile,
                             ),
                             Some(button(
@@ -4154,10 +4154,10 @@ impl OptionsUi {
                     }
                 }
                 rows.push(Row::Note(
-                    "Horizon's own packs, and Iris and OptiFine ones".into(),
+                    "Horizon 自带的光影包，以及 Iris 和 OptiFine 格式".into(),
                 ));
                 rows.push(Row::Note(shader_folder_note()));
-                rows.push(pick(choice.is_none(), "Off", Act::PickShaderPack(None)));
+                rows.push(pick(choice.is_none(), "关闭", Act::PickShaderPack(None)));
                 if s.shader_packs.is_empty() {
                     rows.push(Row::Header("horizon.shader_packs.empty"));
                 }
