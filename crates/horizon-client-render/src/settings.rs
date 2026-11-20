@@ -426,12 +426,13 @@ impl Settings {
         #[cfg(target_os = "android")]
         {
             let marker = path.with_file_name(".starling-language-initialized");
-            if !marker.exists() {
+            let marker_value = fs::read(&marker).unwrap_or_default();
+            if marker_value != b"2" {
                 if settings.language == "en_us" {
                     settings.language = "zh_cn".to_owned();
                     let _ = fs::write(path, settings.serialize());
                 }
-                let _ = fs::write(&marker, b"1");
+                let _ = fs::write(&marker, b"2");
             }
         }
         settings.describe_for_crashes();
