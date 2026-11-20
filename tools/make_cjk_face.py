@@ -34,7 +34,7 @@ SOURCE_URL = (
     "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/"
     "NotoSansSC%5Bwght%5D.ttf"
 )
-SOURCE_SHA256 = ""  # 首次运行时打印，填入以固定版本
+SOURCE_SHA256 = "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da"  # 首次运行时打印，填入以固定版本
 
 # 每套 Geist 字重对应的 Noto 字重。
 FACES = {

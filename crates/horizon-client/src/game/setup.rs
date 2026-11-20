@@ -161,7 +161,13 @@ fn step(setup: &Setup, failure: &str) -> Step {
         return Step::Done;
     }
     if setup.prepared && preparer::stage() == Stage::Idle {
-        return Step::Failed(format!("The prepared game files did not load: {failure}"));
+        return Step::Failed(format!(
+            "{}: {failure}",
+            t(
+                "starling.setup.load_failed",
+                "The prepared game files did not load"
+            )
+        ));
     }
     match preparer::stage() {
         Stage::Java(done, total) => return Step::Java(done, total),
@@ -281,76 +287,147 @@ fn mb(bytes: u64) -> String {
     format!("{:.0}", bytes as f64 / 1_000_000.0)
 }
 
+fn t(key: &str, fallback: &str) -> String {
+    horizon_client::lang::get_or(key, fallback)
+}
+
 /// What the step says: title, body, and the line under it.
-fn texts(step: &Step) -> (&'static str, String, Option<String>) {
+fn texts(step: &Step) -> (String, String, Option<String>) {
     match step {
         #[cfg(target_os = "android")]
         Step::Folder(stage) => {
             let [title, body, ..] = super::files_offer::texts(*stage);
-            (title, body.into(), None)
+            (title, body, None)
         }
         #[cfg(target_os = "android")]
         Step::Horizon(false) => (
-            "Coming from Horizon Android?",
-            "Horizon Android is part of Starling now: bring your worlds and resource packs over. \
-             Close Horizon Android first, then, in the folder that opens, tap Use this folder and \
-             Allow."
-                .into(),
-            Some("They are copied: Horizon Android keeps its own.".into()),
+            t(
+                "starling.files.horizon.title",
+                "Coming from Horizon Android?",
+            ),
+            t(
+                "starling.files.horizon.body",
+                "Horizon Android is part of Starling now: bring your worlds and resource packs over. Close Horizon Android first, then, in the folder that opens, tap Use this folder and Allow.",
+            ),
+            Some(t(
+                "starling.files.horizon.note",
+                "They are copied: Horizon Android keeps its own.",
+            )),
         ),
         #[cfg(target_os = "android")]
         Step::Horizon(true) => (
-            "Coming from Horizon Android?",
-            "Your worlds and resource packs are on their way: the note at the top says what each \
-             one added. Tap Next when they are in."
-                .into(),
+            t(
+                "starling.files.horizon.title",
+                "Coming from Horizon Android?",
+            ),
+            t(
+                "starling.setup.horizon.done_body",
+                "Your worlds and resource packs are on their way: the note at the top says what each one added. Tap Next when they are in.",
+            ),
             None,
         ),
-        Step::Start => ("Set up Starling", tr("setup.intro"), None),
+        Step::Start => (
+            t("starling.setup.title", "Set up Starling"),
+            tr("setup.intro"),
+            None,
+        ),
         Step::Offline => (
-            "Are you sure?",
-            "You will not be able to play on most servers! We highly recommend signing in with \
-             Microsoft."
-                .into(),
+            t("starling.setup.offline.title", "Are you sure?"),
+            t(
+                "starling.setup.offline.body",
+                "You will not be able to play on most servers! We highly recommend signing in with Microsoft.",
+            ),
             None,
         ),
-        Step::Talking(message) => ("Set up Starling", message.clone(), None),
-        Step::AccountForm => ("Set up Starling", String::new(), None),
+        Step::Talking(message) => (
+            t("starling.setup.title", "Set up Starling"),
+            message.clone(),
+            None,
+        ),
+        Step::AccountForm => (
+            t("starling.setup.title", "Set up Starling"),
+            String::new(),
+            None,
+        ),
         Step::Code { link, .. } => (
-            "Sign in with Microsoft",
-            format!("On {link}, enter this code:"),
+            t("starling.setup.code.title", "Sign in with Microsoft"),
+            horizon_client::lang::tr(
+                "starling.setup.code.body",
+                &[link as &dyn std::fmt::Display],
+            ),
             Some(tr("waiting_browser")),
         ),
-        Step::Download([files, files_total, bytes, bytes_total]) => (
-            "Downloading the game",
-            "From Mojang's servers, checked file by file.".into(),
-            Some(if *bytes_total > 0 {
-                format!(
-                    "{files} of {files_total} files, {} of {} MB",
-                    mb(*bytes),
-                    mb(*bytes_total)
-                )
-            } else {
-                "Checking the files".into()
-            }),
+        Step::Download([files, files_total, bytes, bytes_total]) => {
+            let files = files.to_string();
+            let files_total = files_total.to_string();
+            let bytes = mb(*bytes);
+            let bytes_total_bytes = *bytes_total;
+            let bytes_total = mb(bytes_total_bytes);
+            (
+                t("starling.setup.download.title", "Downloading the game"),
+                t(
+                    "starling.setup.download.body",
+                    "From Mojang's servers, checked file by file.",
+                ),
+                Some(if bytes_total_bytes > 0 {
+                    horizon_client::lang::tr(
+                        "starling.setup.download.progress",
+                        &[
+                            &files as &dyn std::fmt::Display,
+                            &files_total as &dyn std::fmt::Display,
+                            &bytes as &dyn std::fmt::Display,
+                            &bytes_total as &dyn std::fmt::Display,
+                        ],
+                    )
+                } else {
+                    t("starling.setup.download.checking", "Checking the files")
+                }),
+            )
+        }
+        Step::Java(done, total) => {
+            let done = mb(*done);
+            let total_bytes = *total;
+            let total = mb(total_bytes);
+            (
+                t("starling.setup.java.title", "Preparing the game"),
+                t(
+                    "starling.setup.java.body",
+                    "Downloading Java, which prepares the game files.",
+                ),
+                (total_bytes > 0).then(|| {
+                    horizon_client::lang::tr(
+                        "starling.setup.java.progress",
+                        &[
+                            &done as &dyn std::fmt::Display,
+                            &total as &dyn std::fmt::Display,
+                        ],
+                    )
+                }),
+            )
+        }
+        Step::Unpacking => (
+            t("starling.setup.java.title", "Preparing the game"),
+            t("starling.setup.unpacking.body", "Unpacking Java."),
+            None,
         ),
-        Step::Java(done, total) => (
-            "Preparing the game",
-            "Downloading Java, which prepares the game files.".into(),
-            (*total > 0).then(|| format!("{} of {} MB", mb(*done), mb(*total))),
-        ),
-        Step::Unpacking => ("Preparing the game", "Unpacking Java.".into(), None),
         Step::Preparing(line) => (
-            "Preparing the game",
-            "This takes a few minutes. Keep Starling open.".into(),
+            t("starling.setup.java.title", "Preparing the game"),
+            t(
+                "starling.setup.preparing.body",
+                "This takes a few minutes. Keep Starling open.",
+            ),
             Some(line.clone()),
         ),
         Step::Done => (
-            "Starting Starling",
-            "The game files are ready.".into(),
+            t("starling.setup.done.title", "Starting Starling"),
+            t("starling.setup.done.body", "The game files are ready."),
             None,
         ),
-        Step::Failed(e) | Step::SignInFailed(e) => ("Something went wrong", e.clone(), None),
+        Step::Failed(e) | Step::SignInFailed(e) => (
+            t("starling.setup.failed.title", "Something went wrong"),
+            e.clone(),
+            None,
+        ),
     }
 }
 
@@ -366,25 +443,30 @@ fn fraction(step: &Step) -> Option<f32> {
 
 /// The buttons, the main one first (drawn on the right).
 fn buttons(step: &Step) -> Vec<(String, Action)> {
-    let literal = |text: &str, action| (text.to_owned(), action);
+    let literal = |key: &str, fallback: &str, action| (t(key, fallback), action);
     match step {
         #[cfg(target_os = "android")]
         Step::Folder(stage) => {
             let [_, _, primary, other] = super::files_offer::texts(*stage);
-            vec![
-                literal(primary, Action::Folder),
-                literal(other, Action::FolderLater),
-            ]
+            vec![(primary, Action::Folder), (other, Action::FolderLater)]
         }
         #[cfg(target_os = "android")]
         Step::Horizon(false) => vec![
-            literal("Bring them over", Action::Horizon),
-            literal("Skip", Action::HorizonDone),
+            literal(
+                "starling.setup.bring_over",
+                "Bring them over",
+                Action::Horizon,
+            ),
+            literal("starling.setup.skip", "Skip", Action::HorizonDone),
         ],
         #[cfg(target_os = "android")]
         Step::Horizon(true) => vec![
-            literal("Next", Action::HorizonDone),
-            literal("Pick the folder again", Action::Horizon),
+            literal("starling.setup.next", "Next", Action::HorizonDone),
+            literal(
+                "starling.setup.pick_folder",
+                "Pick the folder again",
+                Action::Horizon,
+            ),
         ],
         Step::Start => vec![
             (tr("setup.microsoft"), Action::SignIn),
@@ -403,17 +485,17 @@ fn buttons(step: &Step) -> Vec<(String, Action)> {
         ],
         Step::Talking(_) => vec![(tr("cancel"), Action::CancelSignIn)],
         Step::Failed(_) => vec![
-            literal("Try again", Action::Retry),
+            literal("starling.setup.try_again", "Try again", Action::Retry),
             (tr("setup.import"), Action::Pick),
         ],
         Step::SignInFailed(_) => vec![
-            literal("Try again", Action::Retry),
+            literal("starling.setup.try_again", "Try again", Action::Retry),
             (tr("back"), Action::AccountBack),
             (tr("setup.offline_title"), Action::Offline),
         ],
         step if waiting(step) => vec![
-            literal("Go fishing", Action::Fish),
-            literal("Settings", Action::Settings),
+            literal("starling.setup.go_fishing", "Go fishing", Action::Fish),
+            literal("starling.setup.settings", "Settings", Action::Settings),
         ],
         _ => Vec::new(),
     }
@@ -612,7 +694,7 @@ impl Loading {
         };
         ui.rounded(x, y, card_w, card_h, 14.0, card);
         ui.border(x, y, card_w, card_h, 14.0, color::BORDER);
-        ui.text(Face::Semibold, 18.0, x + pad, y + pad, color::TEXT, title);
+        ui.text(Face::Semibold, 18.0, x + pad, y + pad, color::TEXT, &title);
         let mut ty = y + pad + 26.0 + 12.0;
         for line in &lines {
             ui.text(Face::Regular, 14.0, x + pad, ty, color::MUTED, line);
@@ -714,7 +796,7 @@ impl Loading {
                 rect[0] + rect[2] / 2.0,
                 rect[1] + 9.0,
                 color::TEXT,
-                "Back",
+                &t("starling.setup.back", "Back"),
             );
             drawn[0] = Some((rect, Action::Back));
         }

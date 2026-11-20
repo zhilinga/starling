@@ -9486,7 +9486,7 @@ mod tests {
                 assert!(ui.center_language);
             }
             assert!(ui.back(&mut s).contains(&Event::Close));
-            assert_eq!(s.language, "en_us");
+            assert_eq!(s.language, "zh_cn");
             ui.open(false);
             ui.show(page);
             assert!(!ui.back(&mut s).contains(&Event::Close));

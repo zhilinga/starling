@@ -57,49 +57,71 @@ pub(super) fn declined() -> PathBuf {
     horizon_client::logging::private_home().join("files-offer-declined")
 }
 
-pub(super) fn texts(stage: Stage) -> [&'static str; 4] {
+fn t(key: &str, fallback: &str) -> String {
+    horizon_client::lang::get_or(key, fallback)
+}
+
+pub(super) fn texts(stage: Stage) -> [String; 4] {
     match stage {
         Stage::Ask => [
-            "Keep your files where you can reach them",
-            "Starling can keep your worlds, packs, mods and screenshots in a Starling folder on \
-             your phone's storage, which any file manager (and a computer over USB) opens. \
-             Android will ask you to allow access to files for that.",
-            "Set up",
-            "Not now",
+            t(
+                "starling.files.ask.title",
+                "Keep your files where you can reach them",
+            ),
+            t(
+                "starling.files.ask.body",
+                "Starling can keep your worlds, packs, mods and screenshots in a Starling folder on your phone's storage, which any file manager (and a computer over USB) opens. Android will ask you to allow access to files for that.",
+            ),
+            t("starling.files.set_up", "Set up"),
+            t("starling.files.not_now", "Not now"),
         ],
         Stage::Waiting => [
-            "Allow access to files",
-            "Turn on the switch for Starling in the screen that opened, then come back here.",
-            "Open it again",
-            "Not now",
+            t("starling.files.waiting.title", "Allow access to files"),
+            t(
+                "starling.files.waiting.body",
+                "Turn on the switch for Starling in the screen that opened, then come back here.",
+            ),
+            t("starling.files.open_again", "Open it again"),
+            t("starling.files.not_now", "Not now"),
         ],
         Stage::Restart => [
-            "All set",
-            "Restart Starling to move your worlds, packs and settings into the Starling folder. \
-             It copies them first: nothing is lost.",
-            "Restart now",
-            "Later",
+            t("starling.files.restart.title", "All set"),
+            t(
+                "starling.files.restart.body",
+                "Restart Starling to move your worlds, packs and settings into the Starling folder. It copies them first: nothing is lost.",
+            ),
+            t("starling.files.restart_now", "Restart now"),
+            t("starling.files.later", "Later"),
         ],
     }
 }
 
-fn card_texts(card: Card) -> [&'static str; 4] {
+fn card_texts(card: Card) -> [String; 4] {
     match card {
         Card::Folder(stage) => texts(stage),
         Card::Horizon(false) => [
-            "Coming from Horizon Android?",
-            "Horizon Android is part of Starling now: bring your worlds and resource packs over. \
-             Close Horizon Android first, then, in the folder that opens, tap Use this folder and \
-             Allow. They are copied: Horizon Android keeps its own.",
-            "Bring them over",
-            "Not now",
+            t(
+                "starling.files.horizon.title",
+                "Coming from Horizon Android?",
+            ),
+            t(
+                "starling.files.horizon.body",
+                "Horizon Android is part of Starling now: bring your worlds and resource packs over. Close Horizon Android first, then, in the folder that opens, tap Use this folder and Allow. They are copied: Horizon Android keeps its own.",
+            ),
+            t("starling.files.bring_over", "Bring them over"),
+            t("starling.files.not_now", "Not now"),
         ],
         Card::Horizon(true) => [
-            "Coming from Horizon Android?",
-            "Your worlds and resource packs are on their way: the note at the top says what each \
-             one added. Tap Done when they are in.",
-            "Done",
-            "Pick the folder again",
+            t(
+                "starling.files.horizon.title",
+                "Coming from Horizon Android?",
+            ),
+            t(
+                "starling.files.horizon.done_body",
+                "Your worlds and resource packs are on their way: the note at the top says what each one added. Tap Done when they are in.",
+            ),
+            t("starling.files.done", "Done"),
+            t("starling.files.pick_folder", "Pick the folder again"),
         ],
     }
 }
@@ -177,15 +199,28 @@ impl Game<'_> {
         let card_w = (w - 48.0).min(470.0);
         let pad = 22.0;
         let mut lines = Vec::new();
-        let mut line = String::new();
+        let max = card_w - 2.0 * pad;
+        let mut words = Vec::new();
         for word in body.split(' ') {
+            let mut piece = String::new();
+            for ch in word.chars() {
+                piece.push(ch);
+                if piece.chars().count() > 1 && ui.measure(Face::Regular, 14.0, &piece) > max {
+                    piece.pop();
+                    words.push(std::mem::replace(&mut piece, ch.to_string()));
+                }
+            }
+            words.push(piece);
+        }
+        let mut line = String::new();
+        for word in words {
             let next = if line.is_empty() {
-                word.to_owned()
+                word.clone()
             } else {
                 format!("{line} {word}")
             };
-            if !line.is_empty() && ui.measure(Face::Regular, 14.0, &next) > card_w - 2.0 * pad {
-                lines.push(std::mem::replace(&mut line, word.to_owned()));
+            if !line.is_empty() && ui.measure(Face::Regular, 14.0, &next) > max {
+                lines.push(std::mem::replace(&mut line, word));
             } else {
                 line = next;
             }
@@ -196,7 +231,7 @@ impl Game<'_> {
         let (x, y) = ((w - card_w) / 2.0, ((h - card_h) / 2.0).max(8.0));
         ui.rounded(x, y, card_w, card_h, 14.0, color::BG);
         ui.border(x, y, card_w, card_h, 14.0, color::BORDER);
-        ui.text(Face::Semibold, 18.0, x + pad, y + pad, color::TEXT, title);
+        ui.text(Face::Semibold, 18.0, x + pad, y + pad, color::TEXT, &title);
         let mut ty = y + pad + 26.0 + 12.0;
         for line in &lines {
             ui.text(Face::Regular, 14.0, x + pad, ty, color::MUTED, line);
@@ -217,7 +252,7 @@ impl Game<'_> {
                 rect[0] + rect[2] / 2.0,
                 rect[1] + (rect[3] - 15.0) / 2.0 - 2.0,
                 ink,
-                text,
+                &text,
             );
         }
         ui.finish();
