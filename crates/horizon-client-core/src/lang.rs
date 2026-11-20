@@ -107,6 +107,9 @@ impl ResourceSource for Bundled {
             | "assets/horizon/lang/es_ve.json" => {
                 include_str!("../../horizon-client/assets/horizon/lang/es_es.json")
             }
+            "assets/horizon/lang/ms_my.json" => {
+                include_str!("../../horizon-client/assets/horizon/lang/ms_my.json")
+            }
             _ => return None,
         };
         Some(body.as_bytes().to_vec())
