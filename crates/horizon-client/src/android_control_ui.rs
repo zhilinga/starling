@@ -1252,7 +1252,10 @@ fn draw_input_picker_modal(
             } else if mcpe_exclusive {
                 "MCPE Custom Button — Choose Exclusive Binding".to_owned()
             } else {
-                format!("Assign Event Slot #{} — Choose Input Type", event_slot + 1)
+                crate::lang::tr(
+                    "starling.controls_ui.fmt_assign_event_slot_hole_choose_input_type",
+                    &[&(event_slot + 1)],
+                )
             };
             let sub_str = if for_custom_send {
                 "Tap any physical key, use System Keyboard, or pick from the PC layout below."
@@ -1367,9 +1370,9 @@ fn draw_input_picker_modal(
             } else if mcpe_exclusive {
                 "MCPE Exclusive Keyboard Binding (Clears Mouse)".to_owned()
             } else {
-                format!(
-                    "Event Slot #{} — Full PC Keyboard (Tap or Swipe)",
-                    event_slot + 1
+                crate::lang::tr(
+                    "starling.controls_ui.fmt_event_slot_hole_full_pc_keyboard_tap_or_swipe",
+                    &[&(event_slot + 1)],
                 )
             };
             ui.text_clipped(
@@ -1443,9 +1446,9 @@ fn draw_input_picker_modal(
             } else if mcpe_exclusive {
                 "MCPE Exclusive Mouse/Action Binding (Clears Keyboard Binding)".to_owned()
             } else {
-                format!(
-                    "Event Slot #{} — Mouse Buttons, Wheel, Look & Actions",
-                    event_slot + 1
+                crate::lang::tr(
+                    "starling.controls_ui.fmt_event_slot_hole_mouse_buttons_wheel_look_actions",
+                    &[&(event_slot + 1)],
                 )
             };
             ui.text(
@@ -2173,7 +2176,10 @@ impl TouchUi {
                     dlg.name_input.trim().to_owned()
                 };
                 let description = if dlg.desc_input.trim().is_empty() {
-                    format!("Custom {} layout", settings.control_style.label())
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_custom_hole_layout",
+                        &[&(settings.control_style.label())],
+                    )
                 } else {
                     dlg.desc_input.trim().to_owned()
                 };
@@ -2222,7 +2228,10 @@ impl TouchUi {
                     self.preset_dialog = Some(PresetDialogState {
                         is_copy: true,
                         target_id: preset.id.clone(),
-                        name_input: format!("{} Copy", preset.name),
+                        name_input: crate::lang::tr(
+                            "starling.controls_ui.fmt_hole_copy",
+                            &[&(preset.name)],
+                        ),
                         desc_input: preset.description.clone(),
                         editing_desc: false,
                     });
@@ -3153,7 +3162,10 @@ impl TouchUi {
 
                 let act_y = body_y + 342.0;
                 let half_w = (cw - 10.0) * 0.5;
-                let sys_sub = format!("Active: {}", settings.control_style.label());
+                let sys_sub = crate::lang::tr(
+                    "starling.controls_ui.fmt_active_hole",
+                    &[&(settings.control_style.label())],
+                );
                 for (i, (ic, title, sub)) in [
                     (Icon::Gamepad, "Switch Control System", sys_sub.as_str()),
                     (
@@ -3251,7 +3263,10 @@ impl TouchUi {
                     settings.control_style.section_title(),
                 );
                 let act_y = body_y + 84.0;
-                let active_preset_lbl = format!("Preset: {}", settings.preset_name);
+                let active_preset_lbl = crate::lang::tr(
+                    "starling.controls_ui.fmt_preset_hole",
+                    &[&(settings.preset_name)],
+                );
                 for (i, (ic, title, sub)) in [
                     (
                         Icon::MicrosoftGrid,
@@ -3403,9 +3418,9 @@ impl TouchUi {
                     crate::android_controls::Mode::Tap => "Joystick + Tap to Interact",
                 };
                 let area_lbl = settings.joystick_style.move_area.label();
-                let gyro_spd_lbl = format!(
-                    "Tilt Multiplier ({:.0}%) — Tap left (−) or right (+)",
-                    settings.gyro_sensitivity * 100.0
+                let gyro_spd_lbl = crate::lang::tr(
+                    "starling.controls_ui.fmt_tilt_multiplier_hole_tap_left_or_right",
+                    &[&format!("{:.0}", settings.gyro_sensitivity * 100.0)],
                 );
                 let step = 54.0;
                 draw_toggle_row(
@@ -3933,7 +3948,10 @@ impl TouchUi {
                 mdx + 16.0,
                 mdy + 10.0,
                 text_c,
-                &format!("{} — Control Presets", settings.control_style.label()),
+                &crate::lang::tr(
+                    "starling.controls_ui.fmt_hole_control_presets",
+                    &[&(settings.control_style.label())],
+                ),
             );
             ui.text(
                 Face::Regular,
@@ -3941,9 +3959,9 @@ impl TouchUi {
                 mdx + 16.0,
                 mdy + 27.0,
                 muted_c,
-                &format!(
-                    "Independent presets stored in controls/{}/",
-                    settings.control_style.storage_subdir()
+                &crate::lang::tr(
+                    "starling.controls_ui.fmt_independent_presets_stored_in_controls_hole",
+                    &[&(settings.control_style.storage_subdir())],
                 ),
             );
             let back_r = [mdx + mdw - 78.0, mdy + 10.0, 64.0, 28.0];
@@ -4008,7 +4026,10 @@ impl TouchUi {
                     ui.rounded(rx + 3.5, rcy + 3.5, 7.0, 7.0, 3.5, accent_hi);
                 }
                 let title = if preset.is_default {
-                    format!("{} (Protected Default)", preset.name)
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_hole_protected_default",
+                        &[&(preset.name)],
+                    )
                 } else {
                     preset.name.clone()
                 };
@@ -4577,9 +4598,9 @@ pub fn draw_hud_editor(
                 zx + 10.0,
                 zy + 8.0,
                 accent,
-                &format!(
-                    "Joystick Active Zone: {}",
-                    tc.settings.joystick_style.move_area.label()
+                &crate::lang::tr(
+                    "starling.controls_ui.fmt_joystick_active_zone_hole",
+                    &[&(tc.settings.joystick_style.move_area.label())],
                 ),
             );
         }
@@ -4737,7 +4758,10 @@ pub fn draw_hud_editor(
         }
 
         if is_sel {
-            selected_rect_and_title = Some(([rx, ry, rw, rh], format!("Button: {label}")));
+            selected_rect_and_title = Some((
+                [rx, ry, rw, rh],
+                crate::lang::tr("starling.controls_ui.fmt_button_hole", &[&(label)]),
+            ));
         }
     }
 
@@ -4758,7 +4782,10 @@ pub fn draw_hud_editor(
             ui.rounded(hx, hy, hw, hh, 3.0, accent);
             ui.border(hx, hy, hw, hh, 3.0, accent_fg);
         }
-        let tag = format!("{sel_name} (Drag corners/edges to resize)");
+        let tag = crate::lang::tr(
+            "starling.controls_ui.fmt_hole_drag_corners_edges_to_resize",
+            &[&(sel_name)],
+        );
         let tw = (ui.measure(Face::SemiBold, 9.5, &tag) + 12.0).min(w - 16.0);
         let tx = (rx + (rw - tw) * 0.5).clamp(8.0, (w - tw - 8.0).max(8.0));
         let ty = if ry > 24.0 {
@@ -5003,18 +5030,24 @@ pub fn draw_hud_editor(
                 .unwrap_or_else(|| "Button".into());
             if is_mcpe_mode {
                 (
-                    format!("MCPE Custom Button — {lbl}"),
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_mcpe_custom_button_hole",
+                        &[&(lbl)],
+                    ),
                     "Exclusive Binding (Keyboard OR Mouse) • Icon, style & geometry",
                 )
             } else {
                 (
-                    format!("GoyControl Button — {lbl}"),
+                    crate::lang::tr("starling.controls_ui.fmt_goycontrol_button_hole", &[&(lbl)]),
                     "Customize visual style, icon badge, geometry, stroke & events",
                 )
             }
         } else if let Some(c) = ed.selected {
             (
-                format!("MCPE Component — {}", c.name()),
+                crate::lang::tr(
+                    "starling.controls_ui.fmt_mcpe_component_hole",
+                    &[&(c.name())],
+                ),
                 "Customize style, icon, opacity, shape, stroke & visibility",
             )
         } else {
@@ -5030,11 +5063,13 @@ pub fn draw_hud_editor(
         } else {
             crate::android_controls::Placement::new(0.5, 0.5, 0.12)
         };
-        let telem = format!(
-            "X:{:.0}% Y:{:.0}%  •  Sz:{:.0}%",
-            cur_pl.center[0] * 100.0,
-            cur_pl.center[1] * 100.0,
-            cur_pl.size * 100.0,
+        let telem = crate::lang::tr(
+            "starling.controls_ui.fmt_x_hole_y_hole_sz_hole",
+            &[
+                &format!("{:.0}", cur_pl.center[0] * 100.0),
+                &format!("{:.0}", cur_pl.center[1] * 100.0),
+                &format!("{:.0}", cur_pl.size * 100.0),
+            ],
         );
 
         // Top Header Bar: [X] Close Button + Circular Double-Ring Preview Badge + Title/Sub + Telemetry Pill + [⛶] Center Snap + Cyan [✓ Done]
@@ -5211,15 +5246,24 @@ pub fn draw_hud_editor(
                     let card_h = 74.0;
                     for (i, (txt, frac)) in [
                         (
-                            format!("Stick Size|{:.0}%", js.stick_size * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_stick_size_hole",
+                                &[&format!("{:.0}", js.stick_size * 100.0)],
+                            ),
                             (js.stick_size - 0.20) / 0.65,
                         ),
                         (
-                            format!("Stick Alpha|{:.0}%", js.stick_opacity * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_stick_alpha_hole",
+                                &[&format!("{:.0}", js.stick_opacity * 100.0)],
+                            ),
                             (js.stick_opacity - 0.15) / 0.85,
                         ),
                         (
-                            format!("Stick Stroke|{:.1}dp", js.stick_stroke),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_stick_stroke_holedp",
+                                &[&format!("{:.1}", js.stick_stroke)],
+                            ),
                             js.stick_stroke / 8.0,
                         ),
                     ]
@@ -5380,15 +5424,24 @@ pub fn draw_hud_editor(
                     let card_h = 74.0;
                     for (i, (txt, frac)) in [
                         (
-                            format!("Base Alpha|{:.0}%", js.base_opacity * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_base_alpha_hole",
+                                &[&format!("{:.0}", js.base_opacity * 100.0)],
+                            ),
                             (js.base_opacity - 0.15) / 0.85,
                         ),
                         (
-                            format!("Base Stroke|{:.1}dp", js.base_stroke),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_base_stroke_holedp",
+                                &[&format!("{:.1}", js.base_stroke)],
+                            ),
                             js.base_stroke / 8.0,
                         ),
                         (
-                            format!("Base Round|{:.0}", js.base_roundness),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_base_round_hole",
+                                &[&format!("{:.0}", js.base_roundness)],
+                            ),
                             js.base_roundness / 50.0,
                         ),
                     ]
@@ -5502,7 +5555,10 @@ pub fn draw_hud_editor(
                     );
                     let area_y = body_y + 26.0;
                     let hw = (ww - 24.0 - 8.0) * 0.5;
-                    let area_txt = format!("Active Zone: {}", js.move_area.label());
+                    let area_txt = crate::lang::tr(
+                        "starling.controls_ui.fmt_active_zone_hole",
+                        &[&(js.move_area.label())],
+                    );
                     ui.rounded(wx + 12.0, area_y, hw, 38.0, 11.0, st_card);
                     ui.border(wx + 12.0, area_y, hw, 38.0, 11.0, st_cyan);
                     ui.centered_fit(
@@ -5512,7 +5568,10 @@ pub fn draw_hud_editor(
                         st_text,
                         &area_txt,
                     );
-                    let sz_txt = format!("Joystick Footprint|{:.0}%", p_move.size * 100.0);
+                    let sz_txt = crate::lang::tr(
+                        "starling.controls_ui.fmt_joystick_footprint_hole",
+                        &[&format!("{:.0}", p_move.size * 100.0)],
+                    );
                     let sz_x = wx + 12.0 + hw + 8.0;
                     draw_m3_stepper_cell(
                         &mut ui,
@@ -5672,7 +5731,10 @@ pub fn draw_hud_editor(
                     draw_m3_stepper_cell(
                         &mut ui,
                         [wx + 12.0, cards_y, cw3, card_h],
-                        &format!("Opacity|{:.0}%", p.opacity * 100.0),
+                        &crate::lang::tr(
+                            "starling.controls_ui.fmt_opacity_hole",
+                            &[&format!("{:.0}", p.opacity * 100.0)],
+                        ),
                         (p.opacity - 0.15) / 0.85,
                         st_cyan,
                         st_cyan_soft,
@@ -5860,19 +5922,34 @@ pub fn draw_hud_editor(
                         8.8,
                         sh_pill_r,
                         st_cyan,
-                        &format!("● Shape: {} ⌄", shape_name(p.shape)),
+                        &crate::lang::tr(
+                            "starling.controls_ui.fmt_shape_hole",
+                            &[&(shape_name(p.shape))],
+                        ),
                     );
 
                     let cards_y = body_y + 28.0;
                     let card_h = 35.0;
                     for (i, (txt, frac)) in [
                         (
-                            format!("Stroke|{:.1}dp", p.stroke_size),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_stroke_holedp",
+                                &[&format!("{:.1}", p.stroke_size)],
+                            ),
                             p.stroke_size / 8.0,
                         ),
-                        (format!("Roundness|{:.0}", p.roundness), p.roundness / 50.0),
                         (
-                            format!("Shadow|{:.1}dp", p.shadow_size),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_roundness_hole",
+                                &[&format!("{:.0}", p.roundness)],
+                            ),
+                            p.roundness / 50.0,
+                        ),
+                        (
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_shadow_holedp",
+                                &[&format!("{:.1}", p.shadow_size)],
+                            ),
                             p.shadow_size / 12.0,
                         ),
                     ]
@@ -5895,15 +5972,24 @@ pub fn draw_hud_editor(
                     let row2_y = cards_y + 39.0;
                     for (i, (txt, frac)) in [
                         (
-                            format!("Scale|{:.0}%", p.size * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_scale_hole",
+                                &[&format!("{:.0}", p.size * 100.0)],
+                            ),
                             (p.size - 0.05) / 0.39,
                         ),
                         (
-                            format!("Width|{:.0}%", p.width_ratio * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_width_hole",
+                                &[&format!("{:.0}", p.width_ratio * 100.0)],
+                            ),
                             (p.width_ratio - 0.50) / 1.50,
                         ),
                         (
-                            format!("Height|{:.0}%", p.height_ratio * 100.0),
+                            crate::lang::tr(
+                                "starling.controls_ui.fmt_height_hole",
+                                &[&format!("{:.0}", p.height_ratio * 100.0)],
+                            ),
                             (p.height_ratio - 0.50) / 1.50,
                         ),
                     ]
@@ -6019,22 +6105,28 @@ pub fn draw_hud_editor(
                             .unwrap_or("");
                         let is_kb = CustomButton::is_keyboard_binding(cur_tok);
                         let is_ms = CustomButton::is_mouse_binding(cur_tok);
-                        let kb_lbl = if is_kb {
-                            format!(
-                                "Active: {}",
-                                crate::android_controls::custom::friendly_token_name(cur_tok)
-                            )
-                        } else {
-                            "Inactive (Cleared)".to_owned()
-                        };
-                        let ms_lbl = if is_ms {
-                            format!(
-                                "Active: {}",
-                                crate::android_controls::custom::friendly_token_name(cur_tok)
-                            )
-                        } else {
-                            "Inactive (Cleared)".to_owned()
-                        };
+                        let kb_lbl =
+                            if is_kb {
+                                crate::lang::tr(
+                                    "starling.controls_ui.fmt_active_hole",
+                                    &[&(crate::android_controls::custom::friendly_token_name(
+                                        cur_tok,
+                                    ))],
+                                )
+                            } else {
+                                "Inactive (Cleared)".to_owned()
+                            };
+                        let ms_lbl =
+                            if is_ms {
+                                crate::lang::tr(
+                                    "starling.controls_ui.fmt_active_hole",
+                                    &[&(crate::android_controls::custom::friendly_token_name(
+                                        cur_tok,
+                                    ))],
+                                )
+                            } else {
+                                "Inactive (Cleared)".to_owned()
+                            };
                         let half_w = (ww - 24.0 - 8.0) * 0.5;
                         for (ci, (title, status, active)) in [
                             ("KEYBOARD BINDING (EXCLUSIVE)", kb_lbl.as_str(), is_kb),
@@ -6120,7 +6212,10 @@ pub fn draw_hud_editor(
                                 8.8,
                                 [ex + 4.0, body_y + 4.0, ew - 8.0, 16.0],
                                 if has_binding { st_cyan } else { st_muted },
-                                &format!("EVENT SLOT #{}", slot + 1),
+                                &crate::lang::tr(
+                                    "starling.controls_ui.fmt_event_slot_hole",
+                                    &[&(slot + 1)],
+                                ),
                             );
                             ui.centered_fit(
                                 Face::SemiBold,
@@ -6326,10 +6421,12 @@ pub fn draw_hud_editor(
             dx + 14.0,
             dy + 10.0,
             text_c,
-            &format!(
-                "Save {} Layout — {}",
-                tc.settings.control_style.label(),
-                tc.settings.preset_name
+            &crate::lang::tr(
+                "starling.controls_ui.fmt_save_hole_layout_hole",
+                &[
+                    &(tc.settings.control_style.label()),
+                    &(tc.settings.preset_name),
+                ],
             ),
         );
 
@@ -6421,10 +6518,12 @@ pub fn draw_hud_editor(
         let opt_a_sub = if is_def {
             "Default layout cannot be overwritten. Please create a new preset below.".to_owned()
         } else {
-            format!(
-                "Update '{}' in controls/{}/",
-                tc.settings.preset_name,
-                tc.settings.control_style.storage_subdir()
+            crate::lang::tr(
+                "starling.controls_ui.fmt_update_hole_in_controls_hole",
+                &[
+                    &(tc.settings.preset_name),
+                    &(tc.settings.control_style.storage_subdir()),
+                ],
             )
         };
         ui.text(
@@ -6547,10 +6646,12 @@ pub fn draw_hud_editor(
             dx + 44.0,
             dy + 13.0,
             text_c,
-            &format!(
-                "{} Editor — Preset: {}",
-                tc.settings.control_style.label(),
-                tc.settings.preset_name
+            &crate::lang::tr(
+                "starling.controls_ui.fmt_hole_editor_preset_hole",
+                &[
+                    &(tc.settings.control_style.label()),
+                    &(tc.settings.preset_name),
+                ],
             ),
         );
 
@@ -6580,10 +6681,12 @@ pub fn draw_hud_editor(
             dx + 14.0,
             dy + 42.0,
             accent,
-            &format!(
-                "1. {} PRESET ACTIONS (STORAGE: controls/{}/)",
-                tc.settings.control_style.section_title().to_uppercase(),
-                tc.settings.control_style.storage_subdir()
+            &crate::lang::tr(
+                "starling.controls_ui.fmt_1_hole_preset_actions_storage_controls_hole",
+                &[
+                    &(tc.settings.control_style.section_title().to_uppercase()),
+                    &(tc.settings.control_style.storage_subdir()),
+                ],
             ),
         );
         let ey = dy + 56.0;
@@ -6621,9 +6724,9 @@ pub fn draw_hud_editor(
             dx + 14.0,
             ey + 36.0,
             accent,
-            &format!(
-                "2. LOAD {} PRESET",
-                tc.settings.control_style.label().to_uppercase()
+            &crate::lang::tr(
+                "starling.controls_ui.fmt_2_load_hole_preset",
+                &[&(tc.settings.control_style.label().to_uppercase())],
             ),
         );
         let py = ey + 50.0;
@@ -6894,13 +6997,14 @@ pub fn touch_hud_editor(
                                             }
                                             ed.picker_step = PickerStep::None;
                                             ed.status_msg = Some(if is_mcpe {
-                                                format!(
-                                                    "Bound key '{lbl}' (exclusive — mouse binding cleared)."
+                                                crate::lang::tr(
+                                                    "starling.controls_ui.fmt_bound_key_hole_exclusive_mouse_binding_cleared",
+                                                    &[&(lbl)],
                                                 )
                                             } else {
-                                                format!(
-                                                    "Assigned key '{lbl}' to Event Slot #{}.",
-                                                    event_slot + 1
+                                                crate::lang::tr(
+                                                    "starling.controls_ui.fmt_assigned_key_hole_to_event_slot_hole",
+                                                    &[&(lbl), &(event_slot + 1)],
                                                 )
                                             });
                                             tc.clicked = true;
@@ -7025,7 +7129,10 @@ pub fn touch_hud_editor(
                     ed.save_dialog_open = true;
                     ed.editing_save_desc = false;
                     if ed.save_name_input.trim().is_empty() {
-                        ed.save_name_input = format!("{} Custom", tc.settings.preset_name);
+                        ed.save_name_input = crate::lang::tr(
+                            "starling.controls_ui.fmt_hole_custom",
+                            &[&(tc.settings.preset_name)],
+                        );
                     }
                     if ed.save_desc_input.trim().is_empty() {
                         ed.save_desc_input = tc.settings.preset_description.clone();
@@ -7111,12 +7218,18 @@ pub fn touch_hud_editor(
             // Option B: Create New Preset & Save
             if inside([dx + 14.0, dy + dh - 34.0, dw - 28.0, 26.0]) {
                 let name = if ed.save_name_input.trim().is_empty() {
-                    format!("{} Custom", tc.settings.preset_name)
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_hole_custom",
+                        &[&(tc.settings.preset_name)],
+                    )
                 } else {
                     ed.save_name_input.trim().to_owned()
                 };
                 let desc = if ed.save_desc_input.trim().is_empty() {
-                    format!("Custom {} layout", tc.settings.control_style.label())
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_custom_hole_layout",
+                        &[&(tc.settings.control_style.label())],
+                    )
                 } else {
                     ed.save_desc_input.trim().to_owned()
                 };
@@ -7261,9 +7374,15 @@ pub fn touch_hud_editor(
                             }
                             ed.picker_step = PickerStep::None;
                             ed.status_msg = Some(if is_mcpe {
-                                format!("Bound '{lbl}' (exclusive — keyboard binding cleared).")
+                                crate::lang::tr(
+                                    "starling.controls_ui.fmt_bound_hole_exclusive_keyboard_binding_cleared",
+                                    &[&(lbl)],
+                                )
                             } else {
-                                format!("Assigned '{lbl}' to Event Slot #{}.", event_slot + 1)
+                                crate::lang::tr(
+                                    "starling.controls_ui.fmt_assigned_hole_to_event_slot_hole",
+                                    &[&(lbl), &(event_slot + 1)],
+                                )
                             });
                             tc.clicked = true;
                             return false;
@@ -7814,7 +7933,10 @@ pub fn touch_hud_editor(
                                     let is_goy =
                                         tc.settings.control_style == ControlStyle::GoyControl;
                                     let mut nb = CustomButton::new("key.mouse.left".into(), idx);
-                                    nb.custom_label = format!("BTN {}", idx + 1);
+                                    nb.custom_label = crate::lang::tr(
+                                        "starling.controls_ui.fmt_btn_hole",
+                                        &[&(idx + 1)],
+                                    );
                                     for m in 0..3 {
                                         nb.layouts[m].use_goy_style = is_goy;
                                     }
@@ -7920,7 +8042,10 @@ pub fn touch_hud_editor(
                 ed.save_dialog_open = true;
                 ed.editing_save_desc = false;
                 ed.save_name_input = if tc.settings.is_default_preset() {
-                    format!("{} Custom", tc.settings.preset_name)
+                    crate::lang::tr(
+                        "starling.controls_ui.fmt_hole_custom",
+                        &[&(tc.settings.preset_name)],
+                    )
                 } else {
                     tc.settings.preset_name.clone()
                 };
@@ -7948,9 +8073,9 @@ pub fn touch_hud_editor(
                 tc.settings.active_mcpe_preset = active_mcpe;
                 tc.settings.active_goy_preset = active_goy;
                 clamp_editor_custom_selection(&mut ed, &tc.settings);
-                ed.status_msg = Some(format!(
-                    "Reset editor canvas to {} Default layout.",
-                    cur_style.label()
+                ed.status_msg = Some(crate::lang::tr(
+                    "starling.controls_ui.fmt_reset_editor_canvas_to_hole_default_layout",
+                    &[&(cur_style.label())],
                 ));
                 tc.clicked = true;
                 return false;
@@ -7975,7 +8100,10 @@ pub fn touch_hud_editor(
                     clamp_editor_custom_selection(&mut ed, &tc.settings);
                     ed.save_name_input = tc.settings.preset_name.clone();
                     ed.save_desc_input = tc.settings.preset_description.clone();
-                    ed.status_msg = Some(format!("Loaded preset '{}'.", meta.name));
+                    ed.status_msg = Some(crate::lang::tr(
+                        "starling.controls_ui.fmt_loaded_preset_hole",
+                        &[&(meta.name)],
+                    ));
                     tc.clicked = true;
                     return false;
                 }
@@ -8064,7 +8192,10 @@ pub fn touch_hud_editor(
                                 let idx = tc.settings.custom_buttons.len();
                                 let is_goy = tc.settings.control_style == ControlStyle::GoyControl;
                                 let mut nb = CustomButton::new("key.mouse.left".into(), idx);
-                                nb.custom_label = format!("BTN {}", idx + 1);
+                                nb.custom_label = crate::lang::tr(
+                                    "starling.controls_ui.fmt_btn_hole",
+                                    &[&(idx + 1)],
+                                );
                                 for m in 0..3 {
                                     nb.layouts[m].use_goy_style = is_goy;
                                 }
@@ -8086,7 +8217,10 @@ pub fn touch_hud_editor(
                             ed.props_open = false;
                             ed.editing_save_desc = false;
                             ed.save_name_input = if tc.settings.is_default_preset() {
-                                format!("{} Custom", tc.settings.preset_name)
+                                crate::lang::tr(
+                                    "starling.controls_ui.fmt_hole_custom",
+                                    &[&(tc.settings.preset_name)],
+                                )
                             } else {
                                 tc.settings.preset_name.clone()
                             };
