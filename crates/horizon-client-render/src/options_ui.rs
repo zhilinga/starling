@@ -3666,7 +3666,7 @@ impl OptionsUi {
                         0.0,
                         0.0,
                         310.0,
-                        Text::literal("Shader Packs..."),
+                        tr("horizon.pages.open.shader_packs"),
                         Act::Push(Page::ShaderPacks),
                     ),
                     None,

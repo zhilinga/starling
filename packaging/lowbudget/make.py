@@ -194,8 +194,13 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "assets").mkdir(parents=True)
-    (OUT / "pack.mcmeta").write_text(json.dumps({"pack": {
-        "pack_format": 97, "description": "Starling's low-budget skin"}}, indent=2) + "\n", encoding="utf-8")
+    (OUT / "pack.mcmeta").write_text(json.dumps({
+        "pack": {"pack_format": 97, "description": "Starling's low-budget skin"},
+        "language": {
+            "en_us": {"name": "English", "region": "US", "bidirectional": False},
+            "zh_cn": {"name": "简体中文", "region": "中国", "bidirectional": False},
+        },
+    }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     sprites = "minecraft/textures/gui/sprites/widget/"
     # Buttons: a take of each state per take number; the plain names are take 0.
     for take in range(BUTTON_TAKES):

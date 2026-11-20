@@ -47,6 +47,7 @@ FACES = {
 LANG_GLOBS = [
     "crates/horizon-client/assets/horizon/lang/zh_cn.json",
     "launcher/lang/zh.json",
+    "packaging/lowbudget/strings_zh_cn.json",
 ]
 
 # 兜底：语言文件里不一定出现、但界面会用到（诸如省略号、箭头、全角符号）。
