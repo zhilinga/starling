@@ -2846,9 +2846,9 @@ impl TouchUi {
 
         // Active Control System Pill Badge in Header
         let mode_badge_txt = if settings.control_style == ControlStyle::Mcpe {
-            "MCPE Controls"
+            crate::lang::get("starling.controls_ui.mcpe_controls")
         } else {
-            "GoyControl HUD"
+            crate::lang::get("starling.controls_ui.goycontrol_hud")
         };
         let badge_w = 104.0;
         let badge_r = [dx + dw - 188.0, dy + 11.0, badge_w, 26.0];
@@ -2857,7 +2857,7 @@ impl TouchUi {
                 badge_r[0], badge_r[1], badge_r[2], badge_r[3], 8.0, card_sel,
             );
             ui.border(badge_r[0], badge_r[1], badge_r[2], badge_r[3], 8.0, accent);
-            ui.centered_fit(Face::SemiBold, 9.5, badge_r, accent_hi, mode_badge_txt);
+            ui.centered_fit(Face::SemiBold, 9.5, badge_r, accent_hi, &mode_badge_txt);
         }
 
         // "Done" Button in top-right
@@ -2874,11 +2874,11 @@ impl TouchUi {
 
         // Left Sidebar Navigation Tabs (Recommended, Controls, Aiming, Buttons, Advanced)
         let tabs: [(Icon, &str); 5] = [
-            (Icon::HorizonLogo, "Recommended"),
-            (Icon::Gamepad, "Controls"),
-            (Icon::Crosshair, "Aiming"),
-            (Icon::MicrosoftGrid, "Buttons"),
-            (Icon::Flask, "Advanced"),
+            (Icon::HorizonLogo, "starling.controls_ui.recommended"),
+            (Icon::Gamepad, "starling.controls_ui.controls"),
+            (Icon::Crosshair, "starling.controls_ui.aiming"),
+            (Icon::MicrosoftGrid, "starling.controls_ui.buttons"),
+            (Icon::Flask, "starling.controls_ui.advanced"),
         ];
         let tab_start_y = dy + 54.0;
         for (ti, (ic, lbl)) in tabs.into_iter().enumerate() {
@@ -2891,13 +2891,14 @@ impl TouchUi {
             }
             let fg = if active { text_c } else { muted_c };
             ui.icon(ic, tr[0] + 9.0, tr[1] + 9.0, 15.0, fg);
+            let tab_label = crate::lang::get(lbl);
             ui.text(
                 if active { Face::SemiBold } else { Face::Medium },
                 10.6,
                 tr[0] + 29.0,
                 tr[1] + 8.0,
                 fg,
-                lbl,
+                &tab_label,
             );
         }
 
@@ -3162,28 +3163,33 @@ impl TouchUi {
 
                 let act_y = body_y + 342.0;
                 let half_w = (cw - 10.0) * 0.5;
-                let sys_sub = crate::lang::tr(
-                    "starling.controls_ui.fmt_active_hole",
-                    &[&(settings.control_style.label())],
-                );
-                for (i, (ic, title, sub)) in [
-                    (Icon::Gamepad, "Switch Control System", sys_sub.as_str()),
+                let style_label = if settings.control_style == ControlStyle::Mcpe {
+                    crate::lang::get("starling.controls_ui.mcpe_default")
+                } else {
+                    "GoyControl".to_owned()
+                };
+                let sys_sub =
+                    crate::lang::tr("starling.controls_ui.fmt_active_hole", &[&style_label]);
+                let actions = [
+                    (
+                        Icon::Gamepad,
+                        crate::lang::get("starling.controls_ui.switch_control_system"),
+                        sys_sub.clone(),
+                    ),
                     (
                         Icon::MicrosoftGrid,
-                        "Customize Controls",
-                        "Open layout & property studio",
+                        crate::lang::get("starling.controls_ui.customize_controls"),
+                        crate::lang::get("starling.controls_ui.open_layout_property_studio"),
                     ),
-                ]
-                .into_iter()
-                .enumerate()
-                {
+                ];
+                for (i, (ic, title, sub)) in actions.into_iter().enumerate() {
                     let rx = cx + i as f32 * (half_w + 10.0);
                     ui.rounded(rx, act_y, half_w, 44.0, 11.0, card_bg);
                     ui.border(rx, act_y, half_w, 44.0, 11.0, border_c);
                     ui.rounded(rx + 10.0, act_y + 9.0, 26.0, 26.0, 8.0, card_sel);
                     ui.icon(ic, rx + 15.0, act_y + 14.0, 16.0, accent_hi);
-                    ui.text(Face::SemiBold, 10.4, rx + 42.0, act_y + 6.0, text_c, title);
-                    ui.text(Face::Regular, 8.6, rx + 42.0, act_y + 23.0, muted_c, sub);
+                    ui.text(Face::SemiBold, 10.4, rx + 42.0, act_y + 6.0, text_c, &title);
+                    ui.text(Face::Regular, 8.6, rx + 42.0, act_y + 23.0, muted_c, &sub);
                 }
 
                 draw_toggle_row(
@@ -3210,13 +3216,19 @@ impl TouchUi {
                 let mode_y = body_y + 18.0;
                 let half_w = (cw - 10.0) * 0.5;
                 let is_mcpe = settings.control_style == ControlStyle::Mcpe;
-                for (i, (title, sub, sel)) in [
-                    ("MCPE (Default)", "Vanilla touch controls", is_mcpe),
-                    ("GoyControl", "Custom layout & keybinds", !is_mcpe),
-                ]
-                .into_iter()
-                .enumerate()
-                {
+                let modes = [
+                    (
+                        crate::lang::get("starling.controls_ui.mcpe_default"),
+                        crate::lang::get("starling.controls_ui.vanilla_touch_controls"),
+                        is_mcpe,
+                    ),
+                    (
+                        "GoyControl".to_owned(),
+                        crate::lang::get("starling.controls_ui.custom_layout_keybinds"),
+                        !is_mcpe,
+                    ),
+                ];
+                for (i, (title, sub, sel)) in modes.into_iter().enumerate() {
                     let rx = cx + i as f32 * (half_w + 10.0);
                     ui.rounded(
                         rx,
@@ -3249,39 +3261,49 @@ impl TouchUi {
                     if sel {
                         ui.rounded(rad_x + 3.5, rad_y + 3.5, 7.0, 7.0, 3.5, accent_hi);
                     }
-                    ui.text(Face::SemiBold, 11.0, rx + 31.0, mode_y + 7.0, text_c, title);
-                    ui.text(Face::Regular, 9.0, rx + 31.0, mode_y + 25.0, muted_c, sub);
+                    ui.text(
+                        Face::SemiBold,
+                        11.0,
+                        rx + 31.0,
+                        mode_y + 7.0,
+                        text_c,
+                        &title,
+                    );
+                    ui.text(Face::Regular, 9.0, rx + 31.0, mode_y + 25.0, muted_c, &sub);
                 }
 
                 // 2. Dynamic System Controls Section
+                let section_title = if settings.control_style == ControlStyle::Mcpe {
+                    crate::lang::get("starling.controls_ui.mcpe_controls")
+                } else {
+                    "GoyControl".to_owned()
+                };
                 ui.text(
                     Face::SemiBold,
                     10.2,
                     cx,
                     body_y + 68.0,
                     muted_c,
-                    settings.control_style.section_title(),
+                    &section_title,
                 );
                 let act_y = body_y + 84.0;
                 let active_preset_lbl = crate::lang::tr(
                     "starling.controls_ui.fmt_preset_hole",
                     &[&(settings.preset_name)],
                 );
-                for (i, (ic, title, sub)) in [
+                let actions = [
                     (
                         Icon::MicrosoftGrid,
-                        "Customize Controls",
-                        "Open layout editor",
+                        crate::lang::get("starling.controls_ui.customize_controls"),
+                        crate::lang::get("starling.controls_ui.open_layout_editor"),
                     ),
                     (
                         Icon::Settings,
-                        "Control Presets",
-                        active_preset_lbl.as_str(),
+                        crate::lang::get("starling.controls_ui.control_presets"),
+                        active_preset_lbl.to_string(),
                     ),
-                ]
-                .into_iter()
-                .enumerate()
-                {
+                ];
+                for (i, (ic, title, sub)) in actions.into_iter().enumerate() {
                     let rx = cx + i as f32 * (half_w + 10.0);
                     ui.rounded(rx, act_y, half_w, 44.0, 11.0, card_bg);
                     ui.border(rx, act_y, half_w, 44.0, 11.0, border_c);
@@ -3787,16 +3809,22 @@ impl TouchUi {
                     8.0,
                     card_bg,
                 );
+                let ui_vibration = if settings.ui_vibrate {
+                    crate::lang::get("starling.controls_ui.ui_vibration_on")
+                } else {
+                    crate::lang::get("starling.controls_ui.ui_vibration_off")
+                };
+                let gameplay_vibration = if settings.vibrate {
+                    crate::lang::get("starling.controls_ui.gameplay_vibration_on")
+                } else {
+                    crate::lang::get("starling.controls_ui.gameplay_vibration_off")
+                };
                 ui.centered_fit(
                     Face::SemiBold,
                     11.0,
                     [cx, body_y + 18.0, feedback_width, 46.0],
                     text_c,
-                    if settings.ui_vibrate {
-                        "UI vibration: ON"
-                    } else {
-                        "UI vibration: OFF"
-                    },
+                    &ui_vibration,
                 );
                 ui.centered_fit(
                     Face::SemiBold,
@@ -3808,11 +3836,7 @@ impl TouchUi {
                         46.0,
                     ],
                     text_c,
-                    if settings.vibrate {
-                        "Gameplay vibration: ON"
-                    } else {
-                        "Gameplay vibration: OFF"
-                    },
+                    &gameplay_vibration,
                 );
                 draw_toggle_row(
                     &mut ui,

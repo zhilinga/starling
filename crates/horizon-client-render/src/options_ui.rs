@@ -3880,7 +3880,7 @@ impl OptionsUi {
                             0.,
                             0.,
                             150.,
-                            Text::literal("Customize Layout..."),
+                            tr("starling.controls_ui.customize_layout"),
                             Act::CustomButtons,
                         )
                     }),
@@ -3888,7 +3888,9 @@ impl OptionsUi {
                 self.filter_option_rows(rows)
             }
             Page::Touch => {
-                let mut rows = vec![Row::Header("Movement & Look Sensitivity")];
+                let mut rows = vec![Row::Header(
+                    "starling.controls_ui.movement_look_sensitivity",
+                )];
                 rows.push(Row::Big(Opt::TouchMode));
                 rows.extend(pairs(&[
                     Opt::TouchCrosshairGestures,
@@ -3897,13 +3899,13 @@ impl OptionsUi {
                     Opt::TouchSensitivityHorizontal,
                     Opt::TouchSensitivityVertical,
                 ]));
-                rows.push(Row::Header("Control Hub & Feedback"));
+                rows.push(Row::Header("starling.controls_ui.control_hub_feedback"));
                 rows.extend(pairs(&[
                     Opt::TouchControlHub,
                     Opt::TouchUiVibration,
                     Opt::TouchGameVibration,
                 ]));
-                rows.push(Row::Header("HUD Buttons & Layout"));
+                rows.push(Row::Header("starling.controls_ui.hud_buttons_layout"));
                 rows.extend(pairs(&[
                     Opt::TouchMouseButton,
                     Opt::TouchKeyboardButton,
@@ -3916,7 +3918,9 @@ impl OptionsUi {
                     Opt::TouchLeftHand,
                     Opt::TouchSwapJumpSneak,
                 ]));
-                rows.push(Row::Header("Joystick, Actions & Gyroscope"));
+                rows.push(Row::Header(
+                    "starling.controls_ui.joystick_actions_gyroscope",
+                ));
                 rows.extend(pairs(&[
                     Opt::TouchAnalog,
                     Opt::TouchSprintButton,
@@ -3934,7 +3938,7 @@ impl OptionsUi {
                         0.0,
                         0.0,
                         310.0,
-                        Text::literal("Customize Touch & GoyControl Layout..."),
+                        tr("starling.controls_ui.customize_touch_layout"),
                         Act::TouchLayout,
                     ),
                     None,
