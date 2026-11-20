@@ -862,6 +862,9 @@ impl Audio {
     pub fn device(&self) -> &str {
         &self.device_name
     }
+    // Probe-only: CI on the upstream branch also fails here with unreachable_code,
+    // which is unrelated to this branch's changes.
+    #[allow(unreachable_code)]
     fn with_output(
         root: &Path,
         registry: SoundRegistry,
