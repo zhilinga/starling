@@ -243,7 +243,7 @@ def main():
                   "chars": letters(0)[1]}]
     if cjk.exists():
         shutil.copy2(cjk, OUT / "assets" / "minecraft" / "font" / "StarlingCJK.ttf")
-        providers.append({"type": "ttf", "file": "minecraft:font/StarlingCJK.ttf", "size": 10.0,
+        providers.append({"type": "ttf", "file": "minecraft:StarlingCJK.ttf", "size": 10.0,
                           "oversample": 2.0, "shift": [0, 0], "skip": ""})
     default = {"providers": providers, "starling:variants": takes}
     path = OUT / "assets" / "minecraft" / "font" / "default.json"
