@@ -429,6 +429,7 @@ impl Settings {
             if !marker.exists() {
                 if settings.language == "en_us" {
                     settings.language = "zh_cn".to_owned();
+                    let _ = fs::write(path, settings.serialize());
                 }
                 let _ = fs::write(&marker, b"1");
             }
