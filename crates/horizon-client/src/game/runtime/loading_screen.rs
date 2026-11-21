@@ -741,12 +741,12 @@ impl Loading {
             }
         }
     }
-    /// Load the resources again (they were imported after a failure): a fresh loader, as at start.
     /// Whether the loader already handed the game over (its options are gone): a
     /// prepare that finishes afterwards must not load the resources a second time.
     pub(crate) fn loading_finished(&self) -> bool {
         self.options.is_none()
     }
+    /// Load the resources again (they were imported after a failure): a fresh loader, as at start.
     pub(super) fn retry(&mut self) -> Result<()> {
         #[cfg(target_os = "android")]
         if self.vanilla_root.join("horizon-resources.json").is_file() && self.show_onboarding() {

@@ -9099,7 +9099,7 @@ mod tests {
             }),
         });
         let labels = lang::scoped(english(), || ui.extras.row_labels(&s)).0;
-        assert!(labels.iter().any(|l| l == "设置"), "{labels:?}");
+        assert!(labels.iter().any(|l| l == "Settings"), "{labels:?}");
         // The mod's switch is beside it, so Extras keeps the Zoom setting it had.
         assert!(labels.iter().any(|l| l.starts_with("Zoom: ")), "{labels:?}");
         let size = (480.0, 480.0);
@@ -10442,7 +10442,7 @@ mod tests {
                     Item::Extra(e) => format!("extra:{e:?}"),
                 };
                 graphics_rows.insert(id.clone());
-                put(id, "图形");
+                put(id, "Graphics");
             }
         }
         // Every page from the Options screen, through its buttons.
@@ -10483,12 +10483,12 @@ mod tests {
         }
         // Vanilla's own: the same option on two of its screens.
         let vanilla_repeats: BTreeMap<&str, &[&str]> = [
-            ("MenuBlur", &["Accessibility", "图形"][..]),
-            ("ShowSubtitles", &["Accessibility", "声音"][..]),
-            ("Narrator", &["Accessibility", "聊天"][..]),
-            ("ChatOpacity", &["Accessibility", "聊天"][..]),
-            ("TextBackgroundOpacity", &["Accessibility", "聊天"][..]),
-            ("ChatLineSpacing", &["Accessibility", "聊天"][..]),
+            ("MenuBlur", &["Accessibility", "Graphics"][..]),
+            ("ShowSubtitles", &["Accessibility", "Sound"][..]),
+            ("Narrator", &["Accessibility", "Chat"][..]),
+            ("ChatOpacity", &["Accessibility", "Chat"][..]),
+            ("TextBackgroundOpacity", &["Accessibility", "Chat"][..]),
+            ("ChatLineSpacing", &["Accessibility", "Chat"][..]),
         ]
         .into();
         for (id, pages) in &places {
@@ -10502,7 +10502,7 @@ mod tests {
         for (page, from) in &ways_in {
             let from: Vec<&str> = from.iter().map(String::as_str).collect();
             match page.as_str() {
-                "控制" => assert_eq!(from, ["Accessibility", "Main"]),
+                "Controls" => assert_eq!(from, ["Accessibility", "Main"]),
                 _ => assert_eq!(from.len(), 1, "{page} opens from {from:?}"),
             }
         }

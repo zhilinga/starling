@@ -243,7 +243,7 @@ pub(super) fn is_machine_tag(tag: &Tag) -> bool {
 /// What a machine's saved block entity holds, every slot: dropped when its block breaks
 /// (`ItemHelper.dropContents`).
 pub(super) fn held_items(tag: &Tag) -> Vec<Option<ItemStack>> {
-    let size = match tag.get("大小") {
+    let size = match tag.get("Size") {
         Some(Tag::Int(v)) => (*v).max(0) as usize,
         _ => 0,
     };

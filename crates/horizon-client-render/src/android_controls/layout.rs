@@ -972,7 +972,7 @@ impl Settings {
                 };
             }
         } else if self.preset_name.trim().is_empty()
-            || (self.preset_name == "默认" && self.preset_id != "default")
+            || (self.preset_name == "Default" && self.preset_id != "default")
         {
             self.preset_name = self.preset_id.clone();
         }
@@ -1076,7 +1076,7 @@ impl Settings {
                 {
                     parsed.preset_id = clean.clone();
                     parsed.active_profile = clean.clone();
-                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "默认" {
+                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "Default" {
                         parsed.preset_name = stem.to_owned();
                     }
                     if parsed.preset_description.trim().is_empty() {
@@ -1122,7 +1122,7 @@ impl Settings {
                 && let Ok(parsed) = serde_json::from_slice::<Self>(&bytes)
             {
                 let name =
-                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "默认" {
+                    if parsed.preset_name.trim().is_empty() || parsed.preset_name == "Default" {
                         clean.clone()
                     } else {
                         parsed.preset_name.trim().to_owned()
@@ -1164,7 +1164,7 @@ impl Settings {
             loaded.control_style = style;
             loaded.preset_id = clean.clone();
             loaded.active_profile = clean;
-            if loaded.preset_name.trim().is_empty() || loaded.preset_name == "默认" {
+            if loaded.preset_name.trim().is_empty() || loaded.preset_name == "Default" {
                 loaded.preset_name = loaded.preset_id.clone();
             }
             loaded.sanitize();
@@ -1539,7 +1539,7 @@ impl Settings {
         let mut copy = self.clone();
         copy.active_profile = clean.clone();
         copy.preset_id = clean.clone();
-        if copy.preset_name.trim().is_empty() || copy.preset_name == "默认" {
+        if copy.preset_name.trim().is_empty() || copy.preset_name == "Default" {
             copy.preset_name = name.trim().to_owned();
         }
         match style {
