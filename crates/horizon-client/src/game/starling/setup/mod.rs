@@ -643,6 +643,13 @@ impl Loading {
             preparer::clear();
             // The game opens its sound output with the sounds just prepared.
             self.audio = None;
+            // The loader may have handed the game over already (the first start after an
+            // update prepares while the old files still load): loading again would fail
+            // with "loading already finished" and show that as a setup error.
+            if self.loading_finished() {
+                self.setup.starting = true;
+                return;
+            }
             match self.retry() {
                 Ok(()) => self.setup.starting = true,
                 Err(e) => self.failure = Some(e.to_string()),
